@@ -9,31 +9,30 @@ import ActivityKit
 import CoreBluetooth
 import Foundation
 
-class MeasurementsDictionary: ObservableObject {
-	@Published var measurements: [UInt8: Measurement] = [:]
-	@Published var activity: Activity<CarWidgetAttributes>? = nil
-}
-
 class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
-	var measurements: MeasurementsDictionary?
-	private var manager: CBCentralManager?
-	private var adapter: CBPeripheral? = nil
-	private var outgoingQueue = Queue<Message>()
-	private var processingQueue = DispatchQueue(label: "processingQueue")
+
+	private var messageInterval = 0.3
 
 	private let advertisedUUID = CBUUID(string: "18F0")
 	private let serviceUUID = CBUUID(string: "E7810A71-73AE-499D-8C15-FAA9AEF0C3F2")
 	private let characteristicUUID = CBUUID(string: "BEF8D6C9-9C21-4C9E-B632-BD58C1009F9F")
 
-	func setup(_ measurements: MeasurementsDictionary) {
-		self.measurements = measurements
-		print("Setup")
+	private var manager: CBCentralManager? = nil
+	private var adapter: CBPeripheral? = nil
+
+	private var messageQueue = Queue<Message>()
+	private var outgoingQueue = DispatchQueue(label: "outgoingQueue")
+	private var processingQueue = DispatchQueue(label: "processingQueue")
+
+	private let trimmingCharacterSet: CharacterSet = ["\r", "\n", ">"]
+
+	override init() {
+		super.init()
 		manager = CBCentralManager(delegate: self, queue: nil)
 	}
 
 	func centralManagerDidUpdateState(_ central: CBCentralManager) {
 		if central.state == .poweredOn {
-			print("Scanning for peripherals")
 			central.scanForPeripherals(withServices: [advertisedUUID])
 		}
 	}
@@ -52,13 +51,12 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 	}
 
 	func centralManager(_: CBCentralManager, didConnect peripheral: CBPeripheral) {
-		print("Successfully connected to \(peripheral.name ?? "UNKNOWN")")
 		peripheral.discoverServices([serviceUUID])
 	}
 
 	func peripheral(_ peripheral: CBPeripheral, didDiscoverServices _: Error?) {
-		peripheral.services?.forEach { service in
-			peripheral.discoverCharacteristics([characteristicUUID], for: service)
+		peripheral.services?.forEach {
+			peripheral.discoverCharacteristics([characteristicUUID], for: $0)
 		}
 	}
 
@@ -67,80 +65,67 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 		service.characteristics?.forEach { characteristic in
 			adapter.setNotifyValue(true, for: characteristic)
 			// adapter.writeValue(Data("AT Z\r".utf8), for: characteristic, type: .withoutResponse)
-			adapter.writeValue(Data("AT E0\r".utf8), for: characteristic, type: .withoutResponse)
-			sleep(1)
-			adapter.writeValue(Data("AT SP 0\r".utf8), for: characteristic, type: .withoutResponse)
-			sleep(1)
-			adapter.writeValue(Data("AT L1\r".utf8), for: characteristic, type: .withoutResponse)
-			sleep(1)
+			sendToAdapter("AT E0", characteristic)
+			sendToAdapter("AT SP 0", characteristic)
+			sendToAdapter("AT L1", characteristic)
 
-			let initialMessage = Message(sid: "01", pids: PIDs.engineLoad, PIDs.engineSpeed, PIDs.engineCoolantTemperature)
-			outgoingQueue.enqueue(initialMessage)
-			adapter.writeValue(Data("\(initialMessage.encodedData)\r".utf8), for: characteristic, type: .withoutResponse)
+			let initialMessage = Message(characteristic, sid: "01", pids: PIDs.engineLoad, PIDs.engineSpeed, PIDs.engineCoolantTemperature)
+			sendToAdapter(initialMessage)
 		}
 	}
 
 	func peripheral(_: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error _: Error?) {
 		guard let data = characteristic.value else { return }
-		guard var enqueuedMessage = outgoingQueue.peek() else { return }
+		guard var currentMessage = messageQueue.peek() else { return }
 
-		let encodedData = String(bytes: data, encoding: .utf8)?.trimmingCharacters(in: ["\r", "\n", ">"]) ?? "00"
-
+		let encodedData = String(bytes: data, encoding: .utf8)?.trimmingCharacters(in: trimmingCharacterSet) ?? "00"
 		// print("Response: \(encodedData)")
 
-		if encodedData.contains("NOT FOUND") || encodedData.contains("UNABLE") || encodedData.contains("ERROR") {
-			adapter?.writeValue(Data("\(enqueuedMessage.encodedData)\r".utf8), for: characteristic, type: .withoutResponse)
+		if encodedData.contains("NOT|UNABLE|ERROR") {
+			messageInterval = 1
+			sendToAdapter(currentMessage)
 			return
 		}
 
-		if !encodedData.contains(":") { return }
-		let lines = encodedData.split(separator: "\r\n")
-		for line in lines {
-			if !line.contains(":") { continue }
-			var split = line.trimmingCharacters(in: ["\r", "\n"]).split(separator: ":")[1].trimmingPrefix(" ").split(separator: " ").map { String($0) }
-			let isResponseIndicator = split[0] == "41"
-			if isResponseIndicator {
-				split.removeFirst()
-			}
-			enqueuedMessage.responseData.append(contentsOf: split)
-		}
-		if enqueuedMessage.canBeProcessed {
-			outgoingQueue.dequeue()
+		messageInterval = 0.3
+
+		let matches = encodedData.matches(of: /.*: (.*)/)
+			.flatMap { $0.1.split(separator: " ") }
+			.dropFirst()
+			.map { String($0) }
+
+		currentMessage.responseData.append(contentsOf: matches)
+		if currentMessage.canBeProcessed {
+			guard var enqueuedMessage = messageQueue.dequeue() else { return }
 			processingQueue.sync {
 				enqueuedMessage.processMessage()
-
-				var trip = Trip()
-				enqueuedMessage.responseMeasurements.forEach { (key: UInt8, value: Measurement<Unit>) in
-					measurements?.measurements.updateValue(value, forKey: key)
-					switch key {
-					case PIDs.engineCoolantTemperature.id:
-						trip.engineTemp = value.value
-					case PIDs.engineSpeed.id:
-						trip.currentRpm = value.value
-					case _: ()
-					}
+				enqueuedMessage.responseMeasurements.forEach { (_: UInt8, _: Measurement<Unit>) in
 				}
-
-				if let activity = measurements?.activity {
-					let newState = CarWidgetAttributes.ContentState(trip: trip)
-					Task {
-						await activity.update(using: newState)
-					}
-				}
-
-				let newMessage = Message(sid: enqueuedMessage.sid, pids: enqueuedMessage.pids)
-				outgoingQueue.enqueue(newMessage)
-				usleep(300_000)
-				adapter?.writeValue(Data("\(newMessage.encodedData)\r".utf8), for: characteristic, type: .withoutResponse)
-				measurements?.measurements.forEach { (key: UInt8, value: Measurement<Unit>) in
-					print("\(key) == \(value)")
-				}
+				enqueuedMessage.reset()
+				sendToAdapter(enqueuedMessage)
 			}
 		}
 	}
 
 	func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error _: Error?) {
 		central.connect(peripheral)
+	}
+
+	private func sendToAdapter(_ message: Message) {
+		guard let characteristic = message.characteristic else { return }
+		if !messageQueue.contains(message) {
+			messageQueue.enqueue(message)
+		}
+		sendToAdapter(message.encodedRequest, characteristic)
+	}
+
+	private func sendToAdapter(_ message: String, _ characteristic: CBCharacteristic) {
+		guard let adapter = adapter else { return }
+		let data = Data(message.appending("\r").utf8)
+		outgoingQueue.sync {
+			adapter.writeValue(data, for: characteristic, type: .withoutResponse)
+			Thread.sleep(forTimeInterval: messageInterval)
+		}
 	}
 }
 

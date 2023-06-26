@@ -35,6 +35,14 @@
 		47D665122A49ABFB00E25DCE /* ByteBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665102A49ABFB00E25DCE /* ByteBuffer.swift */; };
 		47D665132A49ABFB00E25DCE /* ByteBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665102A49ABFB00E25DCE /* ByteBuffer.swift */; };
 		47D665142A49ABFB00E25DCE /* ByteBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665102A49ABFB00E25DCE /* ByteBuffer.swift */; };
+		47D665162A49D27F00E25DCE /* PIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665152A49D27F00E25DCE /* PIDs.swift */; };
+		47D665172A49D27F00E25DCE /* PIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665152A49D27F00E25DCE /* PIDs.swift */; };
+		47D665182A49D27F00E25DCE /* PIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665152A49D27F00E25DCE /* PIDs.swift */; };
+		47D665192A49D27F00E25DCE /* PIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665152A49D27F00E25DCE /* PIDs.swift */; };
+		47D6651B2A49DC3B00E25DCE /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D6651A2A49DC3B00E25DCE /* Errors.swift */; };
+		47D6651C2A49DC3B00E25DCE /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D6651A2A49DC3B00E25DCE /* Errors.swift */; };
+		47D6651D2A49DC3B00E25DCE /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D6651A2A49DC3B00E25DCE /* Errors.swift */; };
+		47D6651E2A49DC3B00E25DCE /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D6651A2A49DC3B00E25DCE /* Errors.swift */; };
 		47EF1B632A3B49A7001DC39B /* ScopeFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EF1B622A3B4917001DC39B /* ScopeFunctions.swift */; };
 		47EF1B642A3B49A8001DC39B /* ScopeFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EF1B622A3B4917001DC39B /* ScopeFunctions.swift */; };
 		47EF1B652A3B49A8001DC39B /* ScopeFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EF1B622A3B4917001DC39B /* ScopeFunctions.swift */; };
@@ -117,6 +125,8 @@
 		47C077DB2A34BFDF001A85E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		47C077E52A34CC9C001A85E2 /* FuelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelView.swift; sourceTree = "<group>"; };
 		47D665102A49ABFB00E25DCE /* ByteBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteBuffer.swift; sourceTree = "<group>"; };
+		47D665152A49D27F00E25DCE /* PIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PIDs.swift; sourceTree = "<group>"; };
+		47D6651A2A49DC3B00E25DCE /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		47EF1B5D2A3B4917001DC39B /* ExtendedUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedUI.swift; sourceTree = "<group>"; };
 		47EF1B5E2A3B4917001DC39B /* Useful.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Useful.swift; sourceTree = "<group>"; };
 		47EF1B5F2A3B4917001DC39B /* Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
@@ -179,6 +189,8 @@
 				478A55952A4706D9000759D3 /* Queue.swift */,
 				47F0A4B92A490AC20090E3DE /* Message.swift */,
 				47D665102A49ABFB00E25DCE /* ByteBuffer.swift */,
+				47D665152A49D27F00E25DCE /* PIDs.swift */,
+				47D6651A2A49DC3B00E25DCE /* Errors.swift */,
 			);
 			path = Communication;
 			sourceTree = "<group>";
@@ -447,11 +459,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				478A558F2A46ECC5000759D3 /* PID.swift in Sources */,
+				47D665192A49D27F00E25DCE /* PIDs.swift in Sources */,
 				47C077D32A34BFDD001A85E2 /* CarWidgetBundle.swift in Sources */,
 				478A55942A4705B4000759D3 /* BluetoothManager.swift in Sources */,
 				47C077DC2A34BFDF001A85E2 /* CarWidget.intentdefinition in Sources */,
 				47EF1B662A3B49A8001DC39B /* ScopeFunctions.swift in Sources */,
 				47D665142A49ABFB00E25DCE /* ByteBuffer.swift in Sources */,
+				47D6651E2A49DC3B00E25DCE /* Errors.swift in Sources */,
 				47C077D72A34BFDD001A85E2 /* CarWidget.swift in Sources */,
 				47C077D52A34BFDD001A85E2 /* CarWidgetLiveActivity.swift in Sources */,
 				47F0A4BD2A490AC20090E3DE /* Message.swift in Sources */,
@@ -469,6 +483,8 @@
 				478A558C2A46ECC5000759D3 /* PID.swift in Sources */,
 				47C077E82A34E843001A85E2 /* CarWidgetLiveActivity.swift in Sources */,
 				47C077DD2A34BFDF001A85E2 /* CarWidget.intentdefinition in Sources */,
+				47D665162A49D27F00E25DCE /* PIDs.swift in Sources */,
+				47D6651B2A49DC3B00E25DCE /* Errors.swift in Sources */,
 				BFF89A17309A3399CFA86C3D /* ContentView.swift in Sources */,
 				478A55962A4706D9000759D3 /* Queue.swift in Sources */,
 				47F0A4BA2A490AC20090E3DE /* Message.swift in Sources */,
@@ -489,7 +505,9 @@
 				478A558E2A46ECC5000759D3 /* PID.swift in Sources */,
 				BFF898E190A00FB5E7CBF0AF /* CarInfoUITestsLaunchTests.swift in Sources */,
 				47EF1B652A3B49A8001DC39B /* ScopeFunctions.swift in Sources */,
+				47D6651D2A49DC3B00E25DCE /* Errors.swift in Sources */,
 				478A55932A4705B4000759D3 /* BluetoothManager.swift in Sources */,
+				47D665182A49D27F00E25DCE /* PIDs.swift in Sources */,
 				47F0A4BC2A490AC20090E3DE /* Message.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -503,7 +521,9 @@
 				47D665122A49ABFB00E25DCE /* ByteBuffer.swift in Sources */,
 				478A558D2A46ECC5000759D3 /* PID.swift in Sources */,
 				47F0A4BB2A490AC20090E3DE /* Message.swift in Sources */,
+				47D665172A49D27F00E25DCE /* PIDs.swift in Sources */,
 				478A55922A4705B4000759D3 /* BluetoothManager.swift in Sources */,
+				47D6651C2A49DC3B00E25DCE /* Errors.swift in Sources */,
 				BFF898DF4878E0510529C2DC /* CarInfoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

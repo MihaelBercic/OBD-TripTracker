@@ -48,26 +48,22 @@ final class CarInfoTests: XCTestCase {
 
 	func testMessageEncoding() throws {
 		let message = Message(sid: "01", pids: PIDs.engineLoad, PIDs.engineSpeed)
-		XCTAssert(message.encodedData == "01 040C")
+		XCTAssert(message.encodedRequest == "01 040C")
 	}
 
 	func testActualMessageParsing() throws {
 		let encodedData = """
-		008
+		  09
 
-		0: 41 04 58 0C 0C 36
+		  0: 41 AA BB CC DD EE
 
-		1: 05 62 00 00 00 00 00
+		  41 12 23 FF 33
+
+		  1: BE DC EA DD GG
 		"""
-		var lines = encodedData.split(separator: "\n")
-		for line in lines {
-			if !line.contains(":") { continue }
-			var split = line.split(separator: ":")[1].trimmingPrefix(" ").split(separator: " ").map { String($0) }
-			let isResponseIndicator = split[0] == "41"
-			if isResponseIndicator {
-				split.removeFirst()
-			}
-			print(split)
-		}
+
+		let matches = encodedData.matches(of: /.*: (.*)/).flatMap { $0.1.split(separator: " ") }.dropFirst()
+		print(matches)
+		XCTAssert(matches.count == 10)
 	}
 }

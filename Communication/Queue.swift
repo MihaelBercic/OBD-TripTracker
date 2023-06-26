@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct Queue<T> {
+struct Queue<T: Equatable> {
+
 	private var elements = [T]()
 
 	/// Put an element into the queue.
@@ -24,5 +25,9 @@ struct Queue<T> {
 
 	func peek() -> T? {
 		return elements.first
+	}
+
+	func contains(_ element: T) -> Bool {
+		return elements.contains { $0 == element }
 	}
 }
