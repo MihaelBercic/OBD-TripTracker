@@ -8,14 +8,12 @@
 import Foundation
 
 public struct PID {
-	// associatedtype T: Unit
-
 	var id: UInt8
 	var dataLength: Int
 	var compute: ([UInt8]) -> Measurement<Unit>
 }
 
-public struct PIDs {
+public enum PIDs {
 	public static let engineLoad = PID(id: 0x04, dataLength: 1) { data in
 		let measuredValue = Double(data[0])
 		return Measurement(value: measuredValue / 2.55, unit: Unit(symbol: "%"))
@@ -31,7 +29,7 @@ public struct PIDs {
 	}
 
 	public static let engineRunTime = PID(id: 0x1F, dataLength: 2) { data in
-		let doubleMapped = data[0...1].map {
+		let doubleMapped = data[0 ... 1].map {
 			Double($0)
 		}
 		return Measurement(value: 256.0 * doubleMapped[0] + doubleMapped[1], unit: UnitDuration.seconds)
@@ -58,7 +56,7 @@ public struct PIDs {
 	}
 
 	public static let engineFuelRate = PID(id: 0x5E, dataLength: 2) { data in
-		let doubleMapped = data[0...1].map {
+		let doubleMapped = data[0 ... 1].map {
 			Double($0)
 		}
 		return Measurement(value: (256 * doubleMapped[0] + doubleMapped[1]) / 20, unit: UnitFuelEfficiency.litersPer100Kilometers)
