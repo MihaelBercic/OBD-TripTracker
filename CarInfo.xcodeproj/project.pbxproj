@@ -7,10 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		478A558C2A46ECC5000759D3 /* PID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478A558B2A46ECC5000759D3 /* PID.swift */; };
-		478A558D2A46ECC5000759D3 /* PID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478A558B2A46ECC5000759D3 /* PID.swift */; };
-		478A558E2A46ECC5000759D3 /* PID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478A558B2A46ECC5000759D3 /* PID.swift */; };
-		478A558F2A46ECC5000759D3 /* PID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478A558B2A46ECC5000759D3 /* PID.swift */; };
+		474905842A4CD656006C347C /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474905832A4CD656006C347C /* Request.swift */; };
+		474905852A4CD656006C347C /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474905832A4CD656006C347C /* Request.swift */; };
+		474905862A4CD656006C347C /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474905832A4CD656006C347C /* Request.swift */; };
+		474905872A4CD656006C347C /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474905832A4CD656006C347C /* Request.swift */; };
+		474905892A4DEF84006C347C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474905882A4DEF84006C347C /* LocationManager.swift */; };
+		4749058A2A4DEF84006C347C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474905882A4DEF84006C347C /* LocationManager.swift */; };
+		4749058B2A4DEF84006C347C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474905882A4DEF84006C347C /* LocationManager.swift */; };
+		4749058C2A4DEF84006C347C /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474905882A4DEF84006C347C /* LocationManager.swift */; };
+		477E424A2A4B178500A902F0 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477E42492A4B178500A902F0 /* Trip.swift */; };
+		477E424B2A4B187E00A902F0 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477E42492A4B178500A902F0 /* Trip.swift */; };
+		477E424C2A4B187F00A902F0 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477E42492A4B178500A902F0 /* Trip.swift */; };
+		477E424D2A4B187F00A902F0 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477E42492A4B178500A902F0 /* Trip.swift */; };
+		477E424E2A4B66F900A902F0 /* CarWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C077D42A34BFDD001A85E2 /* CarWidgetLiveActivity.swift */; };
+		477E424F2A4B66FA00A902F0 /* CarWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C077D42A34BFDD001A85E2 /* CarWidgetLiveActivity.swift */; };
+		478A558C2A46ECC5000759D3 /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478A558B2A46ECC5000759D3 /* Packet.swift */; };
+		478A558D2A46ECC5000759D3 /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478A558B2A46ECC5000759D3 /* Packet.swift */; };
+		478A558E2A46ECC5000759D3 /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478A558B2A46ECC5000759D3 /* Packet.swift */; };
+		478A558F2A46ECC5000759D3 /* Packet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478A558B2A46ECC5000759D3 /* Packet.swift */; };
 		478A55912A4705B4000759D3 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478A55902A4705B4000759D3 /* BluetoothManager.swift */; };
 		478A55922A4705B4000759D3 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478A55902A4705B4000759D3 /* BluetoothManager.swift */; };
 		478A55932A4705B4000759D3 /* BluetoothManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478A55902A4705B4000759D3 /* BluetoothManager.swift */; };
@@ -35,10 +49,10 @@
 		47D665122A49ABFB00E25DCE /* ByteBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665102A49ABFB00E25DCE /* ByteBuffer.swift */; };
 		47D665132A49ABFB00E25DCE /* ByteBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665102A49ABFB00E25DCE /* ByteBuffer.swift */; };
 		47D665142A49ABFB00E25DCE /* ByteBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665102A49ABFB00E25DCE /* ByteBuffer.swift */; };
-		47D665162A49D27F00E25DCE /* PIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665152A49D27F00E25DCE /* PIDs.swift */; };
-		47D665172A49D27F00E25DCE /* PIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665152A49D27F00E25DCE /* PIDs.swift */; };
-		47D665182A49D27F00E25DCE /* PIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665152A49D27F00E25DCE /* PIDs.swift */; };
-		47D665192A49D27F00E25DCE /* PIDs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665152A49D27F00E25DCE /* PIDs.swift */; };
+		47D665162A49D27F00E25DCE /* Packets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665152A49D27F00E25DCE /* Packets.swift */; };
+		47D665172A49D27F00E25DCE /* Packets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665152A49D27F00E25DCE /* Packets.swift */; };
+		47D665182A49D27F00E25DCE /* Packets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665152A49D27F00E25DCE /* Packets.swift */; };
+		47D665192A49D27F00E25DCE /* Packets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665152A49D27F00E25DCE /* Packets.swift */; };
 		47D6651B2A49DC3B00E25DCE /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D6651A2A49DC3B00E25DCE /* Errors.swift */; };
 		47D6651C2A49DC3B00E25DCE /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D6651A2A49DC3B00E25DCE /* Errors.swift */; };
 		47D6651D2A49DC3B00E25DCE /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D6651A2A49DC3B00E25DCE /* Errors.swift */; };
@@ -47,10 +61,10 @@
 		47EF1B642A3B49A8001DC39B /* ScopeFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EF1B622A3B4917001DC39B /* ScopeFunctions.swift */; };
 		47EF1B652A3B49A8001DC39B /* ScopeFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EF1B622A3B4917001DC39B /* ScopeFunctions.swift */; };
 		47EF1B662A3B49A8001DC39B /* ScopeFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EF1B622A3B4917001DC39B /* ScopeFunctions.swift */; };
-		47F0A4BA2A490AC20090E3DE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F0A4B92A490AC20090E3DE /* Message.swift */; };
-		47F0A4BB2A490AC20090E3DE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F0A4B92A490AC20090E3DE /* Message.swift */; };
-		47F0A4BC2A490AC20090E3DE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F0A4B92A490AC20090E3DE /* Message.swift */; };
-		47F0A4BD2A490AC20090E3DE /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F0A4B92A490AC20090E3DE /* Message.swift */; };
+		47FC02DA2A4C211600E432F6 /* ResponseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FC02D92A4C211600E432F6 /* ResponseManager.swift */; };
+		47FC02DB2A4C211600E432F6 /* ResponseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FC02D92A4C211600E432F6 /* ResponseManager.swift */; };
+		47FC02DC2A4C211600E432F6 /* ResponseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FC02D92A4C211600E432F6 /* ResponseManager.swift */; };
+		47FC02DD2A4C211600E432F6 /* ResponseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47FC02D92A4C211600E432F6 /* ResponseManager.swift */; };
 		BFF89071BA53FC194A9D20E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFF8998AC289C4ED3A1E623F /* Assets.xcassets */; };
 		BFF89086987AAB600E8BFBF8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BFF8995B48808A36D1FA1D0A /* Preview Assets.xcassets */; };
 		BFF892279BE253BB053B73ED /* CarInfoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF8946C0138EFBE94B3563B /* CarInfoApp.swift */; };
@@ -110,8 +124,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		474905832A4CD656006C347C /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		474905882A4DEF84006C347C /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		477E42492A4B178500A902F0 /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		478A55872A45C7C9000759D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		478A558B2A46ECC5000759D3 /* PID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PID.swift; sourceTree = "<group>"; };
+		478A558B2A46ECC5000759D3 /* Packet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
 		478A55902A4705B4000759D3 /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
 		478A55952A4706D9000759D3 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
 		47C077CB2A34BFDD001A85E2 /* CarWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CarWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,7 +142,7 @@
 		47C077DB2A34BFDF001A85E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		47C077E52A34CC9C001A85E2 /* FuelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelView.swift; sourceTree = "<group>"; };
 		47D665102A49ABFB00E25DCE /* ByteBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteBuffer.swift; sourceTree = "<group>"; };
-		47D665152A49D27F00E25DCE /* PIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PIDs.swift; sourceTree = "<group>"; };
+		47D665152A49D27F00E25DCE /* Packets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Packets.swift; sourceTree = "<group>"; };
 		47D6651A2A49DC3B00E25DCE /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		47EF1B5D2A3B4917001DC39B /* ExtendedUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedUI.swift; sourceTree = "<group>"; };
 		47EF1B5E2A3B4917001DC39B /* Useful.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Useful.swift; sourceTree = "<group>"; };
@@ -133,7 +150,7 @@
 		47EF1B602A3B4917001DC39B /* Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constraints.swift; sourceTree = "<group>"; };
 		47EF1B612A3B4917001DC39B /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		47EF1B622A3B4917001DC39B /* ScopeFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScopeFunctions.swift; sourceTree = "<group>"; };
-		47F0A4B92A490AC20090E3DE /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		47FC02D92A4C211600E432F6 /* ResponseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseManager.swift; sourceTree = "<group>"; };
 		BFF8917D496646FFC8A5990D /* CarInfoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarInfoTests.swift; sourceTree = "<group>"; };
 		BFF891AFBFF76242AB675546 /* CarInfoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarInfoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFF893E44146D9A9810D4B5B /* CarInfoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarInfoUITests.swift; sourceTree = "<group>"; };
@@ -181,16 +198,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		477E42482A4B177600A902F0 /* Trip */ = {
+			isa = PBXGroup;
+			children = (
+				477E42492A4B178500A902F0 /* Trip.swift */,
+				474905882A4DEF84006C347C /* LocationManager.swift */,
+			);
+			path = Trip;
+			sourceTree = "<group>";
+		};
 		478A55882A46EC34000759D3 /* Communication */ = {
 			isa = PBXGroup;
 			children = (
-				478A558B2A46ECC5000759D3 /* PID.swift */,
+				478A558B2A46ECC5000759D3 /* Packet.swift */,
 				478A55902A4705B4000759D3 /* BluetoothManager.swift */,
 				478A55952A4706D9000759D3 /* Queue.swift */,
-				47F0A4B92A490AC20090E3DE /* Message.swift */,
 				47D665102A49ABFB00E25DCE /* ByteBuffer.swift */,
-				47D665152A49D27F00E25DCE /* PIDs.swift */,
+				47D665152A49D27F00E25DCE /* Packets.swift */,
 				47D6651A2A49DC3B00E25DCE /* Errors.swift */,
+				47FC02D92A4C211600E432F6 /* ResponseManager.swift */,
+				474905832A4CD656006C347C /* Request.swift */,
 			);
 			path = Communication;
 			sourceTree = "<group>";
@@ -280,6 +307,7 @@
 		BFF89CDB480F67E0C72DFDCD = {
 			isa = PBXGroup;
 			children = (
+				477E42482A4B177600A902F0 /* Trip */,
 				478A55882A46EC34000759D3 /* Communication */,
 				47EF1B3F2A3B490A001DC39B /* Extensions */,
 				47C077D12A34BFDD001A85E2 /* CarWidget */,
@@ -400,11 +428,11 @@
 			};
 			buildConfigurationList = BFF8958A5E46F3FE3E310C45 /* Build configuration list for PBXProject "CarInfo" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
+				Base,
 			);
 			mainGroup = BFF89CDB480F67E0C72DFDCD;
 			productRefGroup = BFF89D27836D006BF9B11DAD /* Products */;
@@ -458,18 +486,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				478A558F2A46ECC5000759D3 /* PID.swift in Sources */,
-				47D665192A49D27F00E25DCE /* PIDs.swift in Sources */,
+				478A558F2A46ECC5000759D3 /* Packet.swift in Sources */,
+				47D665192A49D27F00E25DCE /* Packets.swift in Sources */,
 				47C077D32A34BFDD001A85E2 /* CarWidgetBundle.swift in Sources */,
 				478A55942A4705B4000759D3 /* BluetoothManager.swift in Sources */,
+				4749058C2A4DEF84006C347C /* LocationManager.swift in Sources */,
 				47C077DC2A34BFDF001A85E2 /* CarWidget.intentdefinition in Sources */,
 				47EF1B662A3B49A8001DC39B /* ScopeFunctions.swift in Sources */,
 				47D665142A49ABFB00E25DCE /* ByteBuffer.swift in Sources */,
+				474905872A4CD656006C347C /* Request.swift in Sources */,
 				47D6651E2A49DC3B00E25DCE /* Errors.swift in Sources */,
 				47C077D72A34BFDD001A85E2 /* CarWidget.swift in Sources */,
 				47C077D52A34BFDD001A85E2 /* CarWidgetLiveActivity.swift in Sources */,
-				47F0A4BD2A490AC20090E3DE /* Message.swift in Sources */,
+				47FC02DD2A4C211600E432F6 /* ResponseManager.swift in Sources */,
 				478A55992A4706D9000759D3 /* Queue.swift in Sources */,
+				477E424B2A4B187E00A902F0 /* Trip.swift in Sources */,
 				47C077E72A34D265001A85E2 /* FuelView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -478,16 +509,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				477E424A2A4B178500A902F0 /* Trip.swift in Sources */,
+				474905892A4DEF84006C347C /* LocationManager.swift in Sources */,
+				474905842A4CD656006C347C /* Request.swift in Sources */,
 				BFF892279BE253BB053B73ED /* CarInfoApp.swift in Sources */,
 				47D665112A49ABFB00E25DCE /* ByteBuffer.swift in Sources */,
-				478A558C2A46ECC5000759D3 /* PID.swift in Sources */,
+				478A558C2A46ECC5000759D3 /* Packet.swift in Sources */,
 				47C077E82A34E843001A85E2 /* CarWidgetLiveActivity.swift in Sources */,
 				47C077DD2A34BFDF001A85E2 /* CarWidget.intentdefinition in Sources */,
-				47D665162A49D27F00E25DCE /* PIDs.swift in Sources */,
+				47D665162A49D27F00E25DCE /* Packets.swift in Sources */,
 				47D6651B2A49DC3B00E25DCE /* Errors.swift in Sources */,
 				BFF89A17309A3399CFA86C3D /* ContentView.swift in Sources */,
 				478A55962A4706D9000759D3 /* Queue.swift in Sources */,
-				47F0A4BA2A490AC20090E3DE /* Message.swift in Sources */,
+				47FC02DA2A4C211600E432F6 /* ResponseManager.swift in Sources */,
 				BFF89E9472E3B716C83C92F4 /* CarInfo.xcdatamodeld in Sources */,
 				47C077E62A34CC9C001A85E2 /* FuelView.swift in Sources */,
 				478A55912A4705B4000759D3 /* BluetoothManager.swift in Sources */,
@@ -499,16 +533,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				477E424C2A4B187F00A902F0 /* Trip.swift in Sources */,
+				474905862A4CD656006C347C /* Request.swift in Sources */,
+				477E424F2A4B66FA00A902F0 /* CarWidgetLiveActivity.swift in Sources */,
 				BFF89B5D3F7A97929213FA0F /* CarInfoUITests.swift in Sources */,
 				47D665132A49ABFB00E25DCE /* ByteBuffer.swift in Sources */,
 				478A55982A4706D9000759D3 /* Queue.swift in Sources */,
-				478A558E2A46ECC5000759D3 /* PID.swift in Sources */,
+				478A558E2A46ECC5000759D3 /* Packet.swift in Sources */,
 				BFF898E190A00FB5E7CBF0AF /* CarInfoUITestsLaunchTests.swift in Sources */,
 				47EF1B652A3B49A8001DC39B /* ScopeFunctions.swift in Sources */,
+				47FC02DC2A4C211600E432F6 /* ResponseManager.swift in Sources */,
+				4749058B2A4DEF84006C347C /* LocationManager.swift in Sources */,
 				47D6651D2A49DC3B00E25DCE /* Errors.swift in Sources */,
 				478A55932A4705B4000759D3 /* BluetoothManager.swift in Sources */,
-				47D665182A49D27F00E25DCE /* PIDs.swift in Sources */,
-				47F0A4BC2A490AC20090E3DE /* Message.swift in Sources */,
+				47D665182A49D27F00E25DCE /* Packets.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,15 +554,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				477E424D2A4B187F00A902F0 /* Trip.swift in Sources */,
+				474905852A4CD656006C347C /* Request.swift in Sources */,
 				478A55972A4706D9000759D3 /* Queue.swift in Sources */,
 				47EF1B642A3B49A8001DC39B /* ScopeFunctions.swift in Sources */,
 				47D665122A49ABFB00E25DCE /* ByteBuffer.swift in Sources */,
-				478A558D2A46ECC5000759D3 /* PID.swift in Sources */,
-				47F0A4BB2A490AC20090E3DE /* Message.swift in Sources */,
-				47D665172A49D27F00E25DCE /* PIDs.swift in Sources */,
+				478A558D2A46ECC5000759D3 /* Packet.swift in Sources */,
+				47D665172A49D27F00E25DCE /* Packets.swift in Sources */,
 				478A55922A4705B4000759D3 /* BluetoothManager.swift in Sources */,
+				477E424E2A4B66F900A902F0 /* CarWidgetLiveActivity.swift in Sources */,
 				47D6651C2A49DC3B00E25DCE /* Errors.swift in Sources */,
+				47FC02DB2A4C211600E432F6 /* ResponseManager.swift in Sources */,
 				BFF898DF4878E0510529C2DC /* CarInfoTests.swift in Sources */,
+				4749058A2A4DEF84006C347C /* LocationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

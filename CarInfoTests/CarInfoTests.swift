@@ -20,50 +20,68 @@ final class CarInfoTests: XCTestCase {
 
 	func testEngineLoad() throws {
 		let dataRead: [UInt8] = [0, 0, 0, 255, 0, 0, 0]
-		let engineLoadPID = PIDs.engineLoad
+		let engineLoadPID = Packets.engineLoad
 		let relevantData = Array(dataRead[3 ... 2 + engineLoadPID.dataLength])
 		let engineLoad = engineLoadPID.compute(relevantData)
 		XCTAssert(engineLoad.value == 100.0)
 	}
 
 	func testEnqueue() throws {
-		var queue = Queue<Int>()
+		let queue = Queue<Int>()
 		queue.enqueue(5)
 		let enqueuedElement = queue.peek()
 		assert(enqueuedElement == 5)
 	}
 
-	func testEnqueuMessage() throws {
-		var queue = Queue<Message>()
-		var message = Message(sid: "01", pids: PIDs.engineLoad, PIDs.engineSpeed)
-		let readData = ["04", "10", "0C", "00", "04", "00", "00", "00"]
-		message.responseData.append(contentsOf: readData)
-		queue.enqueue(message)
-
-		var dequeuedMessage = queue.dequeue()!
-		dequeuedMessage.processMessage()
-		print(dequeuedMessage.responseMeasurements)
-		XCTAssert(!dequeuedMessage.responseMeasurements.isEmpty)
-	}
-
-	func testMessageEncoding() throws {
-		let message = Message(sid: "01", pids: PIDs.engineLoad, PIDs.engineSpeed)
-		XCTAssert(message.encodedRequest == "01 040C")
+	func testShortMessageParsing() throws {
+		let responseManager = ResponseManager()
+		let encodedData = "7E8 03 41 2F E8"
+		let lines = encodedData.split(separator: "\r\n")
+		for line in lines {
+			responseManager.prepare(message: String(line))
+		}
 	}
 
 	func testActualMessageParsing() throws {
+		let measurementQueue = Queue<MeasuredValue>()
+		let responseManager = ResponseManager(measurementQueue: measurementQueue)
 		let encodedData = """
-		  09
+		7E8 10 0A 41 2F E8 46 3F 1F
+		7E8 21 00 0E 0D 00 00 00 00
 
-		  0: 41 AA BB CC DD EE
-
-		  41 12 23 FF 33
-
-		  1: BE DC EA DD GG
+		7E9 10 08 41 46 3F 1F 00 0E
+		7E9 21 0D 00 00 00 00 00 00
 		"""
-
-		let matches = encodedData.matches(of: /.*: (.*)/).flatMap { $0.1.split(separator: " ") }.dropFirst()
-		print(matches)
-		XCTAssert(matches.count == 10)
+		let lines = encodedData.split(separator: /\r\n|\n/)
+		lines.forEach { responseManager.prepare(message: String($0)) }
+		XCTAssert(measurementQueue.peek() != nil)
 	}
+
+	func testChunkedArray() throws {
+		let array = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+		let chunked = array.chunked(into: 5)
+		XCTAssert(chunked.count == 2 && chunked[0].count == 5 && chunked[1].count == 4)
+	}
+
+	func testStructPass() throws {
+		var trip: Trip? = Trip()
+		trip?.use {
+			$0.car = "XCODE"
+			print($0)
+			XCTAssert($0.car == "XCODE")
+		}
+		XCTAssert(trip?.car == "XCODE")
+		print(trip?.car ?? "UNKNOWN")
+	}
+
+	func testDequeue() throws {
+		let lastSpeedMeasurement: Date = .now - 5
+		let timeDifference = abs(Date.now.distance(to: lastSpeedMeasurement))
+		let speedKMH = 100.0
+		let speedMS = speedKMH / 3.6
+		let movedMeters = speedMS * timeDifference
+
+		print("\(Date.now) vs \(lastSpeedMeasurement) = \(timeDifference) moved \(movedMeters)")
+	}
+
 }

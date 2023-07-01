@@ -9,13 +9,13 @@ import UIKit
 public protocol ScopeFunctions {}
 
 extension ScopeFunctions {
-	func apply(block: (Self) -> ()) -> Self {
+	func apply(block: (Self) -> Void) -> Self {
 		block(self)
 		return self
 	}
 
-	func use(_ block: (Self) -> ()) {
-		block(self)
+	mutating func use(_ block: (inout Self) -> Void) {
+		block(&self)
 	}
 }
 

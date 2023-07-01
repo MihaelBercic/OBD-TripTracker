@@ -7,7 +7,10 @@
 
 import Foundation
 
-struct Queue<T: Equatable> {
+class Queue<T: Equatable> {
+
+	let semaphore = DispatchSemaphore(value: 0)
+	private var lock = NSLock()
 
 	private var elements = [T]()
 
@@ -15,19 +18,44 @@ struct Queue<T: Equatable> {
 	///
 	/// - Parameters:
 	/// 	- element: Element of type T that will be put into the queue.
-	mutating func enqueue(_ element: T) {
-		elements.append(element)
+	func enqueue(_ element: T) {
+		lock.withLock {
+			elements.append(element)
+			semaphore.signal()
+		}
 	}
 
-	mutating func dequeue() -> T? {
-		return elements.isEmpty ? nil : elements.removeFirst()
+	func dequeue() -> T? {
+		return lock.withLock { elements.isEmpty ? nil : elements.removeFirst() }
 	}
 
 	func peek() -> T? {
-		return elements.first
+		return lock.withLock { elements.first }
 	}
 
 	func contains(_ element: T) -> Bool {
-		return elements.contains { $0 == element }
+		return lock.withLock { elements.contains { $0 == element }}
 	}
+
+	func moveToTheBack() {
+		guard let element = dequeue() else { return }
+		enqueue(element)
+	}
+
+	func clear() {
+		lock.withLock {
+			elements = []
+		}
+	}
+}
+
+extension NSLock {
+
+	@discardableResult
+	func with<T>(_ block: () throws -> T) rethrows -> T {
+		lock()
+		defer { unlock() }
+		return try block()
+	}
+
 }

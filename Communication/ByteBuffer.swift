@@ -6,12 +6,18 @@
 //
 
 import Foundation
+
 class ByteBuffer {
 	private var data: Data
 	private var index: Int = 0
 
-	init(_ data: Data) {
+	init(_ data: Data = .init()) {
 		self.data = data
+	}
+
+	func setData(_ data: Data) {
+		self.data = data
+		index = 0
 	}
 
 	func hasNext() -> Bool {

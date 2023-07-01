@@ -6,23 +6,21 @@
 //
 
 import ActivityKit
+import CoreLocation
 import SwiftUI
 import WidgetKit
 
 struct CarWidgetAttributes: ActivityAttributes {
 	public struct ContentState: Codable, Hashable {
-		// Dynamic stateful properties about your activity go here!
 		var trip: Trip
 	}
-
-	var start = Date.now
 }
 
 struct CarWidgetLiveActivity: Widget {
 	var body: some WidgetConfiguration {
 		ActivityConfiguration(for: CarWidgetAttributes.self) { context in
 			// Lock screen/banner UI goes here
-			LiveActivityView(start: context.attributes.start, contentState: context.state)
+			LiveActivityView(contentState: context.state)
 		} dynamicIsland: { _ in
 			DynamicIsland {
 				// Expanded UI goes here.  Compose the expanded UI through
@@ -50,20 +48,9 @@ struct CarWidgetLiveActivity: Widget {
 	}
 }
 
-struct Trip: Codable, Hashable {
-	var car = "XC70"
-	var averageConsumption = 4.3
-	var distance = 0.0
-	var rpmMax = 5000.0
-	var currentRpm = 2440.0
-	var speed = 130.0
-	var engineTemp = 90.0
-}
-
 struct LiveActivityView: View {
-	let start: Date
+
 	let contentState: CarWidgetAttributes.ContentState
-	let characterSize = 10
 	let formatter: DateComponentsFormatter = DateComponentsFormatter().apply { formatter in
 		formatter.unitsStyle = .abbreviated
 		formatter.zeroFormattingBehavior = .dropAll
@@ -75,8 +62,7 @@ struct LiveActivityView: View {
 		formatter.minimumFractionDigits = 1
 	}
 
-	init(start: Date, contentState: CarWidgetAttributes.ContentState) {
-		self.start = start
+	init(contentState: CarWidgetAttributes.ContentState) {
 		self.contentState = contentState
 	}
 
@@ -96,14 +82,14 @@ struct LiveActivityView: View {
 						}
 					}.frame(maxWidth: .infinity)
 					HStack(alignment: .center) {
-						Text("\(formatter.string(from: start.distance(to: Date.now)) ?? "-")")
+						Text("\(formatter.string(from: trip.start.distance(to: Date.now)) ?? "-")")
 							.font(.footnote)
 							.fontWeight(.bold)
 							.fontDesign(.rounded)
 					}.frame(maxWidth: .infinity)
 					CustomGauge(iconName: "fanblades", dataPosition: .bottom) {
 						HStack(alignment: .top, spacing: 0) {
-							Text("\(decimalFormatter.string(for: trip.engineTemp - 70) ?? "-")").fontWeight(.bold)
+							Text("\(decimalFormatter.string(for: trip.ambientTemperature) ?? "-")").fontWeight(.bold)
 							Text("°C").font(.footnote).foregroundColor(.secondary)
 						}.fixedSize(horizontal: true, vertical: false)
 					}.frame(maxWidth: .infinity).gridColumnAlignment(.trailing)
@@ -118,10 +104,8 @@ struct LiveActivityView: View {
 					}.frame(maxWidth: .infinity)
 					CustomGauge(iconName: "fuelpump") {
 						HStack(alignment: .top, spacing: 0) {
-							// Text("\(decimalFormatter.string(for: trip.averageConsumption) ?? "-")L").fontWeight(.bold)
-							// Text("/100km").font(.footnote).foregroundColor(.secondary)
-							Text("\(decimalFormatter.string(for: trip.currentRpm) ?? "-")").fontWeight(.bold)
-							Text("RPM").font(.footnote).foregroundColor(.secondary)
+							Text("\(decimalFormatter.string(for: trip.fuelTankLevel) ?? "-")L").fontWeight(.bold)
+							Text("%").font(.footnote).foregroundColor(.secondary)
 						}
 					}.frame(maxWidth: .infinity)
 					CustomGauge(iconName: "engine.combustion") {
@@ -174,7 +158,7 @@ struct CustomGauge<Data: View>: View {
 
 struct Previews_CarWidgetLiveActivity_Previews: PreviewProvider {
 	static var previews: some View {
-		LiveActivityView(start: Date.now, contentState: CarWidgetAttributes.ContentState(trip: Trip()))
+		LiveActivityView(contentState: CarWidgetAttributes.ContentState(trip: Trip()))
 			.previewContext(WidgetPreviewContext(family: .systemMedium))
 	}
 }

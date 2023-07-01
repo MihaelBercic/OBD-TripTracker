@@ -7,8 +7,8 @@
 
 import Foundation
 
-public struct PID {
-	var id: UInt8
+public struct Packet {
+	var id: PIDs
 	var dataLength: Int
 	var compute: ([UInt8]) -> Measurement<Unit>
 }
