@@ -14,18 +14,25 @@ class Queue<T: Equatable> {
 
 	private var elements = [T]()
 
-	/// Put an element into the queue.
+	var isEmpty: Bool {
+		elements.isEmpty
+	}
+
+	/// [BLOCKING] Put an element into the queue.
 	///
 	/// - Parameters:
 	/// 	- element: Element of type T that will be put into the queue.
-	func enqueue(_ element: T) {
+	func enqueue(_ element: T, quietly: Bool = false) {
 		lock.withLock {
 			elements.append(element)
-			semaphore.signal()
+			if !quietly {
+				semaphore.signal()
+			}
 		}
 	}
 
 	func dequeue() -> T? {
+		semaphore.wait()
 		return lock.withLock { elements.isEmpty ? nil : elements.removeFirst() }
 	}
 
@@ -38,7 +45,8 @@ class Queue<T: Equatable> {
 	}
 
 	func moveToTheBack() {
-		guard let element = dequeue() else { return }
+		let firstElementRemoved = lock.withLock { elements.isEmpty ? nil : elements.removeFirst() }
+		guard let element = firstElementRemoved else { return }
 		enqueue(element)
 	}
 

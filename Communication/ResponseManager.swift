@@ -14,15 +14,11 @@ struct MeasuredValue: Equatable {
 
 class ResponseManager {
 
-	private var measurementProcessingQueue: Queue<MeasuredValue>?
+	private var measurementProcessingQueue: Queue<MeasuredValue> = TripSingleton.shared.measurementQueue
 	private var activeBuilders: [Int: ResponseBuilder] = [:]
 	private var byteBuffer = ByteBuffer()
 
 	var canSend: Bool { activeBuilders.isEmpty }
-
-	init(measurementQueue: Queue<MeasuredValue>? = nil) {
-		measurementProcessingQueue = measurementQueue
-	}
 
 	func prepare(message: String) {
 		let bytes = message.split(separator: " ").compactMap { Int($0, radix: 16) }
@@ -53,7 +49,8 @@ class ResponseManager {
 				let data = byteBuffer.readNBytes(packet.dataLength)
 				let computedMeasurement = packet.compute(data)
 				let measuredValue = MeasuredValue(pid: pid, measurement: computedMeasurement)
-				measurementProcessingQueue?.enqueue(measuredValue)
+				measurementProcessingQueue.enqueue(measuredValue)
+				print("Queued measurement: \(computedMeasurement)")
 			}
 		}
 	}

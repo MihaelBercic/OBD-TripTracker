@@ -17,7 +17,8 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
 		super.init()
 		locationManager.delegate = self
 		locationManager.pausesLocationUpdatesAutomatically = true
-		locationManager.desiredAccuracy = .greatestFiniteMagnitude
+		locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+		// locationManager.startUpdatingLocation()
 		print("Initialised location manager!")
 	}
 
