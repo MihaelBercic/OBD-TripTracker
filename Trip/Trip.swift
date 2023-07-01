@@ -30,21 +30,24 @@ public struct Trip: Codable, Hashable, ScopeFunctions {
 
 class TripSingleton {
 
-	// private let locationManager = LocationManager()
+	private let locationManager = LocationManager()
 
 	static let shared: TripSingleton = .init()
+	let measurementQueue = Queue<MeasuredValue>()
 	private var liveActivityTimer: Timer?
 	private(set) var currentTrip: Trip?
 	private(set) var currentActivity: Activity<CarWidgetAttributes>?
 
 	private var lastSpeedMeasurement: Date = .now
 
-	private init() {}
+	private init() {
+		Thread(block: processMeasurements).start()
+	}
 
 	func updateTrip(measuredValue: MeasuredValue) {
 		let pid = measuredValue.pid
 		let value = measuredValue.measurement.value
-		// print("🗒️ \t \(pid) => \(measuredValue.measurement)")
+		print("🗒️ \t \(pid) => \(measuredValue.measurement)")
 
 		if pid == .engineSpeed {
 			let isEngineOn = value > 0
@@ -115,6 +118,13 @@ class TripSingleton {
 		let attributes = CarWidgetAttributes()
 		let state = Activity<CarWidgetAttributes>.ContentState(trip: trip)
 		currentActivity = try? Activity.request(attributes: attributes, contentState: state, pushType: nil)
+	}
+
+	private func processMeasurements() {
+		while true {
+			guard let measuredValue = measurementQueue.dequeue() else { continue }
+			updateTrip(measuredValue: measuredValue)
+		}
 	}
 
 }
