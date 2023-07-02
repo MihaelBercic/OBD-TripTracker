@@ -45,6 +45,26 @@
 		47C077E62A34CC9C001A85E2 /* FuelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C077E52A34CC9C001A85E2 /* FuelView.swift */; };
 		47C077E72A34D265001A85E2 /* FuelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C077E52A34CC9C001A85E2 /* FuelView.swift */; };
 		47C077E82A34E843001A85E2 /* CarWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C077D42A34BFDD001A85E2 /* CarWidgetLiveActivity.swift */; };
+		47CDBCA82A507EC00013322E /* CoordinateEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA42A507EC00013322E /* CoordinateEntity+CoreDataClass.swift */; };
+		47CDBCA92A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA52A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift */; };
+		47CDBCAA2A507EC00013322E /* TripEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA62A507EC00013322E /* TripEntity+CoreDataClass.swift */; };
+		47CDBCAB2A507EC00013322E /* TripEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA72A507EC00013322E /* TripEntity+CoreDataProperties.swift */; };
+		47CDBCAD2A507F800013322E /* TripDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCAC2A507F800013322E /* TripDataManager.swift */; };
+		47CDBCB12A5087900013322E /* TripDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCAC2A507F800013322E /* TripDataManager.swift */; };
+		47CDBCB32A5087910013322E /* TripDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCAC2A507F800013322E /* TripDataManager.swift */; };
+		47CDBCB42A5087920013322E /* TripDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCAC2A507F800013322E /* TripDataManager.swift */; };
+		47CDBCB52A5087AB0013322E /* CoordinateEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA42A507EC00013322E /* CoordinateEntity+CoreDataClass.swift */; };
+		47CDBCB62A5087AB0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA52A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift */; };
+		47CDBCB72A5087AB0013322E /* TripEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA62A507EC00013322E /* TripEntity+CoreDataClass.swift */; };
+		47CDBCB82A5087AB0013322E /* TripEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA72A507EC00013322E /* TripEntity+CoreDataProperties.swift */; };
+		47CDBCB92A5087AB0013322E /* CoordinateEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA42A507EC00013322E /* CoordinateEntity+CoreDataClass.swift */; };
+		47CDBCBA2A5087AB0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA52A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift */; };
+		47CDBCBB2A5087AB0013322E /* TripEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA62A507EC00013322E /* TripEntity+CoreDataClass.swift */; };
+		47CDBCBC2A5087AB0013322E /* TripEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA72A507EC00013322E /* TripEntity+CoreDataProperties.swift */; };
+		47CDBCBD2A5087AC0013322E /* CoordinateEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA42A507EC00013322E /* CoordinateEntity+CoreDataClass.swift */; };
+		47CDBCBE2A5087AC0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA52A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift */; };
+		47CDBCBF2A5087AC0013322E /* TripEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA62A507EC00013322E /* TripEntity+CoreDataClass.swift */; };
+		47CDBCC02A5087AC0013322E /* TripEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA72A507EC00013322E /* TripEntity+CoreDataProperties.swift */; };
 		47D665112A49ABFB00E25DCE /* ByteBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665102A49ABFB00E25DCE /* ByteBuffer.swift */; };
 		47D665122A49ABFB00E25DCE /* ByteBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665102A49ABFB00E25DCE /* ByteBuffer.swift */; };
 		47D665132A49ABFB00E25DCE /* ByteBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665102A49ABFB00E25DCE /* ByteBuffer.swift */; };
@@ -141,6 +161,11 @@
 		47C077D92A34BFDF001A85E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		47C077DB2A34BFDF001A85E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		47C077E52A34CC9C001A85E2 /* FuelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelView.swift; sourceTree = "<group>"; };
+		47CDBCA42A507EC00013322E /* CoordinateEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoordinateEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		47CDBCA52A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoordinateEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		47CDBCA62A507EC00013322E /* TripEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TripEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		47CDBCA72A507EC00013322E /* TripEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TripEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		47CDBCAC2A507F800013322E /* TripDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDataManager.swift; sourceTree = "<group>"; };
 		47D665102A49ABFB00E25DCE /* ByteBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteBuffer.swift; sourceTree = "<group>"; };
 		47D665152A49D27F00E25DCE /* Packets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Packets.swift; sourceTree = "<group>"; };
 		47D6651A2A49DC3B00E25DCE /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -201,6 +226,7 @@
 		477E42482A4B177600A902F0 /* Trip */ = {
 			isa = PBXGroup;
 			children = (
+				47CDBCAC2A507F800013322E /* TripDataManager.swift */,
 				477E42492A4B178500A902F0 /* Trip.swift */,
 				474905882A4DEF84006C347C /* LocationManager.swift */,
 			);
@@ -307,6 +333,10 @@
 		BFF89CDB480F67E0C72DFDCD = {
 			isa = PBXGroup;
 			children = (
+				47CDBCA42A507EC00013322E /* CoordinateEntity+CoreDataClass.swift */,
+				47CDBCA52A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift */,
+				47CDBCA62A507EC00013322E /* TripEntity+CoreDataClass.swift */,
+				47CDBCA72A507EC00013322E /* TripEntity+CoreDataProperties.swift */,
 				477E42482A4B177600A902F0 /* Trip */,
 				478A55882A46EC34000759D3 /* Communication */,
 				47EF1B3F2A3B490A001DC39B /* Extensions */,
@@ -491,7 +521,11 @@
 				47C077D32A34BFDD001A85E2 /* CarWidgetBundle.swift in Sources */,
 				478A55942A4705B4000759D3 /* BluetoothManager.swift in Sources */,
 				4749058C2A4DEF84006C347C /* LocationManager.swift in Sources */,
+				47CDBCBF2A5087AC0013322E /* TripEntity+CoreDataClass.swift in Sources */,
+				47CDBCC02A5087AC0013322E /* TripEntity+CoreDataProperties.swift in Sources */,
 				47C077DC2A34BFDF001A85E2 /* CarWidget.intentdefinition in Sources */,
+				47CDBCBE2A5087AC0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */,
+				47CDBCB32A5087910013322E /* TripDataManager.swift in Sources */,
 				47EF1B662A3B49A8001DC39B /* ScopeFunctions.swift in Sources */,
 				47D665142A49ABFB00E25DCE /* ByteBuffer.swift in Sources */,
 				474905872A4CD656006C347C /* Request.swift in Sources */,
@@ -501,6 +535,7 @@
 				47FC02DD2A4C211600E432F6 /* ResponseManager.swift in Sources */,
 				478A55992A4706D9000759D3 /* Queue.swift in Sources */,
 				477E424B2A4B187E00A902F0 /* Trip.swift in Sources */,
+				47CDBCBD2A5087AC0013322E /* CoordinateEntity+CoreDataClass.swift in Sources */,
 				47C077E72A34D265001A85E2 /* FuelView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -514,7 +549,11 @@
 				474905842A4CD656006C347C /* Request.swift in Sources */,
 				BFF892279BE253BB053B73ED /* CarInfoApp.swift in Sources */,
 				47D665112A49ABFB00E25DCE /* ByteBuffer.swift in Sources */,
+				47CDBCAA2A507EC00013322E /* TripEntity+CoreDataClass.swift in Sources */,
+				47CDBCAB2A507EC00013322E /* TripEntity+CoreDataProperties.swift in Sources */,
 				478A558C2A46ECC5000759D3 /* Packet.swift in Sources */,
+				47CDBCAD2A507F800013322E /* TripDataManager.swift in Sources */,
+				47CDBCA92A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */,
 				47C077E82A34E843001A85E2 /* CarWidgetLiveActivity.swift in Sources */,
 				47C077DD2A34BFDF001A85E2 /* CarWidget.intentdefinition in Sources */,
 				47D665162A49D27F00E25DCE /* Packets.swift in Sources */,
@@ -525,6 +564,7 @@
 				BFF89E9472E3B716C83C92F4 /* CarInfo.xcdatamodeld in Sources */,
 				47C077E62A34CC9C001A85E2 /* FuelView.swift in Sources */,
 				478A55912A4705B4000759D3 /* BluetoothManager.swift in Sources */,
+				47CDBCA82A507EC00013322E /* CoordinateEntity+CoreDataClass.swift in Sources */,
 				47EF1B632A3B49A7001DC39B /* ScopeFunctions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -533,6 +573,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47CDBCB42A5087920013322E /* TripDataManager.swift in Sources */,
 				477E424C2A4B187F00A902F0 /* Trip.swift in Sources */,
 				474905862A4CD656006C347C /* Request.swift in Sources */,
 				477E424F2A4B66FA00A902F0 /* CarWidgetLiveActivity.swift in Sources */,
@@ -540,13 +581,17 @@
 				47D665132A49ABFB00E25DCE /* ByteBuffer.swift in Sources */,
 				478A55982A4706D9000759D3 /* Queue.swift in Sources */,
 				478A558E2A46ECC5000759D3 /* Packet.swift in Sources */,
+				47CDBCB92A5087AB0013322E /* CoordinateEntity+CoreDataClass.swift in Sources */,
 				BFF898E190A00FB5E7CBF0AF /* CarInfoUITestsLaunchTests.swift in Sources */,
 				47EF1B652A3B49A8001DC39B /* ScopeFunctions.swift in Sources */,
 				47FC02DC2A4C211600E432F6 /* ResponseManager.swift in Sources */,
+				47CDBCBC2A5087AB0013322E /* TripEntity+CoreDataProperties.swift in Sources */,
 				4749058B2A4DEF84006C347C /* LocationManager.swift in Sources */,
 				47D6651D2A49DC3B00E25DCE /* Errors.swift in Sources */,
 				478A55932A4705B4000759D3 /* BluetoothManager.swift in Sources */,
+				47CDBCBA2A5087AB0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */,
 				47D665182A49D27F00E25DCE /* Packets.swift in Sources */,
+				47CDBCBB2A5087AB0013322E /* TripEntity+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -558,14 +603,19 @@
 				474905852A4CD656006C347C /* Request.swift in Sources */,
 				478A55972A4706D9000759D3 /* Queue.swift in Sources */,
 				47EF1B642A3B49A8001DC39B /* ScopeFunctions.swift in Sources */,
+				47CDBCB62A5087AB0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */,
 				47D665122A49ABFB00E25DCE /* ByteBuffer.swift in Sources */,
 				478A558D2A46ECC5000759D3 /* Packet.swift in Sources */,
+				47CDBCB12A5087900013322E /* TripDataManager.swift in Sources */,
+				47CDBCB52A5087AB0013322E /* CoordinateEntity+CoreDataClass.swift in Sources */,
 				47D665172A49D27F00E25DCE /* Packets.swift in Sources */,
 				478A55922A4705B4000759D3 /* BluetoothManager.swift in Sources */,
 				477E424E2A4B66F900A902F0 /* CarWidgetLiveActivity.swift in Sources */,
 				47D6651C2A49DC3B00E25DCE /* Errors.swift in Sources */,
 				47FC02DB2A4C211600E432F6 /* ResponseManager.swift in Sources */,
 				BFF898DF4878E0510529C2DC /* CarInfoTests.swift in Sources */,
+				47CDBCB82A5087AB0013322E /* TripEntity+CoreDataProperties.swift in Sources */,
+				47CDBCB72A5087AB0013322E /* TripEntity+CoreDataClass.swift in Sources */,
 				4749058A2A4DEF84006C347C /* LocationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

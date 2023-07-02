@@ -6,7 +6,8 @@
 //
 
 import ActivityKit
-import Foundation
+import CoreData
+import CoreLocation
 
 public struct Trip: Codable, Hashable, ScopeFunctions {
 	let start: Date
@@ -31,6 +32,8 @@ public struct Trip: Codable, Hashable, ScopeFunctions {
 class TripSingleton {
 
 	private let locationManager = LocationManager()
+	let tripDataManager = TripDataManager()
+	lazy var viewContext: NSManagedObjectContext = tripDataManager.container.viewContext
 
 	static let shared: TripSingleton = .init()
 	let measurementQueue = Queue<MeasuredValue>()
@@ -51,7 +54,7 @@ class TripSingleton {
 
 		if pid == .engineSpeed {
 			let isEngineOn = value > 0
-			print("Engine is on: \(isEngineOn) and current trip is \(currentTrip)")
+			print("Engine is on: \(isEngineOn) and current trip exists \(currentTrip != nil)")
 			if isEngineOn, currentTrip == nil {
 				startTrip()
 			}
@@ -95,7 +98,29 @@ class TripSingleton {
 	}
 
 	func stopTrip() {
-		currentTrip?.stoppedAt = .now
+		let locations = locationManager.stopTrackingLocation()
+		currentTrip?.use {
+			$0.stoppedAt = .now
+			let tripEntity = TripEntity(context: viewContext)
+			tripEntity.averageSpeed = $0.speed
+			tripEntity.distance = $0.distance
+			tripEntity.timestamp = .now
+			tripEntity.end = .now
+			tripEntity.start = $0.start
+			locations.forEach { location in
+				let coordinate = location.coordinate
+				let coordinateEntity = CoordinateEntity(context: self.viewContext)
+				coordinateEntity.latitude = NSDecimalNumber(value: coordinate.latitude)
+				coordinateEntity.longitude = NSDecimalNumber(value: coordinate.longitude)
+				tripEntity.addToLocations(coordinateEntity)
+			}
+			do {
+				viewContext.insert(tripEntity)
+				try viewContext.save()
+			} catch {
+				print(error)
+			}
+		}
 		liveActivityTimer?.invalidate()
 		currentTrip = nil
 	}
@@ -104,6 +129,7 @@ class TripSingleton {
 		lastSpeedMeasurement = .now
 		currentTrip = Trip()
 		startTheActivity()
+		locationManager.startTrackingLocation()
 		DispatchQueue.main.async { [weak self] in
 			self?.liveActivityTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
 				TripSingleton.shared.updateActivity()

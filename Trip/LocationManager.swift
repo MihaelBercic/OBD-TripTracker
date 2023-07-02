@@ -11,14 +11,14 @@ import Foundation
 class LocationManager: NSObject, CLLocationManagerDelegate {
 
 	let locationManager = CLLocationManager()
-	private var locationUpdates: [CLLocation] = []
+	private(set) var locationUpdates: [CLLocation] = []
 
 	override init() {
 		super.init()
 		locationManager.delegate = self
+		locationManager.activityType = .automotiveNavigation
 		locationManager.pausesLocationUpdatesAutomatically = true
 		locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-		// locationManager.startUpdatingLocation()
 		print("Initialised location manager!")
 	}
 

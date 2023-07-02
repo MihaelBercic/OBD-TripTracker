@@ -41,11 +41,11 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 	}
 
 	func centralManagerDidUpdateState(_ central: CBCentralManager) {
-		print("Updated CBManager state to \(central.state) vs \(CBManagerState.poweredOn) with \(adapter)")
+		// print("Updated CBManager state to \(central.state) vs \(CBManagerState.poweredOn) with \(adapter)")
 		if central.state == .poweredOn {
 			let isConnected = adapter != nil
 			if isConnected {
-				adapter?.apply {
+				adapter?.use {
 					if $0.state == .connected { $0.discoverServices([serviceUUID]) }
 					else { central.connect($0) }
 				}
@@ -79,7 +79,6 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 	}
 
 	func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error _: Error?) {
-		guard let adapter = adapter else { return }
 		guard let characteristic = service.characteristics?.first(where: { $0.uuid == characteristicUUID }) else { return }
 		self.characteristic = characteristic
 		print("📍 Discovered the important characteristic!")

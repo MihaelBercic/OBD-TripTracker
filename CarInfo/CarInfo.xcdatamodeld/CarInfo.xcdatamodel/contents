@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
-        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="TripModel">
+    <entity name="Coordinate" representedClassName="CoordinateEntity" syncable="YES">
+        <attribute name="latitude" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="longitude" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <relationship name="trip" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Trip" inverseName="locations" inverseEntity="Trip"/>
     </entity>
-    <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="44"/>
-    </elements>
+    <entity name="Trip" representedClassName="TripEntity" syncable="YES">
+        <attribute name="averageSpeed" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="distance" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="end" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="start" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="locations" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Coordinate" inverseName="trip" inverseEntity="Coordinate"/>
+    </entity>
 </model>
