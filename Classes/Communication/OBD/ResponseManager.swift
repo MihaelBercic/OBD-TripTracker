@@ -7,11 +7,6 @@
 
 import Foundation
 
-struct MeasuredValue: Equatable {
-	let pid: PIDs
-	let measurement: Measurement<Unit>
-}
-
 class ResponseManager {
 
 	private var measurementProcessingQueue: Queue<MeasuredValue> = TripSingleton.shared.measurementQueue
@@ -53,27 +48,6 @@ class ResponseManager {
 				print("Queued measurement: \(computedMeasurement)")
 			}
 		}
-	}
-
-}
-
-class ResponseBuilder: ScopeFunctions {
-
-	var totalDataLength: Int = 0xFFF
-	private var data: [Int: [UInt8]] = [:]
-	private var currentDataLength: Int = 0
-
-	var isReady: Bool {
-		currentDataLength >= totalDataLength
-	}
-
-	func insertData(_ frameIndex: Int, bytes: [UInt8]) {
-		currentDataLength += bytes.count
-		data.updateValue(bytes, forKey: frameIndex)
-	}
-
-	func combineData() -> [UInt8] {
-		return data.sorted(by: { $0.key < $1.key }).flatMap { $0.value }
 	}
 
 }

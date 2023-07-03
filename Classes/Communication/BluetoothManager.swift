@@ -183,19 +183,3 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 	}
 
 }
-
-public extension UInt8 {
-	var asBinary: String {
-		let binaryRepresentation = String(self, radix: 2)
-		let requiredZeros = 8 - binaryRepresentation.count
-		return repeatElement("0", count: requiredZeros) + binaryRepresentation
-	}
-}
-
-extension Array {
-	func chunked(into size: Int) -> [[Element]] {
-		return stride(from: 0, to: count, by: size).map {
-			Array(self[$0 ..< Swift.min($0 + size, count)])
-		}
-	}
-}
