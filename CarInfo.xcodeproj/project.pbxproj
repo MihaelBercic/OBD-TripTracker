@@ -65,6 +65,28 @@
 		47CDBCBE2A5087AC0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA52A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift */; };
 		47CDBCBF2A5087AC0013322E /* TripEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA62A507EC00013322E /* TripEntity+CoreDataClass.swift */; };
 		47CDBCC02A5087AC0013322E /* TripEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA72A507EC00013322E /* TripEntity+CoreDataProperties.swift */; };
+		47CDBCC22A5191550013322E /* TripCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCC12A5191550013322E /* TripCard.swift */; };
+		47CDBCC32A5191550013322E /* TripCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCC12A5191550013322E /* TripCard.swift */; };
+		47CDBCC42A5191550013322E /* TripCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCC12A5191550013322E /* TripCard.swift */; };
+		47CDBCC52A5191550013322E /* TripCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCC12A5191550013322E /* TripCard.swift */; };
+		47CDBCC62A51D0290013322E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF895298CD94DBDA8193722 /* ContentView.swift */; };
+		47CDBCC72A51D0290013322E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF895298CD94DBDA8193722 /* ContentView.swift */; };
+		47CDBCC82A51D02A0013322E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF895298CD94DBDA8193722 /* ContentView.swift */; };
+		47CDBCCA2A52C0230013322E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCC92A52C0230013322E /* Logger.swift */; };
+		47CDBCCB2A52C0230013322E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCC92A52C0230013322E /* Logger.swift */; };
+		47CDBCCC2A52C0230013322E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCC92A52C0230013322E /* Logger.swift */; };
+		47CDBCCD2A52C0230013322E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCC92A52C0230013322E /* Logger.swift */; };
+		47CDBCCE2A52C13E0013322E /* CarInfo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BFF89B2C0974C99562C1E43F /* CarInfo.xcdatamodeld */; };
+		47CDBCCF2A52C13E0013322E /* CarInfo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BFF89B2C0974C99562C1E43F /* CarInfo.xcdatamodeld */; };
+		47CDBCD02A52C13F0013322E /* CarInfo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BFF89B2C0974C99562C1E43F /* CarInfo.xcdatamodeld */; };
+		47CDBCDD2A52C5A80013322E /* LogEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCDB2A52C5A80013322E /* LogEntity+CoreDataClass.swift */; };
+		47CDBCDE2A52C5A80013322E /* LogEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCDB2A52C5A80013322E /* LogEntity+CoreDataClass.swift */; };
+		47CDBCDF2A52C5A80013322E /* LogEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCDB2A52C5A80013322E /* LogEntity+CoreDataClass.swift */; };
+		47CDBCE02A52C5A80013322E /* LogEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCDB2A52C5A80013322E /* LogEntity+CoreDataClass.swift */; };
+		47CDBCE12A52C5A80013322E /* LogEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCDC2A52C5A80013322E /* LogEntity+CoreDataProperties.swift */; };
+		47CDBCE22A52C5A80013322E /* LogEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCDC2A52C5A80013322E /* LogEntity+CoreDataProperties.swift */; };
+		47CDBCE32A52C5A80013322E /* LogEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCDC2A52C5A80013322E /* LogEntity+CoreDataProperties.swift */; };
+		47CDBCE42A52C5A80013322E /* LogEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCDC2A52C5A80013322E /* LogEntity+CoreDataProperties.swift */; };
 		47D665112A49ABFB00E25DCE /* ByteBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665102A49ABFB00E25DCE /* ByteBuffer.swift */; };
 		47D665122A49ABFB00E25DCE /* ByteBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665102A49ABFB00E25DCE /* ByteBuffer.swift */; };
 		47D665132A49ABFB00E25DCE /* ByteBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665102A49ABFB00E25DCE /* ByteBuffer.swift */; };
@@ -166,6 +188,10 @@
 		47CDBCA62A507EC00013322E /* TripEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TripEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		47CDBCA72A507EC00013322E /* TripEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TripEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		47CDBCAC2A507F800013322E /* TripDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDataManager.swift; sourceTree = "<group>"; };
+		47CDBCC12A5191550013322E /* TripCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripCard.swift; sourceTree = "<group>"; };
+		47CDBCC92A52C0230013322E /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		47CDBCDB2A52C5A80013322E /* LogEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		47CDBCDC2A52C5A80013322E /* LogEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		47D665102A49ABFB00E25DCE /* ByteBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteBuffer.swift; sourceTree = "<group>"; };
 		47D665152A49D27F00E25DCE /* Packets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Packets.swift; sourceTree = "<group>"; };
 		47D6651A2A49DC3B00E25DCE /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -229,6 +255,7 @@
 				47CDBCAC2A507F800013322E /* TripDataManager.swift */,
 				477E42492A4B178500A902F0 /* Trip.swift */,
 				474905882A4DEF84006C347C /* LocationManager.swift */,
+				47CDBCC12A5191550013322E /* TripCard.swift */,
 			);
 			path = Trip;
 			sourceTree = "<group>";
@@ -333,6 +360,9 @@
 		BFF89CDB480F67E0C72DFDCD = {
 			isa = PBXGroup;
 			children = (
+				47CDBCDB2A52C5A80013322E /* LogEntity+CoreDataClass.swift */,
+				47CDBCDC2A52C5A80013322E /* LogEntity+CoreDataProperties.swift */,
+				47CDBCC92A52C0230013322E /* Logger.swift */,
 				47CDBCA42A507EC00013322E /* CoordinateEntity+CoreDataClass.swift */,
 				47CDBCA52A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift */,
 				47CDBCA62A507EC00013322E /* TripEntity+CoreDataClass.swift */,
@@ -523,17 +553,23 @@
 				4749058C2A4DEF84006C347C /* LocationManager.swift in Sources */,
 				47CDBCBF2A5087AC0013322E /* TripEntity+CoreDataClass.swift in Sources */,
 				47CDBCC02A5087AC0013322E /* TripEntity+CoreDataProperties.swift in Sources */,
+				47CDBCE02A52C5A80013322E /* LogEntity+CoreDataClass.swift in Sources */,
+				47CDBCCD2A52C0230013322E /* Logger.swift in Sources */,
+				47CDBCD02A52C13F0013322E /* CarInfo.xcdatamodeld in Sources */,
 				47C077DC2A34BFDF001A85E2 /* CarWidget.intentdefinition in Sources */,
 				47CDBCBE2A5087AC0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */,
 				47CDBCB32A5087910013322E /* TripDataManager.swift in Sources */,
 				47EF1B662A3B49A8001DC39B /* ScopeFunctions.swift in Sources */,
 				47D665142A49ABFB00E25DCE /* ByteBuffer.swift in Sources */,
+				47CDBCC52A5191550013322E /* TripCard.swift in Sources */,
 				474905872A4CD656006C347C /* Request.swift in Sources */,
 				47D6651E2A49DC3B00E25DCE /* Errors.swift in Sources */,
 				47C077D72A34BFDD001A85E2 /* CarWidget.swift in Sources */,
 				47C077D52A34BFDD001A85E2 /* CarWidgetLiveActivity.swift in Sources */,
+				47CDBCC82A51D02A0013322E /* ContentView.swift in Sources */,
 				47FC02DD2A4C211600E432F6 /* ResponseManager.swift in Sources */,
 				478A55992A4706D9000759D3 /* Queue.swift in Sources */,
+				47CDBCE42A52C5A80013322E /* LogEntity+CoreDataProperties.swift in Sources */,
 				477E424B2A4B187E00A902F0 /* Trip.swift in Sources */,
 				47CDBCBD2A5087AC0013322E /* CoordinateEntity+CoreDataClass.swift in Sources */,
 				47C077E72A34D265001A85E2 /* FuelView.swift in Sources */,
@@ -547,9 +583,11 @@
 				477E424A2A4B178500A902F0 /* Trip.swift in Sources */,
 				474905892A4DEF84006C347C /* LocationManager.swift in Sources */,
 				474905842A4CD656006C347C /* Request.swift in Sources */,
+				47CDBCC22A5191550013322E /* TripCard.swift in Sources */,
 				BFF892279BE253BB053B73ED /* CarInfoApp.swift in Sources */,
 				47D665112A49ABFB00E25DCE /* ByteBuffer.swift in Sources */,
 				47CDBCAA2A507EC00013322E /* TripEntity+CoreDataClass.swift in Sources */,
+				47CDBCCA2A52C0230013322E /* Logger.swift in Sources */,
 				47CDBCAB2A507EC00013322E /* TripEntity+CoreDataProperties.swift in Sources */,
 				478A558C2A46ECC5000759D3 /* Packet.swift in Sources */,
 				47CDBCAD2A507F800013322E /* TripDataManager.swift in Sources */,
@@ -561,6 +599,8 @@
 				BFF89A17309A3399CFA86C3D /* ContentView.swift in Sources */,
 				478A55962A4706D9000759D3 /* Queue.swift in Sources */,
 				47FC02DA2A4C211600E432F6 /* ResponseManager.swift in Sources */,
+				47CDBCE12A52C5A80013322E /* LogEntity+CoreDataProperties.swift in Sources */,
+				47CDBCDD2A52C5A80013322E /* LogEntity+CoreDataClass.swift in Sources */,
 				BFF89E9472E3B716C83C92F4 /* CarInfo.xcdatamodeld in Sources */,
 				47C077E62A34CC9C001A85E2 /* FuelView.swift in Sources */,
 				478A55912A4705B4000759D3 /* BluetoothManager.swift in Sources */,
@@ -574,7 +614,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				47CDBCB42A5087920013322E /* TripDataManager.swift in Sources */,
+				47CDBCCC2A52C0230013322E /* Logger.swift in Sources */,
+				47CDBCCF2A52C13E0013322E /* CarInfo.xcdatamodeld in Sources */,
+				47CDBCDF2A52C5A80013322E /* LogEntity+CoreDataClass.swift in Sources */,
 				477E424C2A4B187F00A902F0 /* Trip.swift in Sources */,
+				47CDBCC72A51D0290013322E /* ContentView.swift in Sources */,
 				474905862A4CD656006C347C /* Request.swift in Sources */,
 				477E424F2A4B66FA00A902F0 /* CarWidgetLiveActivity.swift in Sources */,
 				BFF89B5D3F7A97929213FA0F /* CarInfoUITests.swift in Sources */,
@@ -585,8 +629,10 @@
 				BFF898E190A00FB5E7CBF0AF /* CarInfoUITestsLaunchTests.swift in Sources */,
 				47EF1B652A3B49A8001DC39B /* ScopeFunctions.swift in Sources */,
 				47FC02DC2A4C211600E432F6 /* ResponseManager.swift in Sources */,
+				47CDBCE32A52C5A80013322E /* LogEntity+CoreDataProperties.swift in Sources */,
 				47CDBCBC2A5087AB0013322E /* TripEntity+CoreDataProperties.swift in Sources */,
 				4749058B2A4DEF84006C347C /* LocationManager.swift in Sources */,
+				47CDBCC42A5191550013322E /* TripCard.swift in Sources */,
 				47D6651D2A49DC3B00E25DCE /* Errors.swift in Sources */,
 				478A55932A4705B4000759D3 /* BluetoothManager.swift in Sources */,
 				47CDBCBA2A5087AB0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */,
@@ -599,17 +645,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47CDBCCE2A52C13E0013322E /* CarInfo.xcdatamodeld in Sources */,
 				477E424D2A4B187F00A902F0 /* Trip.swift in Sources */,
 				474905852A4CD656006C347C /* Request.swift in Sources */,
 				478A55972A4706D9000759D3 /* Queue.swift in Sources */,
 				47EF1B642A3B49A8001DC39B /* ScopeFunctions.swift in Sources */,
+				47CDBCCB2A52C0230013322E /* Logger.swift in Sources */,
 				47CDBCB62A5087AB0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */,
 				47D665122A49ABFB00E25DCE /* ByteBuffer.swift in Sources */,
+				47CDBCC62A51D0290013322E /* ContentView.swift in Sources */,
+				47CDBCC32A5191550013322E /* TripCard.swift in Sources */,
 				478A558D2A46ECC5000759D3 /* Packet.swift in Sources */,
+				47CDBCE22A52C5A80013322E /* LogEntity+CoreDataProperties.swift in Sources */,
 				47CDBCB12A5087900013322E /* TripDataManager.swift in Sources */,
 				47CDBCB52A5087AB0013322E /* CoordinateEntity+CoreDataClass.swift in Sources */,
 				47D665172A49D27F00E25DCE /* Packets.swift in Sources */,
 				478A55922A4705B4000759D3 /* BluetoothManager.swift in Sources */,
+				47CDBCDE2A52C5A80013322E /* LogEntity+CoreDataClass.swift in Sources */,
 				477E424E2A4B66F900A902F0 /* CarWidgetLiveActivity.swift in Sources */,
 				47D6651C2A49DC3B00E25DCE /* Errors.swift in Sources */,
 				47FC02DB2A4C211600E432F6 /* ResponseManager.swift in Sources */,

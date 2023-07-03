@@ -5,6 +5,11 @@
         <attribute name="longitude" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <relationship name="trip" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Trip" inverseName="locations" inverseEntity="Trip"/>
     </entity>
+    <entity name="LogEntity" representedClassName="LogEntity" syncable="YES">
+        <attribute name="message" attributeType="String"/>
+        <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="type" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
     <entity name="Trip" representedClassName="TripEntity" syncable="YES">
         <attribute name="averageSpeed" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="distance" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>

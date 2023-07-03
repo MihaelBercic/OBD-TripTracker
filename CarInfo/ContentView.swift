@@ -31,6 +31,7 @@ struct ContentView: View {
 	@Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
 
 	@FetchRequest(sortDescriptors: []) private var previousTrips: FetchedResults<TripEntity>
+	@FetchRequest(sortDescriptors: []) private var logHistory: FetchedResults<LogEntity>
 
 	@State private var deletionAlert: Bool = false
 	@State var dict: [UInt8: Measurement] = [:]
@@ -61,96 +62,46 @@ struct ContentView: View {
 					print(error)
 				}
 			}
-
 			List {
-				ForEach(previousTrips.map { $0 as TripEntity }, id: \.self) { trip in
-
-					let route = trip.locations.map { CLLocation(latitude: $0.latitude.doubleValue, longitude: $0.longitude.doubleValue) }
-
-					Group {
-						TripMapView(route: route)
-							.frame(height: 150)
-							.cornerRadius(5)
-						Text("Trip locations: \(trip.locations.count)")
-						Text("Trip distance: \(String(format: "%.2f", trip.distance))km")
-						Button("Delete") {
-							tripInQuestion = trip
-							deletionAlert = true
-						}
+				ForEach(logHistory.map { $0 as LogEntity }.sorted(by: { $0.timestamp > $1.timestamp })) { log in
+					VStack(alignment: .leading) {
+						Text(log.timestamp.formatted(date: .omitted, time: .standard))
+							.font(.footnote)
+							.opacity(0.5)
+							.foregroundColor(log.type == 0 ? .blue : .red)
+						Text(log.message ?? "No message")
 					}
 				}
-			}.alert(isPresented: $deletionAlert) {
-				Alert(title: Text("Delete trip?"), primaryButton: .default(Text("Yes")) {
-					do {
-						guard let trip = tripInQuestion else { return }
-						viewContext.delete(trip)
-						try viewContext.save()
-					} catch {
-						print(error)
+			}
+
+			GeometryReader { _ in
+				ScrollView {
+					ForEach(previousTrips.map { $0 as TripEntity }.sorted(by: { $0.timestamp > $1.timestamp }), id: \.self) { trip in
+
+						TripCard(trip: trip)
+							.frame(height: 150)
+							.background(.background)
+							.overlay(
+								RoundedRectangle(cornerRadius: 20)
+									.stroke(.black.opacity(0.1), lineWidth: 2)
+							)
+							.cornerRadius(20)
+							.shadow(color: .black.opacity(0.05), radius: 2, x: 0, y: 5)
 					}
-				}, secondaryButton: .default(Text("No")))
+				}
+				.padding(10)
+				.alert(isPresented: $deletionAlert) {
+					Alert(title: Text("Delete trip?"), primaryButton: .default(Text("Yes")) {
+						do {
+							guard let trip = tripInQuestion else { return }
+							viewContext.delete(trip)
+							try viewContext.save()
+						} catch {
+							print(error)
+						}
+					}, secondaryButton: .default(Text("No")))
+				}
 			}
 		}
-	}
-}
-
-struct TripMapView: View {
-
-	let coordinates: [CLLocation]
-	var routePolyline: MKPolyline?
-	@State var region: MKCoordinateRegion
-
-	init(route: [CLLocation]) {
-		let coordinatesCount = route.count
-		let middleElementIndex = coordinatesCount / 2
-		let centerCoordinate = route[max(0, middleElementIndex - 1)]
-		let span = MKCoordinateSpan(latitudeDelta: 20, longitudeDelta: 20)
-		region = MKCoordinateRegion(center: centerCoordinate.coordinate, span: span)
-		coordinates = route
-		routePolyline = MKPolyline(coordinates: coordinates.map { $0.coordinate }, count: route.count)
-	}
-
-	var body: some View {
-		MapView(route: routePolyline)
-	}
-}
-
-struct MapView: UIViewRepresentable {
-
-	var route: MKPolyline?
-	let mapViewDelegate = MapViewDelegate()
-
-	func makeUIView(context _: Context) -> MKMapView {
-		let view = MKMapView(frame: .zero)
-		addRoute(to: view)
-		return view
-	}
-
-	func updateUIView(_ view: MKMapView, context _: Context) {
-		view.isUserInteractionEnabled = false
-		view.delegate = mapViewDelegate // (1) This should be set in makeUIView, but it is getting reset to `nil`
-		view.translatesAutoresizingMaskIntoConstraints = false // (2) In the absence of this, we get constraints error on rotation; and again, it seems one should do this in makeUIView, but has to be here
-		view.interactions = []
-	}
-}
-
-private extension MapView {
-	func addRoute(to view: MKMapView) {
-		if !view.overlays.isEmpty {
-			view.removeOverlays(view.overlays)
-		}
-		guard let route = route else { return }
-		let mapRect = route.boundingMapRect
-		view.setVisibleMapRect(mapRect, edgePadding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10), animated: true)
-		view.addOverlay(route)
-	}
-}
-
-class MapViewDelegate: NSObject, MKMapViewDelegate {
-	func mapView(_: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-		let renderer = MKGradientPolylineRenderer(overlay: overlay)
-		renderer.lineWidth = 4
-		renderer.setColors([.systemBlue, .systemGreen, .systemBlue], locations: [0.3, 0.5, 0.8])
-		return renderer
 	}
 }

@@ -36,8 +36,7 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 
 		Thread(block: processOutgoing).start()
 		Thread(block: processRequests).start()
-
-		// TODO: Start threads...
+		Logger.shared.info("BM initialised")
 	}
 
 	func centralManagerDidUpdateState(_ central: CBCentralManager) {
@@ -45,12 +44,13 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 		if central.state == .poweredOn {
 			let isConnected = adapter != nil
 			if isConnected {
+				Logger.shared.info("Adapter is connected, discovering services...")
 				adapter?.use {
 					if $0.state == .connected { $0.discoverServices([serviceUUID]) }
 					else { central.connect($0) }
 				}
 			} else {
-				print("📡 Scanning for peripherals...")
+				Logger.shared.info("📡 Scanning for peripherals...")
 				central.scanForPeripherals(withServices: [advertisedUUID])
 			}
 		}
@@ -59,7 +59,7 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 	func centralManager(_ manager: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData _: [String: Any], rssi _: NSNumber) {
 		if peripheral.name != "IOS-Vlink" { return }
 		manager.stopScan()
-		print("📍 Discovered our adapter!")
+		Logger.shared.info("📍 Discovered our adapter!")
 		adapter = peripheral.apply {
 			$0.delegate = self
 			manager.connect($0)
@@ -67,21 +67,21 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 	}
 
 	func centralManager(_: CBCentralManager, didConnect peripheral: CBPeripheral) {
-		print("✅ Connected to our adapter!")
-		// adapter = peripheral
+		Logger.shared.info("✅ Connected to our adapter!")
+		adapter = peripheral
 		peripheral.discoverServices([serviceUUID])
 	}
 
 	func peripheral(_ peripheral: CBPeripheral, didDiscoverServices _: Error?) {
 		guard let importantService = peripheral.services?.first(where: { $0.uuid == serviceUUID }) else { return }
-		print("📍 Discovered the important service!")
+		Logger.shared.info("📍 Discovered the important service!")
 		peripheral.discoverCharacteristics([characteristicUUID], for: importantService)
 	}
 
 	func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error _: Error?) {
 		guard let characteristic = service.characteristics?.first(where: { $0.uuid == characteristicUUID }) else { return }
 		self.characteristic = characteristic
-		print("📍 Discovered the important characteristic!")
+		Logger.shared.info("📍 Discovered the important characteristic!")
 
 		peripheral.setNotifyValue(true, for: characteristic)
 		addToOutgoingQueue("AT E0",
@@ -104,15 +104,20 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 		if shouldIgnoreResponse { return }
 
 		defer {
+			adapter?.readRSSI()
 			outgoingMessageQueue.semaphore.signal()
 		}
 
 		if encodedData.contains(/NO|UNABLE|ERROR|STOPPED/) {
-			messageInterval = 2
+			Logger.shared.info("No|Unable|Error|Stopped")
+			messageInterval = 5
 			requestQueue.moveToTheBack()
 		} else {
-			if encodedData.split(separator: " ").count < 3 { return }
-			messageInterval = 0.3
+			if encodedData.split(separator: " ").count < 3 {
+				Logger.shared.info("Data is shorter \(encodedData)...")
+				return
+			}
+			messageInterval = 1
 
 			let lines = encodedData.split(whereSeparator: \.isNewline)
 			lines.filter { !$0.isEmpty && $0.contains(" ") }.forEach {
@@ -125,17 +130,27 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 		}
 	}
 
+	func peripheral(_: CBPeripheral, didReadRSSI rssiValue: NSNumber, error _: Error?) {
+		Logger.shared.info("RSSI: \(rssiValue.decimalValue)")
+		if rssiValue.decimalValue < -80 {
+			messageInterval = 10
+		}
+	}
+
 	func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error _: Error?) {
 		central.connect(peripheral)
 		TripSingleton.shared.stopTrip()
-		print("Will try to reconnect!")
+		Logger.shared.info("Will try to reconnect!")
 	}
 
-	func centralManager(_: CBCentralManager, willRestoreState state: [String: Any]) {
+	func centralManager(_ central: CBCentralManager, willRestoreState state: [String: Any]) {
+		Logger.shared.info("Will restore state!")
 		guard let restoredPeripherals = state[CBCentralManagerRestoredStatePeripheralsKey] as? [CBPeripheral] else { return }
 		guard let ourAdapter = restoredPeripherals.first(where: { $0.name == adapterName }) else { return }
+		Logger.shared.info("Restoring state and adapter exists!")
 		adapter = ourAdapter.apply {
 			$0.delegate = self
+			central.connect($0)
 		}
 	}
 
@@ -153,9 +168,11 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 			guard let characteristic = characteristic else { continue }
 			guard let adapter = adapter else { continue }
 			let data = Data("\(message)\r".utf8)
-			adapter.writeValue(data, for: characteristic, type: .withoutResponse)
-			print("[\(Date.now.timeIntervalSince1970)] Sent \(message)")
-			Thread.sleep(forTimeInterval: messageInterval)
+
+			DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + messageInterval) {
+				adapter.writeValue(data, for: characteristic, type: .withoutResponse)
+				print("[\(Date.now.timeIntervalSince1970)] Sent \(message)")
+			}
 		}
 	}
 
