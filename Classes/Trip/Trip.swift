@@ -114,11 +114,13 @@ class TripSingleton {
 				coordinateEntity.longitude = NSDecimalNumber(value: coordinate.longitude)
 				tripEntity.addToLocations(coordinateEntity)
 			}
-			do {
-				viewContext.insert(tripEntity)
-				try viewContext.save()
-			} catch {
-				print(error)
+			if $0.distance > 0.1 {
+				do {
+					viewContext.insert(tripEntity)
+					try viewContext.save()
+				} catch {
+					print(error)
+				}
 			}
 		}
 		liveActivityTimer?.invalidate()

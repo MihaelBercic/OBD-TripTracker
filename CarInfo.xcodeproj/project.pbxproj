@@ -65,10 +65,6 @@
 		47CDBCBE2A5087AC0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA52A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift */; };
 		47CDBCBF2A5087AC0013322E /* TripEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA62A507EC00013322E /* TripEntity+CoreDataClass.swift */; };
 		47CDBCC02A5087AC0013322E /* TripEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA72A507EC00013322E /* TripEntity+CoreDataProperties.swift */; };
-		47CDBCC22A5191550013322E /* TripCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCC12A5191550013322E /* TripCard.swift */; };
-		47CDBCC32A5191550013322E /* TripCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCC12A5191550013322E /* TripCard.swift */; };
-		47CDBCC42A5191550013322E /* TripCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCC12A5191550013322E /* TripCard.swift */; };
-		47CDBCC52A5191550013322E /* TripCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCC12A5191550013322E /* TripCard.swift */; };
 		47CDBCC62A51D0290013322E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF895298CD94DBDA8193722 /* ContentView.swift */; };
 		47CDBCC72A51D0290013322E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF895298CD94DBDA8193722 /* ContentView.swift */; };
 		47CDBCC82A51D02A0013322E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF895298CD94DBDA8193722 /* ContentView.swift */; };
@@ -103,6 +99,18 @@
 		47CDBD082A52D30B0013322E /* ResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBD062A52D30B0013322E /* ResponseBuilder.swift */; };
 		47CDBD092A52D30B0013322E /* ResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBD062A52D30B0013322E /* ResponseBuilder.swift */; };
 		47CDBD0A2A52D30B0013322E /* ResponseBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBD062A52D30B0013322E /* ResponseBuilder.swift */; };
+		47CDBD0D2A52D3EC0013322E /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBD0C2A52D3EC0013322E /* StatisticsView.swift */; };
+		47CDBD0E2A52D3EC0013322E /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBD0C2A52D3EC0013322E /* StatisticsView.swift */; };
+		47CDBD0F2A52D3EC0013322E /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBD0C2A52D3EC0013322E /* StatisticsView.swift */; };
+		47CDBD102A52D3EC0013322E /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBD0C2A52D3EC0013322E /* StatisticsView.swift */; };
+		47CDBD122A52D7310013322E /* CustomGauge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBD112A52D7310013322E /* CustomGauge.swift */; };
+		47CDBD132A52D7310013322E /* CustomGauge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBD112A52D7310013322E /* CustomGauge.swift */; };
+		47CDBD142A52D7310013322E /* CustomGauge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBD112A52D7310013322E /* CustomGauge.swift */; };
+		47CDBD152A52D7310013322E /* CustomGauge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBD112A52D7310013322E /* CustomGauge.swift */; };
+		47CDBD182A52FD910013322E /* TripCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBD172A52FD910013322E /* TripCard.swift */; };
+		47CDBD192A52FD910013322E /* TripCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBD172A52FD910013322E /* TripCard.swift */; };
+		47CDBD1A2A52FD910013322E /* TripCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBD172A52FD910013322E /* TripCard.swift */; };
+		47CDBD1B2A52FD910013322E /* TripCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBD172A52FD910013322E /* TripCard.swift */; };
 		47D665112A49ABFB00E25DCE /* ByteBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665102A49ABFB00E25DCE /* ByteBuffer.swift */; };
 		47D665122A49ABFB00E25DCE /* ByteBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665102A49ABFB00E25DCE /* ByteBuffer.swift */; };
 		47D665132A49ABFB00E25DCE /* ByteBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D665102A49ABFB00E25DCE /* ByteBuffer.swift */; };
@@ -204,13 +212,15 @@
 		47CDBCA62A507EC00013322E /* TripEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TripEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		47CDBCA72A507EC00013322E /* TripEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TripEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		47CDBCAC2A507F800013322E /* TripDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDataManager.swift; sourceTree = "<group>"; };
-		47CDBCC12A5191550013322E /* TripCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripCard.swift; sourceTree = "<group>"; };
 		47CDBCC92A52C0230013322E /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		47CDBCDB2A52C5A80013322E /* LogEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		47CDBCDC2A52C5A80013322E /* LogEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		47CDBCFC2A52D2AB0013322E /* PIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PIDs.swift; sourceTree = "<group>"; };
 		47CDBD012A52D2F00013322E /* MeasuredValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasuredValue.swift; sourceTree = "<group>"; };
 		47CDBD062A52D30B0013322E /* ResponseBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseBuilder.swift; sourceTree = "<group>"; };
+		47CDBD0C2A52D3EC0013322E /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
+		47CDBD112A52D7310013322E /* CustomGauge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomGauge.swift; sourceTree = "<group>"; };
+		47CDBD172A52FD910013322E /* TripCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripCard.swift; sourceTree = "<group>"; };
 		47D665102A49ABFB00E25DCE /* ByteBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ByteBuffer.swift; sourceTree = "<group>"; };
 		47D665152A49D27F00E25DCE /* Packets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Packets.swift; sourceTree = "<group>"; };
 		47D6651A2A49DC3B00E25DCE /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -270,7 +280,6 @@
 				47CDBCAC2A507F800013322E /* TripDataManager.swift */,
 				477E42492A4B178500A902F0 /* Trip.swift */,
 				474905882A4DEF84006C347C /* LocationManager.swift */,
-				47CDBCC12A5191550013322E /* TripCard.swift */,
 			);
 			path = Trip;
 			sourceTree = "<group>";
@@ -349,6 +358,24 @@
 			path = OBD;
 			sourceTree = "<group>";
 		};
+		47CDBD0B2A52D3D20013322E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				47CDBD162A52FD820013322E /* Trip */,
+				47CDBD0C2A52D3EC0013322E /* StatisticsView.swift */,
+				47CDBD112A52D7310013322E /* CustomGauge.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		47CDBD162A52FD820013322E /* Trip */ = {
+			isa = PBXGroup;
+			children = (
+				47CDBD172A52FD910013322E /* TripCard.swift */,
+			);
+			path = Trip;
+			sourceTree = "<group>";
+		};
 		47EF1B3F2A3B490A001DC39B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -407,6 +434,7 @@
 		BFF89CDB480F67E0C72DFDCD = {
 			isa = PBXGroup;
 			children = (
+				47CDBD0B2A52D3D20013322E /* Views */,
 				47CDBCE62A52D2310013322E /* Classes */,
 				47C077D12A34BFDD001A85E2 /* CarWidget */,
 				47C077CC2A34BFDD001A85E2 /* Frameworks */,
@@ -587,6 +615,7 @@
 				478A558F2A46ECC5000759D3 /* Packet.swift in Sources */,
 				47D665192A49D27F00E25DCE /* Packets.swift in Sources */,
 				47C077D32A34BFDD001A85E2 /* CarWidgetBundle.swift in Sources */,
+				47CDBD152A52D7310013322E /* CustomGauge.swift in Sources */,
 				478A55942A4705B4000759D3 /* BluetoothManager.swift in Sources */,
 				4749058C2A4DEF84006C347C /* LocationManager.swift in Sources */,
 				47CDBCBF2A5087AC0013322E /* TripEntity+CoreDataClass.swift in Sources */,
@@ -602,9 +631,10 @@
 				47CDBCB32A5087910013322E /* TripDataManager.swift in Sources */,
 				47EF1B662A3B49A8001DC39B /* ScopeFunctions.swift in Sources */,
 				47D665142A49ABFB00E25DCE /* ByteBuffer.swift in Sources */,
-				47CDBCC52A5191550013322E /* TripCard.swift in Sources */,
 				47CDBD002A52D2AB0013322E /* PIDs.swift in Sources */,
 				474905872A4CD656006C347C /* Request.swift in Sources */,
+				47CDBD1B2A52FD910013322E /* TripCard.swift in Sources */,
+				47CDBD102A52D3EC0013322E /* StatisticsView.swift in Sources */,
 				47D6651E2A49DC3B00E25DCE /* Errors.swift in Sources */,
 				47C077D72A34BFDD001A85E2 /* CarWidget.swift in Sources */,
 				47C077D52A34BFDD001A85E2 /* CarWidgetLiveActivity.swift in Sources */,
@@ -625,18 +655,20 @@
 				477E424A2A4B178500A902F0 /* Trip.swift in Sources */,
 				474905892A4DEF84006C347C /* LocationManager.swift in Sources */,
 				474905842A4CD656006C347C /* Request.swift in Sources */,
-				47CDBCC22A5191550013322E /* TripCard.swift in Sources */,
 				47CDBCEA2A52D2760013322E /* Useful.swift in Sources */,
 				BFF892279BE253BB053B73ED /* CarInfoApp.swift in Sources */,
 				47D665112A49ABFB00E25DCE /* ByteBuffer.swift in Sources */,
+				47CDBD0D2A52D3EC0013322E /* StatisticsView.swift in Sources */,
 				47CDBCAA2A507EC00013322E /* TripEntity+CoreDataClass.swift in Sources */,
 				47CDBCCA2A52C0230013322E /* Logger.swift in Sources */,
 				47CDBCAB2A507EC00013322E /* TripEntity+CoreDataProperties.swift in Sources */,
 				478A558C2A46ECC5000759D3 /* Packet.swift in Sources */,
+				47CDBD182A52FD910013322E /* TripCard.swift in Sources */,
 				47CDBCAD2A507F800013322E /* TripDataManager.swift in Sources */,
 				47CDBD072A52D30B0013322E /* ResponseBuilder.swift in Sources */,
 				47CDBCA92A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */,
 				47CDBD022A52D2F00013322E /* MeasuredValue.swift in Sources */,
+				47CDBD122A52D7310013322E /* CustomGauge.swift in Sources */,
 				47C077E82A34E843001A85E2 /* CarWidgetLiveActivity.swift in Sources */,
 				47C077DD2A34BFDF001A85E2 /* CarWidget.intentdefinition in Sources */,
 				47D665162A49D27F00E25DCE /* Packets.swift in Sources */,
@@ -660,6 +692,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				47CDBD042A52D2F00013322E /* MeasuredValue.swift in Sources */,
+				47CDBD0F2A52D3EC0013322E /* StatisticsView.swift in Sources */,
+				47CDBD1A2A52FD910013322E /* TripCard.swift in Sources */,
 				47CDBCB42A5087920013322E /* TripDataManager.swift in Sources */,
 				47CDBCCC2A52C0230013322E /* Logger.swift in Sources */,
 				47CDBCCF2A52C13E0013322E /* CarInfo.xcdatamodeld in Sources */,
@@ -669,6 +703,7 @@
 				474905862A4CD656006C347C /* Request.swift in Sources */,
 				477E424F2A4B66FA00A902F0 /* CarWidgetLiveActivity.swift in Sources */,
 				BFF89B5D3F7A97929213FA0F /* CarInfoUITests.swift in Sources */,
+				47CDBD142A52D7310013322E /* CustomGauge.swift in Sources */,
 				47D665132A49ABFB00E25DCE /* ByteBuffer.swift in Sources */,
 				478A55982A4706D9000759D3 /* Queue.swift in Sources */,
 				478A558E2A46ECC5000759D3 /* Packet.swift in Sources */,
@@ -679,7 +714,6 @@
 				47CDBCE32A52C5A80013322E /* LogEntity+CoreDataProperties.swift in Sources */,
 				47CDBCBC2A5087AB0013322E /* TripEntity+CoreDataProperties.swift in Sources */,
 				4749058B2A4DEF84006C347C /* LocationManager.swift in Sources */,
-				47CDBCC42A5191550013322E /* TripCard.swift in Sources */,
 				47CDBD092A52D30B0013322E /* ResponseBuilder.swift in Sources */,
 				47CDBCF42A52D2780013322E /* Useful.swift in Sources */,
 				47D6651D2A49DC3B00E25DCE /* Errors.swift in Sources */,
@@ -701,23 +735,25 @@
 				47CDBCEF2A52D2770013322E /* Useful.swift in Sources */,
 				478A55972A4706D9000759D3 /* Queue.swift in Sources */,
 				47CDBD082A52D30B0013322E /* ResponseBuilder.swift in Sources */,
+				47CDBD0E2A52D3EC0013322E /* StatisticsView.swift in Sources */,
 				47EF1B642A3B49A8001DC39B /* ScopeFunctions.swift in Sources */,
 				47CDBCCB2A52C0230013322E /* Logger.swift in Sources */,
 				47CDBCB62A5087AB0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */,
 				47D665122A49ABFB00E25DCE /* ByteBuffer.swift in Sources */,
 				47CDBCC62A51D0290013322E /* ContentView.swift in Sources */,
-				47CDBCC32A5191550013322E /* TripCard.swift in Sources */,
 				478A558D2A46ECC5000759D3 /* Packet.swift in Sources */,
 				47CDBCE22A52C5A80013322E /* LogEntity+CoreDataProperties.swift in Sources */,
 				47CDBCB12A5087900013322E /* TripDataManager.swift in Sources */,
 				47CDBCB52A5087AB0013322E /* CoordinateEntity+CoreDataClass.swift in Sources */,
 				47D665172A49D27F00E25DCE /* Packets.swift in Sources */,
 				478A55922A4705B4000759D3 /* BluetoothManager.swift in Sources */,
+				47CDBD192A52FD910013322E /* TripCard.swift in Sources */,
 				47CDBCFE2A52D2AB0013322E /* PIDs.swift in Sources */,
 				47CDBCDE2A52C5A80013322E /* LogEntity+CoreDataClass.swift in Sources */,
 				477E424E2A4B66F900A902F0 /* CarWidgetLiveActivity.swift in Sources */,
 				47CDBD032A52D2F00013322E /* MeasuredValue.swift in Sources */,
 				47D6651C2A49DC3B00E25DCE /* Errors.swift in Sources */,
+				47CDBD132A52D7310013322E /* CustomGauge.swift in Sources */,
 				47FC02DB2A4C211600E432F6 /* ResponseManager.swift in Sources */,
 				BFF898DF4878E0510529C2DC /* CarInfoTests.swift in Sources */,
 				47CDBCB82A5087AB0013322E /* TripEntity+CoreDataProperties.swift in Sources */,

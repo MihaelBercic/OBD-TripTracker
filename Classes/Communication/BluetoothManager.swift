@@ -99,9 +99,10 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 		guard let data = characteristic.value else { return }
 		guard let encodedData = String(bytes: data, encoding: .utf8)?.trimmingCharacters(in: trimmingCharacterSet) else { return }
 
-		let shouldIgnoreResponse = data.count <= 1 || encodedData.contains(/SEARCHING/)
+		let shouldIgnoreResponse = encodedData.count <= 1 || encodedData.contains(/SEARCHING/)
 		print("🔊 \(encodedData)")
 		if shouldIgnoreResponse { return }
+		messageInterval = 1
 
 		defer {
 			adapter?.readRSSI()
@@ -109,15 +110,14 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 		}
 
 		if encodedData.contains(/NO|UNABLE|ERROR|STOPPED/) {
-			Logger.shared.info("No|Unable|Error|Stopped")
+			Logger.shared.info(encodedData)
 			messageInterval = 5
 			requestQueue.moveToTheBack()
 		} else {
 			if encodedData.split(separator: " ").count < 3 {
-				Logger.shared.info("Data is shorter \(encodedData)...")
+				Logger.shared.info("Data is shorter |\(encodedData)|")
 				return
 			}
-			messageInterval = 1
 
 			let lines = encodedData.split(whereSeparator: \.isNewline)
 			lines.filter { !$0.isEmpty && $0.contains(" ") }.forEach {
@@ -131,7 +131,6 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 	}
 
 	func peripheral(_: CBPeripheral, didReadRSSI rssiValue: NSNumber, error _: Error?) {
-		Logger.shared.info("RSSI: \(rssiValue.decimalValue)")
 		if rssiValue.decimalValue < -80 {
 			messageInterval = 10
 		}
@@ -139,8 +138,10 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 
 	func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error _: Error?) {
 		central.connect(peripheral)
+		outgoingMessageQueue.clear()
+		requestQueue.clear()
 		TripSingleton.shared.stopTrip()
-		Logger.shared.info("Will try to reconnect!")
+		Logger.shared.info("Will try to reconnect! Cleared queues.")
 	}
 
 	func centralManager(_ central: CBCentralManager, willRestoreState state: [String: Any]) {
