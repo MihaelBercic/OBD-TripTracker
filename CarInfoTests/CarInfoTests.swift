@@ -44,7 +44,7 @@ final class CarInfoTests: XCTestCase {
 
 	func testActualMessageParsing() throws {
 		let measurementQueue = Queue<MeasuredValue>()
-		let responseManager = ResponseManager(measurementQueue: measurementQueue)
+		let responseManager = ResponseManager()
 		let encodedData = """
 		7E8 10 0A 41 2F E8 46 3F 1F
 		7E8 21 00 0E 0D 00 00 00 00
@@ -82,6 +82,12 @@ final class CarInfoTests: XCTestCase {
 		let movedMeters = speedMS * timeDifference
 
 		print("\(Date.now) vs \(lastSpeedMeasurement) = \(timeDifference) moved \(movedMeters)")
+	}
+
+	func testTrip() {
+		var trip = Trip()
+		trip.fuelTankLevel = 9.0
+		XCTAssert(trip.startFuelTankLevel == 9.0)
 	}
 
 }

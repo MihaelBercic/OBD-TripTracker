@@ -14,7 +14,13 @@
         <attribute name="averageSpeed" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="distance" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="end" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="endCity" attributeType="String"/>
+        <attribute name="endCountry" attributeType="String"/>
+        <attribute name="fuelEnd" attributeType="Decimal" defaultValueString="100"/>
+        <attribute name="fuelStart" attributeType="Decimal" defaultValueString="100"/>
         <attribute name="start" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="startCity" attributeType="String"/>
+        <attribute name="startCountry" attributeType="String"/>
         <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="locations" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Coordinate" inverseName="trip" inverseEntity="Coordinate"/>
     </entity>

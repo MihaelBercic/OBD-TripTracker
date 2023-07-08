@@ -16,7 +16,6 @@ class TripDataManager: NSObject, ObservableObject {
 
 	override init() {
 		super.init()
-		print("Initialised Trip Data Manager...")
 		container.loadPersistentStores { _, error in
 			if let error = error {
 				print("Error with data loading \(error)")

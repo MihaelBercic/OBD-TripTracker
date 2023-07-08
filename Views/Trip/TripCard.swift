@@ -36,12 +36,12 @@ struct TripCard: View {
 
 			HStack(alignment: .center) {
 				VStack(alignment: .leading) {
-					Text("Ljubljana")
+					Text(tripEntity.startCity)
 						.font(.body)
 						.fontWeight(.semibold)
 						.dynamicTypeSize(.small)
 						.fontDesign(.rounded)
-					Text("SLOVENIA")
+					Text(tripEntity.startCountry)
 						.font(.footnote)
 						.fontWeight(.semibold)
 						.controlSize(.small)
@@ -53,12 +53,12 @@ struct TripCard: View {
 				Image(systemName: "arrow.right")
 				Spacer()
 				VStack(alignment: .trailing) {
-					Text("Portorož")
+					Text(tripEntity.endCity)
 						.font(.body)
 						.fontWeight(.semibold)
 						.dynamicTypeSize(.small)
 						.fontDesign(.rounded)
-					Text("SLOVENIA")
+					Text(tripEntity.endCountry)
 						.font(.footnote)
 						.fontWeight(.semibold)
 						.controlSize(.small)
@@ -88,7 +88,7 @@ struct TripCard: View {
 
 struct TripCard_Previews: PreviewProvider {
 
-	static let tripEntity = TripEntity(context: TripSingleton.shared.viewContext).apply {
+	public static let tripEntity = TripEntity(context: TripSingleton.shared.viewContext).apply {
 		$0.start = .now - 3600
 	}
 
@@ -101,46 +101,52 @@ struct TripCard_Previews: PreviewProvider {
 
 struct TripMapView: View {
 
-	var route: Binding<[CLLocation]>
-	var routePolyline: MKPolyline? = nil
+	@Binding var route: [CLLocation]
+	@State var routePolyline: MKPolyline = .init()
+	@State var chunk = 0
 
 	var body: some View {
-		let coordinates = route.wrappedValue
+		let coordinates = $route.wrappedValue
 		let coordinatesCount = coordinates.count
 		if coordinatesCount < 5 {
 			return MapView(route: MKPolyline(coordinates: [], count: 0))
 		}
 		let middleElementIndex = coordinatesCount / 2
-		let centerCoordinate = coordinates[max(0, middleElementIndex - 1)]
-		let span = MKCoordinateSpan(latitudeDelta: 20, longitudeDelta: 20)
-		let routePolyline = MKPolyline(coordinates: coordinates.map { $0.coordinate }, count: route.count)
-		let _ = print(coordinates.count)
-		return MapView(route: routePolyline)
+		let mappedCoordinates = coordinates.map { $0.coordinate }
+		let chunks = mappedCoordinates.chunked(into: 10)
+		_ = coordinates[max(0, middleElementIndex - 1)]
+		_ = MKCoordinateSpan(latitudeDelta: 50, longitudeDelta: 50)
+//		Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
+//			if chunk > chunks.count - 1 {
+//				chunk = 0
+//				timer.invalidate()
+//				print("Invalidating the timer yo...")
+//				return
+//			}
+//			let combined = chunks[0 ... chunk].flatMap { $0 }
+//			routePolyline = MKPolyline(coordinates: combined, count: combined.count)
+//			print("\(chunk) ... \(chunks.count) ... \(combined.count)")
+//			chunk += 1
+//		}
+		return MapView(route: MKPolyline(coordinates: mappedCoordinates, count: mappedCoordinates.count))
 	}
 }
 
 struct MapView: UIViewRepresentable {
 
-	var route: MKPolyline?
+	var route: MKPolyline
 	let mapViewDelegate = MapViewDelegate()
-
-	init(route: MKPolyline) {
-		self.route = route
-		print("Initialised view!")
-	}
 
 	func makeUIView(context _: Context) -> MKMapView {
 		let view = MKMapView(frame: .zero)
 		view.preferredConfiguration = MKStandardMapConfiguration(elevationStyle: .flat)
 		addRoute(to: view)
-		print("ADding route!")
 		return view
 	}
 
 	func updateUIView(_ view: MKMapView, context _: Context) {
 		view.delegate = mapViewDelegate
 		view.removeAnnotations(view.annotations)
-		view.isUserInteractionEnabled = false
 		view.pointOfInterestFilter = .some(MKPointOfInterestFilter(including: []))
 		print("Updating view!")
 		addRoute(to: view)
@@ -152,27 +158,30 @@ struct MapView: UIViewRepresentable {
 extension MapView {
 
 	func addRoute(to view: MKMapView) {
-		print("Add route! \(route == nil)")
 		if !view.overlays.isEmpty {
 			view.removeOverlays(view.overlays)
 		}
-		guard let route = route else { return }
 		let mapRect = route.boundingMapRect
-		view.setVisibleMapRect(mapRect, edgePadding: UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10), animated: true)
+
+		view.setVisibleMapRect(mapRect, edgePadding: UIEdgeInsets(top: 100, left: 100, bottom: 100, right: 100), animated: true)
 		view.addOverlay(route, level: .aboveLabels)
-		print("Adding route!")
 	}
+
 }
 
 class MapViewDelegate: NSObject, MKMapViewDelegate {
 
-	func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+	var width: Double = 1.0
+
+	func mapViewWillStartRenderingMap(_ mapView: MKMapView) {
+		width = max(3.0, min(4, mapView.visibleMapRect.width / 500))
+	}
+
+	func mapView(_: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
 		let renderer = MKGradientPolylineRenderer(overlay: overlay)
-		let width = max(1.0, min(1.5, mapView.visibleMapRect.width / 1000))
 		renderer.lineWidth = width
-		renderer.strokeColor = .blue
+		renderer.strokeColor = UIColor(named: "RouteColor")
 		renderer.fillColor = .systemRed
 		return renderer
 	}
-
 }

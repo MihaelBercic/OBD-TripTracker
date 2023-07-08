@@ -39,6 +39,7 @@ struct ContentView: View {
 	@State var region = MKCoordinateRegion(center: CLLocation(latitude: 46.02652652, longitude: 14.54156769).coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
 
 	@State var selectedView: String = "trip"
+	@State var cardIndex: Int = 0
 
 	@GestureState var isDragging = false
 
@@ -49,128 +50,145 @@ struct ContentView: View {
 		UITabBar.appearance().backgroundColor = .systemBackground
 	}
 
+	@State var isPresented = true
+	@State var isLogSheetPresented = false
+
 	var body: some View {
-		TabView {
-			VStack(alignment: .leading, spacing: 10) {
-				Picker("TITLE", selection: $selectedView) {
-					Text("Trip").tag("trip")
-					Text("Today").tag("today")
-					Text("Week").tag("week")
-					Text("Month").tag("month")
-					Text("All").tag("all")
-				}
-				.pickerStyle(.segmented)
-				.padding([.leading, .trailing, .top], 30)
-				StatisticsView()
-					.frame(maxHeight: 140)
-					.padding(20)
-					.background(.foreground.opacity(0.05))
-					.cornerRadius(20)
-					.overlay(
-						RoundedRectangle(cornerRadius: 20)
-							.stroke(.foreground.opacity(0.05), lineWidth: 1)
-					)
-
+		GeometryReader { screenGeometry in
+			ZStack(alignment: .topTrailing) {
 				TripMapView(route: $path)
-					.cornerRadius(5)
+					.ignoresSafeArea()
 
-				Text("Recent trips")
-					.font(.title)
-					.fontWeight(.bold)
-					.fontDesign(.rounded)
-
+				VStack(alignment: .center, spacing: 10) {
+					Button {} label: {
+						Image(systemName: "gear")
+							.symbolRenderingMode(SymbolRenderingMode.hierarchical)
+							.foregroundStyle(.foreground)
+					}
+					Divider()
+						.frame(width: 35)
+						.background(.foreground.opacity(0.6))
+					Button {} label: {
+						Image(systemName: "info")
+							.symbolRenderingMode(SymbolRenderingMode.hierarchical)
+							.foregroundStyle(.foreground)
+					}
+					Divider()
+						.frame(width: 35)
+						.background(.foreground.opacity(0.6))
+					Button {
+						isLogSheetPresented = true
+					} label: {
+						Image(systemName: "list.bullet")
+							.symbolRenderingMode(SymbolRenderingMode.hierarchical)
+							.foregroundStyle(.foreground)
+					}
+				}
+				.padding([.top, .bottom], 10)
+				.background(.thickMaterial)
+				.cornerRadius(5)
+				.offset(x: -10, y: screenGeometry.safeAreaInsets.top - 30)
+				.shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
+			}
+			.sheet(isPresented: $isPresented) {
 				GeometryReader { containerReader in
-					let screenCenter = containerReader.size.width / 2
-					let colors: [String] = [
-						"7C72FF", "8F73FF", "A673FF", "F88C9C", "F7A68B", "F7C18B", "F7D98B", "FFBA7D", "FFA454", "FF7E46",
-					]
-					ScrollView(.horizontal, showsIndicators: false) {
-						ScrollViewReader { proxy in
-							HStack(spacing: 20) {
-								let trips: [TripEntity] = previousTrips
-									.filter { $0.distance > 0.5 }
-									.sorted(by: { $0.timestamp > $1.timestamp })
-									.chunked(into: 10)[0]
+					VStack(alignment: .leading) {
+						let screenCenter = containerReader.size.width / 2
+						let colors: [String] = [
+							"7C72FF", "8F73FF", "A673FF", "F88C9C", "F7A68B", "F7C18B", "F7D98B", "FFBA7D", "FFA454", "FF7E46",
+						]
+						let trips: [TripEntity] = previousTrips
+							.sorted(by: { $0.timestamp > $1.timestamp })
+							.chunked(into: 10).first ?? []
+						ScrollView(.horizontal, showsIndicators: false) {
+							ScrollViewReader { proxy in
+								HStack(spacing: 20) {
+									ForEach(trips.indices, id: \.self) { id in
+										let trip = trips[id]
+										let backgroundColor = Color(UIColor(hex: colors[id]))
 
-								ForEach(trips.indices, id: \.self) { id in
-									let trip = trips[id]
-									let backgroundColor = Color(UIColor(hex: colors[id]))
-
-									GeometryReader { geometry in
-										let midX = geometry.frame(in: .named("container")).midX
-										let distanceFromCenter = abs(screenCenter - midX)
-										let opacity = max(1.0 - distanceFromCenter / 500, 0.1)
-										if distanceFromCenter < 20 {
-											let _ = DispatchQueue.main.async {
-												proxy.scrollTo("\(id)", anchor: .center)
-												path = trip.locations.map {
-													CLLocation(latitude: $0.latitude.doubleValue, longitude: $0.longitude.doubleValue)
+										GeometryReader { geometry in
+											let midX = geometry.frame(in: .named("container")).midX
+											let distanceFromCenter = abs(screenCenter - midX)
+											let opacity = max(1.0 - distanceFromCenter / 500, 0.1)
+											TripCard(tripEntity: trip)
+												.id("\(id)")
+												.frame(maxWidth: .infinity, maxHeight: containerReader.size.height)
+												.padding(10)
+												.background(backgroundColor)
+												.opacity(opacity)
+												.cornerRadius(10)
+												.rotation3DEffect(
+													Angle(degrees:
+														Double(geometry.frame(in: .global).maxX - 1.4 * geometry.size.width) / -20.0
+													),
+													axis: (x: 0, y: 1, z: 0)
+												)
+												.shadow(color: .black.opacity(0.15), radius: 5, x: 0, y: 5)
+												.foregroundColor(.white)
+												.onAppear {
+													if id == 0 {
+														path = trip.locations.map {
+															CLLocation(latitude: $0.latitude.doubleValue, longitude: $0.longitude.doubleValue)
+														}
+													}
 												}
+										}
+										.frame(width: containerReader.size.width * 0.6, height: 100)
+									}
+								}
+								.padding([.leading, .trailing], 60)
+								.frame(height: 120)
+								.simultaneousGesture(DragGesture(minimumDistance: 0.0).onEnded { value in
+									let distance = value.translation.width
+									let isLeft = distance < 0
+									let toMove = distance == 0 ? 0 : (isLeft ? 1 : -1)
+									let nextIndex = max(0, min(cardIndex + toMove, trips.count - 1))
+									let trip = trips[nextIndex]
+									print("Ended \(nextIndex)")
+									cardIndex = nextIndex
+									DispatchQueue.main.async {
+										withAnimation(.easeInOut(duration: 0.25)) {
+											proxy.scrollTo("\(nextIndex)", anchor: .center)
+											path = trip.locations.map {
+												CLLocation(latitude: $0.latitude.doubleValue, longitude: $0.longitude.doubleValue)
 											}
 										}
-										TripCard(tripEntity: trip)
-											.id("\(id)")
-											.frame(maxWidth: .infinity, maxHeight: .infinity)
-											.padding(10)
-											.background(backgroundColor)
-											.cornerRadius(10)
-											.rotation3DEffect(
-												Angle(degrees:
-													Double(geometry.frame(in: .global).maxX - 1.5 * geometry.size.width) / -20.0
-												),
-												axis: (x: 0, y: 1, z: 0)
-											)
-											.shadow(color: .black.opacity(0.15), radius: 5, x: 0, y: 5)
-											.foregroundColor(.white)
 									}
-									.frame(width: 200, height: 100)
-								}
+								})
 							}
-							.padding(20)
-							.padding([.leading, .trailing], 60)
+						}
+						.scrollDisabled(true)
+
+						Text("Trips")
+							.font(.title)
+							.fontWeight(.bold)
+							.dynamicTypeSize(.xLarge)
+						Button("Clear") {
+							do {
+								let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "TripEntity")
+								let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+								let context = TripSingleton.shared.viewContext
+								try context.execute(deleteRequest)
+								try context.save()
+							} catch {
+								print(error)
+							}
 						}
 					}
+					.frame(maxWidth: .infinity, alignment: .leading)
+					.padding(20)
 				}
-				.frame(height: 140)
 				.coordinateSpace(name: "container")
-			}
-			.padding(25)
-			.tabItem {
-				Label("Trips", systemImage: "car.rear.road.lane.dashed")
-			}
-
-			VStack {
-				Button("Clear") {
-					do {
-						let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "LogEntity")
-						let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
-						let context = TripSingleton.shared.viewContext
-						try context.execute(deleteRequest)
-						try context.save()
-					} catch {
-						print(error)
-					}
+				.presentationDetents([.fraction(0.2), .medium])
+				.presentationBackground(.ultraThinMaterial)
+				.presentationBackgroundInteraction(.enabled(upThrough: .medium))
+				.interactiveDismissDisabled(true)
+				.sheet(isPresented: $isLogSheetPresented) {
+					LogListView(logHistory: logHistory)
+						.presentationDetents([.large])
 				}
-				List {
-					ForEach(logHistory.map { $0 as LogEntity }.sorted(by: { $0.timestamp > $1.timestamp })) { log in
-						VStack(alignment: .leading) {
-							Text(log.timestamp.formatted(date: .omitted, time: .standard))
-								.font(.footnote)
-								.opacity(0.5)
-								.foregroundColor(log.type == 0 ? .blue : .red)
-							Text(log.message ?? "No message")
-						}.listRowInsets(.none)
-					}
-				}
-				.scrollIndicators(.hidden)
-				.listStyle(.plain)
 			}
-			.badge(logHistory.count)
-			.tabItem {
-				Label("Logs", systemImage: "list.bullet.rectangle.portrait.fill")
-			}
-
-			.navigationBarHidden(true)
 		}
 	}
 }

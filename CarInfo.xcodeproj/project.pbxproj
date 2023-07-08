@@ -45,33 +45,33 @@
 		47C077E62A34CC9C001A85E2 /* FuelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C077E52A34CC9C001A85E2 /* FuelView.swift */; };
 		47C077E72A34D265001A85E2 /* FuelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C077E52A34CC9C001A85E2 /* FuelView.swift */; };
 		47C077E82A34E843001A85E2 /* CarWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C077D42A34BFDD001A85E2 /* CarWidgetLiveActivity.swift */; };
+		47C9567D2A55939600E52853 /* LogListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C9567C2A55939600E52853 /* LogListView.swift */; };
+		47C9567E2A55939600E52853 /* LogListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C9567C2A55939600E52853 /* LogListView.swift */; };
+		47C9567F2A55939600E52853 /* LogListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C9567C2A55939600E52853 /* LogListView.swift */; };
+		47C956802A55939600E52853 /* LogListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C9567C2A55939600E52853 /* LogListView.swift */; };
+		47C956832A56B0CB00E52853 /* TripEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C956812A56B0CB00E52853 /* TripEntity+CoreDataClass.swift */; };
+		47C956842A56B0CB00E52853 /* TripEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C956822A56B0CB00E52853 /* TripEntity+CoreDataProperties.swift */; };
+		47C956852A56B31000E52853 /* TripEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C956812A56B0CB00E52853 /* TripEntity+CoreDataClass.swift */; };
+		47C956862A56B31000E52853 /* TripEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C956822A56B0CB00E52853 /* TripEntity+CoreDataProperties.swift */; };
+		47C956872A56B31100E52853 /* TripEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C956812A56B0CB00E52853 /* TripEntity+CoreDataClass.swift */; };
+		47C956882A56B31100E52853 /* TripEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C956822A56B0CB00E52853 /* TripEntity+CoreDataProperties.swift */; };
+		47C956892A56B31100E52853 /* TripEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C956812A56B0CB00E52853 /* TripEntity+CoreDataClass.swift */; };
+		47C9568A2A56B31100E52853 /* TripEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C956822A56B0CB00E52853 /* TripEntity+CoreDataProperties.swift */; };
 		47CDBCA82A507EC00013322E /* CoordinateEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA42A507EC00013322E /* CoordinateEntity+CoreDataClass.swift */; };
 		47CDBCA92A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA52A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift */; };
-		47CDBCAA2A507EC00013322E /* TripEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA62A507EC00013322E /* TripEntity+CoreDataClass.swift */; };
-		47CDBCAB2A507EC00013322E /* TripEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA72A507EC00013322E /* TripEntity+CoreDataProperties.swift */; };
 		47CDBCAD2A507F800013322E /* TripDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCAC2A507F800013322E /* TripDataManager.swift */; };
 		47CDBCB12A5087900013322E /* TripDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCAC2A507F800013322E /* TripDataManager.swift */; };
 		47CDBCB32A5087910013322E /* TripDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCAC2A507F800013322E /* TripDataManager.swift */; };
 		47CDBCB42A5087920013322E /* TripDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCAC2A507F800013322E /* TripDataManager.swift */; };
 		47CDBCB52A5087AB0013322E /* CoordinateEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA42A507EC00013322E /* CoordinateEntity+CoreDataClass.swift */; };
 		47CDBCB62A5087AB0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA52A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift */; };
-		47CDBCB72A5087AB0013322E /* TripEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA62A507EC00013322E /* TripEntity+CoreDataClass.swift */; };
-		47CDBCB82A5087AB0013322E /* TripEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA72A507EC00013322E /* TripEntity+CoreDataProperties.swift */; };
 		47CDBCB92A5087AB0013322E /* CoordinateEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA42A507EC00013322E /* CoordinateEntity+CoreDataClass.swift */; };
 		47CDBCBA2A5087AB0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA52A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift */; };
-		47CDBCBB2A5087AB0013322E /* TripEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA62A507EC00013322E /* TripEntity+CoreDataClass.swift */; };
-		47CDBCBC2A5087AB0013322E /* TripEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA72A507EC00013322E /* TripEntity+CoreDataProperties.swift */; };
 		47CDBCBD2A5087AC0013322E /* CoordinateEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA42A507EC00013322E /* CoordinateEntity+CoreDataClass.swift */; };
 		47CDBCBE2A5087AC0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA52A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift */; };
-		47CDBCBF2A5087AC0013322E /* TripEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA62A507EC00013322E /* TripEntity+CoreDataClass.swift */; };
-		47CDBCC02A5087AC0013322E /* TripEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA72A507EC00013322E /* TripEntity+CoreDataProperties.swift */; };
 		47CDBCC62A51D0290013322E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF895298CD94DBDA8193722 /* ContentView.swift */; };
 		47CDBCC72A51D0290013322E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF895298CD94DBDA8193722 /* ContentView.swift */; };
 		47CDBCC82A51D02A0013322E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF895298CD94DBDA8193722 /* ContentView.swift */; };
-		47CDBCCA2A52C0230013322E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCC92A52C0230013322E /* Logger.swift */; };
-		47CDBCCB2A52C0230013322E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCC92A52C0230013322E /* Logger.swift */; };
-		47CDBCCC2A52C0230013322E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCC92A52C0230013322E /* Logger.swift */; };
-		47CDBCCD2A52C0230013322E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCC92A52C0230013322E /* Logger.swift */; };
 		47CDBCCE2A52C13E0013322E /* CarInfo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BFF89B2C0974C99562C1E43F /* CarInfo.xcdatamodeld */; };
 		47CDBCCF2A52C13E0013322E /* CarInfo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BFF89B2C0974C99562C1E43F /* CarInfo.xcdatamodeld */; };
 		47CDBCD02A52C13F0013322E /* CarInfo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BFF89B2C0974C99562C1E43F /* CarInfo.xcdatamodeld */; };
@@ -207,12 +207,12 @@
 		47C077D92A34BFDF001A85E2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		47C077DB2A34BFDF001A85E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		47C077E52A34CC9C001A85E2 /* FuelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuelView.swift; sourceTree = "<group>"; };
+		47C9567C2A55939600E52853 /* LogListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogListView.swift; sourceTree = "<group>"; };
+		47C956812A56B0CB00E52853 /* TripEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TripEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		47C956822A56B0CB00E52853 /* TripEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TripEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		47CDBCA42A507EC00013322E /* CoordinateEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoordinateEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		47CDBCA52A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoordinateEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		47CDBCA62A507EC00013322E /* TripEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TripEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
-		47CDBCA72A507EC00013322E /* TripEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TripEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		47CDBCAC2A507F800013322E /* TripDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDataManager.swift; sourceTree = "<group>"; };
-		47CDBCC92A52C0230013322E /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		47CDBCDB2A52C5A80013322E /* LogEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		47CDBCDC2A52C5A80013322E /* LogEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		47CDBCFC2A52D2AB0013322E /* PIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PIDs.swift; sourceTree = "<group>"; };
@@ -322,13 +322,12 @@
 		47CDBCE52A52D2000013322E /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				47C956812A56B0CB00E52853 /* TripEntity+CoreDataClass.swift */,
+				47C956822A56B0CB00E52853 /* TripEntity+CoreDataProperties.swift */,
 				47CDBCDB2A52C5A80013322E /* LogEntity+CoreDataClass.swift */,
 				47CDBCDC2A52C5A80013322E /* LogEntity+CoreDataProperties.swift */,
-				47CDBCC92A52C0230013322E /* Logger.swift */,
 				47CDBCA42A507EC00013322E /* CoordinateEntity+CoreDataClass.swift */,
 				47CDBCA52A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift */,
-				47CDBCA62A507EC00013322E /* TripEntity+CoreDataClass.swift */,
-				47CDBCA72A507EC00013322E /* TripEntity+CoreDataProperties.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -364,6 +363,7 @@
 				47CDBD162A52FD820013322E /* Trip */,
 				47CDBD0C2A52D3EC0013322E /* StatisticsView.swift */,
 				47CDBD112A52D7310013322E /* CustomGauge.swift */,
+				47C9567C2A55939600E52853 /* LogListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -618,12 +618,9 @@
 				47CDBD152A52D7310013322E /* CustomGauge.swift in Sources */,
 				478A55942A4705B4000759D3 /* BluetoothManager.swift in Sources */,
 				4749058C2A4DEF84006C347C /* LocationManager.swift in Sources */,
-				47CDBCBF2A5087AC0013322E /* TripEntity+CoreDataClass.swift in Sources */,
-				47CDBCC02A5087AC0013322E /* TripEntity+CoreDataProperties.swift in Sources */,
 				47CDBCF92A52D2790013322E /* Useful.swift in Sources */,
 				47CDBCE02A52C5A80013322E /* LogEntity+CoreDataClass.swift in Sources */,
 				47CDBD0A2A52D30B0013322E /* ResponseBuilder.swift in Sources */,
-				47CDBCCD2A52C0230013322E /* Logger.swift in Sources */,
 				47CDBCD02A52C13F0013322E /* CarInfo.xcdatamodeld in Sources */,
 				47C077DC2A34BFDF001A85E2 /* CarWidget.intentdefinition in Sources */,
 				47CDBCBE2A5087AC0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */,
@@ -633,6 +630,7 @@
 				47D665142A49ABFB00E25DCE /* ByteBuffer.swift in Sources */,
 				47CDBD002A52D2AB0013322E /* PIDs.swift in Sources */,
 				474905872A4CD656006C347C /* Request.swift in Sources */,
+				47C956802A55939600E52853 /* LogListView.swift in Sources */,
 				47CDBD1B2A52FD910013322E /* TripCard.swift in Sources */,
 				47CDBD102A52D3EC0013322E /* StatisticsView.swift in Sources */,
 				47D6651E2A49DC3B00E25DCE /* Errors.swift in Sources */,
@@ -644,7 +642,9 @@
 				47CDBCE42A52C5A80013322E /* LogEntity+CoreDataProperties.swift in Sources */,
 				477E424B2A4B187E00A902F0 /* Trip.swift in Sources */,
 				47CDBCBD2A5087AC0013322E /* CoordinateEntity+CoreDataClass.swift in Sources */,
+				47C9568A2A56B31100E52853 /* TripEntity+CoreDataProperties.swift in Sources */,
 				47C077E72A34D265001A85E2 /* FuelView.swift in Sources */,
+				47C956892A56B31100E52853 /* TripEntity+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -659,17 +659,17 @@
 				BFF892279BE253BB053B73ED /* CarInfoApp.swift in Sources */,
 				47D665112A49ABFB00E25DCE /* ByteBuffer.swift in Sources */,
 				47CDBD0D2A52D3EC0013322E /* StatisticsView.swift in Sources */,
-				47CDBCAA2A507EC00013322E /* TripEntity+CoreDataClass.swift in Sources */,
-				47CDBCCA2A52C0230013322E /* Logger.swift in Sources */,
-				47CDBCAB2A507EC00013322E /* TripEntity+CoreDataProperties.swift in Sources */,
+				47C9567D2A55939600E52853 /* LogListView.swift in Sources */,
 				478A558C2A46ECC5000759D3 /* Packet.swift in Sources */,
 				47CDBD182A52FD910013322E /* TripCard.swift in Sources */,
 				47CDBCAD2A507F800013322E /* TripDataManager.swift in Sources */,
 				47CDBD072A52D30B0013322E /* ResponseBuilder.swift in Sources */,
+				47C956832A56B0CB00E52853 /* TripEntity+CoreDataClass.swift in Sources */,
 				47CDBCA92A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */,
 				47CDBD022A52D2F00013322E /* MeasuredValue.swift in Sources */,
 				47CDBD122A52D7310013322E /* CustomGauge.swift in Sources */,
 				47C077E82A34E843001A85E2 /* CarWidgetLiveActivity.swift in Sources */,
+				47C956842A56B0CB00E52853 /* TripEntity+CoreDataProperties.swift in Sources */,
 				47C077DD2A34BFDF001A85E2 /* CarWidget.intentdefinition in Sources */,
 				47D665162A49D27F00E25DCE /* Packets.swift in Sources */,
 				47D6651B2A49DC3B00E25DCE /* Errors.swift in Sources */,
@@ -695,7 +695,7 @@
 				47CDBD0F2A52D3EC0013322E /* StatisticsView.swift in Sources */,
 				47CDBD1A2A52FD910013322E /* TripCard.swift in Sources */,
 				47CDBCB42A5087920013322E /* TripDataManager.swift in Sources */,
-				47CDBCCC2A52C0230013322E /* Logger.swift in Sources */,
+				47C9567F2A55939600E52853 /* LogListView.swift in Sources */,
 				47CDBCCF2A52C13E0013322E /* CarInfo.xcdatamodeld in Sources */,
 				47CDBCDF2A52C5A80013322E /* LogEntity+CoreDataClass.swift in Sources */,
 				477E424C2A4B187F00A902F0 /* Trip.swift in Sources */,
@@ -712,16 +712,16 @@
 				47EF1B652A3B49A8001DC39B /* ScopeFunctions.swift in Sources */,
 				47FC02DC2A4C211600E432F6 /* ResponseManager.swift in Sources */,
 				47CDBCE32A52C5A80013322E /* LogEntity+CoreDataProperties.swift in Sources */,
-				47CDBCBC2A5087AB0013322E /* TripEntity+CoreDataProperties.swift in Sources */,
+				47C956872A56B31100E52853 /* TripEntity+CoreDataClass.swift in Sources */,
 				4749058B2A4DEF84006C347C /* LocationManager.swift in Sources */,
 				47CDBD092A52D30B0013322E /* ResponseBuilder.swift in Sources */,
 				47CDBCF42A52D2780013322E /* Useful.swift in Sources */,
 				47D6651D2A49DC3B00E25DCE /* Errors.swift in Sources */,
 				47CDBCFF2A52D2AB0013322E /* PIDs.swift in Sources */,
 				478A55932A4705B4000759D3 /* BluetoothManager.swift in Sources */,
+				47C956882A56B31100E52853 /* TripEntity+CoreDataProperties.swift in Sources */,
 				47CDBCBA2A5087AB0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */,
 				47D665182A49D27F00E25DCE /* Packets.swift in Sources */,
-				47CDBCBB2A5087AB0013322E /* TripEntity+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -733,11 +733,12 @@
 				477E424D2A4B187F00A902F0 /* Trip.swift in Sources */,
 				474905852A4CD656006C347C /* Request.swift in Sources */,
 				47CDBCEF2A52D2770013322E /* Useful.swift in Sources */,
+				47C956862A56B31000E52853 /* TripEntity+CoreDataProperties.swift in Sources */,
 				478A55972A4706D9000759D3 /* Queue.swift in Sources */,
+				47C956852A56B31000E52853 /* TripEntity+CoreDataClass.swift in Sources */,
 				47CDBD082A52D30B0013322E /* ResponseBuilder.swift in Sources */,
 				47CDBD0E2A52D3EC0013322E /* StatisticsView.swift in Sources */,
 				47EF1B642A3B49A8001DC39B /* ScopeFunctions.swift in Sources */,
-				47CDBCCB2A52C0230013322E /* Logger.swift in Sources */,
 				47CDBCB62A5087AB0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */,
 				47D665122A49ABFB00E25DCE /* ByteBuffer.swift in Sources */,
 				47CDBCC62A51D0290013322E /* ContentView.swift in Sources */,
@@ -745,6 +746,7 @@
 				47CDBCE22A52C5A80013322E /* LogEntity+CoreDataProperties.swift in Sources */,
 				47CDBCB12A5087900013322E /* TripDataManager.swift in Sources */,
 				47CDBCB52A5087AB0013322E /* CoordinateEntity+CoreDataClass.swift in Sources */,
+				47C9567E2A55939600E52853 /* LogListView.swift in Sources */,
 				47D665172A49D27F00E25DCE /* Packets.swift in Sources */,
 				478A55922A4705B4000759D3 /* BluetoothManager.swift in Sources */,
 				47CDBD192A52FD910013322E /* TripCard.swift in Sources */,
@@ -756,8 +758,6 @@
 				47CDBD132A52D7310013322E /* CustomGauge.swift in Sources */,
 				47FC02DB2A4C211600E432F6 /* ResponseManager.swift in Sources */,
 				BFF898DF4878E0510529C2DC /* CarInfoTests.swift in Sources */,
-				47CDBCB82A5087AB0013322E /* TripEntity+CoreDataProperties.swift in Sources */,
-				47CDBCB72A5087AB0013322E /* TripEntity+CoreDataClass.swift in Sources */,
 				4749058A2A4DEF84006C347C /* LocationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -906,7 +906,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -930,12 +930,15 @@
 				INFOPLIST_FILE = CarInfo/Info.plist;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Lemme USE";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Lemme Use Em Blutuuths";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "For the trips!";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "For the trips!";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1028,7 +1031,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1052,12 +1055,15 @@
 				INFOPLIST_FILE = CarInfo/Info.plist;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Lemme USE";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Lemme Use Em Blutuuths";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "For the trips!";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "For the trips!";
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

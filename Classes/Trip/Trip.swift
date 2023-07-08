@@ -19,9 +19,17 @@ public struct Trip: Codable, Hashable, ScopeFunctions {
 	var currentRpm = 0.0
 	var distance = 0.0
 	var speed = 0.0
-	var engineTemp = 00.0
+	var engineTemp = 0.0
 	var ambientTemperature = 0.0
-	var fuelTankLevel = 0.0
+	var fuelTankLevel = 0.0 {
+		didSet {
+			if startFuelTankLevel == 0.0 {
+				startFuelTankLevel = fuelTankLevel
+			}
+		}
+	}
+
+	var startFuelTankLevel = 0.0
 
 	init(start: Date = Date()) {
 		self.start = start
@@ -31,11 +39,14 @@ public struct Trip: Codable, Hashable, ScopeFunctions {
 
 class TripSingleton {
 
+	static let shared: TripSingleton = .init()
+
+	private let geocoder = CLGeocoder()
+
 	private let locationManager = LocationManager()
-	let tripDataManager = TripDataManager()
+	lazy var tripDataManager = TripDataManager()
 	lazy var viewContext: NSManagedObjectContext = tripDataManager.container.viewContext
 
-	static let shared: TripSingleton = .init()
 	let measurementQueue = Queue<MeasuredValue>()
 	private var liveActivityTimer: Timer?
 	private(set) var currentTrip: Trip?
@@ -99,32 +110,61 @@ class TripSingleton {
 
 	func stopTrip() {
 		let locations = locationManager.stopTrackingLocation()
-		currentTrip?.use {
-			$0.stoppedAt = .now
-			let tripEntity = TripEntity(context: viewContext)
-			tripEntity.averageSpeed = $0.speed
-			tripEntity.distance = $0.distance
-			tripEntity.timestamp = .now
-			tripEntity.end = .now
-			tripEntity.start = $0.start
-			locations.forEach { location in
-				let coordinate = location.coordinate
-				let coordinateEntity = CoordinateEntity(context: self.viewContext)
-				coordinateEntity.latitude = NSDecimalNumber(value: coordinate.latitude)
-				coordinateEntity.longitude = NSDecimalNumber(value: coordinate.longitude)
-				tripEntity.addToLocations(coordinateEntity)
-			}
-			if $0.distance > 0.1 {
+		defer {
+			liveActivityTimer?.invalidate()
+			currentTrip = nil
+		}
+
+		guard let firstLocation = locations.first else { return }
+		guard let lastLocation = locations.last else { return }
+		guard var trip = currentTrip else { return }
+
+		// if trip.distance < 0.1 { return }
+
+		geocoder.reverseGeocodeLocation(firstLocation) { [self] startPlacemarks, _ in
+			print("Start locations \(startPlacemarks?.count ?? 0)")
+			guard let startPlacemark = startPlacemarks?[0] else { return }
+			geocoder.reverseGeocodeLocation(lastLocation) { [self] endPlacemarks, _ in
+				print("End locations \(endPlacemarks?.count ?? 0)")
+				guard let endPlacemark = endPlacemarks?[0] else { return }
+
+				print("Start \(startPlacemark.locality), \(startPlacemark.country)")
+				print("End \(endPlacemark.locality), \(endPlacemark.country)")
+
+				let tripEntity = TripEntity(context: viewContext).apply { entity in
+					entity.end = .now
+					entity.start = trip.start
+					entity.averageSpeed = trip.speed
+					entity.distance = trip.distance
+					entity.timestamp = .now
+					entity.fuelEnd = trip.fuelTankLevel.asDecimal
+					entity.fuelStart = trip.startFuelTankLevel.asDecimal
+
+					entity.startCity = startPlacemark.locality ?? "Unknown"
+					entity.startCountry = startPlacemark.country ?? "Unknown"
+					entity.endCity = endPlacemark.locality ?? "Unknown"
+					entity.endCountry = endPlacemark.country ?? "Unknown"
+
+					print("Set entity values to: \(entity.startCity), \(entity.startCountry) -> \(entity.endCity), \(entity.endCountry)")
+
+					locations.forEach { location in
+						let coordinate = location.coordinate
+						let coordinateEntity = CoordinateEntity(context: self.viewContext)
+						coordinateEntity.latitude = NSDecimalNumber(value: coordinate.latitude)
+						coordinateEntity.longitude = NSDecimalNumber(value: coordinate.longitude)
+						entity.addToLocations(coordinateEntity)
+					}
+					print("Stopped the trip: \(trip.distance)km")
+				}
 				do {
 					viewContext.insert(tripEntity)
 					try viewContext.save()
+					print("Saved the trip!")
 				} catch {
 					print(error)
 				}
 			}
 		}
-		liveActivityTimer?.invalidate()
-		currentTrip = nil
 	}
 
 	func startTrip() {
@@ -138,6 +178,7 @@ class TripSingleton {
 				print("Timer is running!")
 			}
 		}
+		print("Started the trip!")
 	}
 
 	func startTheActivity() {
@@ -146,6 +187,7 @@ class TripSingleton {
 		let attributes = CarWidgetAttributes()
 		let state = Activity<CarWidgetAttributes>.ContentState(trip: trip)
 		currentActivity = try? Activity.request(attributes: attributes, contentState: state, pushType: nil)
+		print("Started the activity.")
 	}
 
 	private func processMeasurements() {

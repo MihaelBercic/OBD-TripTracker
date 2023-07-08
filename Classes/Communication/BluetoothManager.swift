@@ -36,7 +36,7 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 
 		Thread(block: processOutgoing).start()
 		Thread(block: processRequests).start()
-		Logger.shared.info("BM initialised")
+		print("BM initialised")
 	}
 
 	func centralManagerDidUpdateState(_ central: CBCentralManager) {
@@ -44,13 +44,13 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 		if central.state == .poweredOn {
 			let isConnected = adapter != nil
 			if isConnected {
-				Logger.shared.info("Adapter is connected, discovering services...")
+				print("Adapter is connected, discovering services...")
 				adapter?.use {
 					if $0.state == .connected { $0.discoverServices([serviceUUID]) }
 					else { central.connect($0) }
 				}
 			} else {
-				Logger.shared.info("📡 Scanning for peripherals...")
+				print("📡 Scanning for peripherals...")
 				central.scanForPeripherals(withServices: [advertisedUUID])
 			}
 		}
@@ -59,7 +59,7 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 	func centralManager(_ manager: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData _: [String: Any], rssi _: NSNumber) {
 		if peripheral.name != "IOS-Vlink" { return }
 		manager.stopScan()
-		Logger.shared.info("📍 Discovered our adapter!")
+		print("📍 Discovered our adapter!")
 		adapter = peripheral.apply {
 			$0.delegate = self
 			manager.connect($0)
@@ -67,21 +67,21 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 	}
 
 	func centralManager(_: CBCentralManager, didConnect peripheral: CBPeripheral) {
-		Logger.shared.info("✅ Connected to our adapter!")
+		print("✅ Connected to our adapter!")
 		adapter = peripheral
 		peripheral.discoverServices([serviceUUID])
 	}
 
 	func peripheral(_ peripheral: CBPeripheral, didDiscoverServices _: Error?) {
 		guard let importantService = peripheral.services?.first(where: { $0.uuid == serviceUUID }) else { return }
-		Logger.shared.info("📍 Discovered the important service!")
+		print("📍 Discovered the important service!")
 		peripheral.discoverCharacteristics([characteristicUUID], for: importantService)
 	}
 
 	func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error _: Error?) {
 		guard let characteristic = service.characteristics?.first(where: { $0.uuid == characteristicUUID }) else { return }
 		self.characteristic = characteristic
-		Logger.shared.info("📍 Discovered the important characteristic!")
+		print("📍 Discovered the important characteristic!")
 
 		peripheral.setNotifyValue(true, for: characteristic)
 		addToOutgoingQueue("AT E0",
@@ -110,12 +110,12 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 		}
 
 		if encodedData.contains(/NO|UNABLE|ERROR|STOPPED/) {
-			Logger.shared.info(encodedData)
+			print(encodedData)
 			messageInterval = 5
 			requestQueue.moveToTheBack()
 		} else {
 			if encodedData.split(separator: " ").count < 3 {
-				Logger.shared.info("Data is shorter |\(encodedData)|")
+				print("Data is shorter |\(encodedData)|")
 				return
 			}
 
@@ -141,17 +141,16 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 		outgoingMessageQueue.clear()
 		requestQueue.clear()
 		TripSingleton.shared.stopTrip()
-		Logger.shared.info("Will try to reconnect! Cleared queues.")
+		print("Will try to reconnect! Cleared queues.")
 	}
 
-	func centralManager(_ central: CBCentralManager, willRestoreState state: [String: Any]) {
-		Logger.shared.info("Will restore state!")
+	func centralManager(_: CBCentralManager, willRestoreState state: [String: Any]) {
+		print("Will restore state!")
 		guard let restoredPeripherals = state[CBCentralManagerRestoredStatePeripheralsKey] as? [CBPeripheral] else { return }
 		guard let ourAdapter = restoredPeripherals.first(where: { $0.name == adapterName }) else { return }
-		Logger.shared.info("Restoring state and adapter exists!")
+		print("Restoring state and adapter exists!")
 		adapter = ourAdapter.apply {
 			$0.delegate = self
-			central.connect($0)
 		}
 	}
 
@@ -169,11 +168,9 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 			guard let characteristic = characteristic else { continue }
 			guard let adapter = adapter else { continue }
 			let data = Data("\(message)\r".utf8)
-
-			DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + messageInterval) {
-				adapter.writeValue(data, for: characteristic, type: .withoutResponse)
-				print("[\(Date.now.timeIntervalSince1970)] Sent \(message)")
-			}
+			print("Sending \(message)")
+			Thread.sleep(forTimeInterval: messageInterval)
+			adapter.writeValue(data, for: characteristic, type: .withoutResponse)
 		}
 	}
 
