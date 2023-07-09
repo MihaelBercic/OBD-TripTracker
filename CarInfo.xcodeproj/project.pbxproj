@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		470A92572A595E3D00237240 /* MapToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470A92562A595E3D00237240 /* MapToolbar.swift */; };
+		470A92582A595E8C00237240 /* MapToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470A92562A595E3D00237240 /* MapToolbar.swift */; };
+		470A92592A595E8C00237240 /* MapToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470A92562A595E3D00237240 /* MapToolbar.swift */; };
+		470A925A2A595E8D00237240 /* MapToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470A92562A595E3D00237240 /* MapToolbar.swift */; };
 		474905842A4CD656006C347C /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474905832A4CD656006C347C /* Request.swift */; };
 		474905852A4CD656006C347C /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474905832A4CD656006C347C /* Request.swift */; };
 		474905862A4CD656006C347C /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474905832A4CD656006C347C /* Request.swift */; };
@@ -33,6 +37,22 @@
 		478A55972A4706D9000759D3 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478A55952A4706D9000759D3 /* Queue.swift */; };
 		478A55982A4706D9000759D3 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478A55952A4706D9000759D3 /* Queue.swift */; };
 		478A55992A4706D9000759D3 /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 478A55952A4706D9000759D3 /* Queue.swift */; };
+		47B3D8242A59C95A00E36389 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D8232A59C95A00E36389 /* TestView.swift */; };
+		47B3D8252A59C95A00E36389 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D8232A59C95A00E36389 /* TestView.swift */; };
+		47B3D8262A59C95A00E36389 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D8232A59C95A00E36389 /* TestView.swift */; };
+		47B3D8272A59C95A00E36389 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D8232A59C95A00E36389 /* TestView.swift */; };
+		47B3D8292A59D3B400E36389 /* TripRepresented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D8282A59D3B400E36389 /* TripRepresented.swift */; };
+		47B3D82A2A59D3B400E36389 /* TripRepresented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D8282A59D3B400E36389 /* TripRepresented.swift */; };
+		47B3D82B2A59D3B400E36389 /* TripRepresented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D8282A59D3B400E36389 /* TripRepresented.swift */; };
+		47B3D82C2A59D3B400E36389 /* TripRepresented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D8282A59D3B400E36389 /* TripRepresented.swift */; };
+		47B3D82E2A59E45C00E36389 /* TripGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D82D2A59E45C00E36389 /* TripGridView.swift */; };
+		47B3D82F2A59E45C00E36389 /* TripGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D82D2A59E45C00E36389 /* TripGridView.swift */; };
+		47B3D8302A59E45C00E36389 /* TripGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D82D2A59E45C00E36389 /* TripGridView.swift */; };
+		47B3D8312A59E45C00E36389 /* TripGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D82D2A59E45C00E36389 /* TripGridView.swift */; };
+		47B3D8332A59E79500E36389 /* RecentTripsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D8322A59E79500E36389 /* RecentTripsList.swift */; };
+		47B3D8342A59E79500E36389 /* RecentTripsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D8322A59E79500E36389 /* RecentTripsList.swift */; };
+		47B3D8352A59E79500E36389 /* RecentTripsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D8322A59E79500E36389 /* RecentTripsList.swift */; };
+		47B3D8362A59E79500E36389 /* RecentTripsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D8322A59E79500E36389 /* RecentTripsList.swift */; };
 		47C077CE2A34BFDD001A85E2 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C077CD2A34BFDD001A85E2 /* WidgetKit.framework */; };
 		47C077D02A34BFDD001A85E2 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C077CF2A34BFDD001A85E2 /* SwiftUI.framework */; };
 		47C077D32A34BFDD001A85E2 /* CarWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C077D22A34BFDD001A85E2 /* CarWidgetBundle.swift */; };
@@ -190,6 +210,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		470A92562A595E3D00237240 /* MapToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapToolbar.swift; sourceTree = "<group>"; };
 		474905832A4CD656006C347C /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		474905882A4DEF84006C347C /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		477E42492A4B178500A902F0 /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
@@ -197,6 +218,10 @@
 		478A558B2A46ECC5000759D3 /* Packet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Packet.swift; sourceTree = "<group>"; };
 		478A55902A4705B4000759D3 /* BluetoothManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothManager.swift; sourceTree = "<group>"; };
 		478A55952A4706D9000759D3 /* Queue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Queue.swift; sourceTree = "<group>"; };
+		47B3D8232A59C95A00E36389 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		47B3D8282A59D3B400E36389 /* TripRepresented.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripRepresented.swift; sourceTree = "<group>"; };
+		47B3D82D2A59E45C00E36389 /* TripGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripGridView.swift; sourceTree = "<group>"; };
+		47B3D8322A59E79500E36389 /* RecentTripsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentTripsList.swift; sourceTree = "<group>"; };
 		47C077CB2A34BFDD001A85E2 /* CarWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CarWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		47C077CD2A34BFDD001A85E2 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		47C077CF2A34BFDD001A85E2 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -274,12 +299,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		470A92552A595E2B00237240 /* MapView */ = {
+			isa = PBXGroup;
+			children = (
+				470A92562A595E3D00237240 /* MapToolbar.swift */,
+				47B3D8232A59C95A00E36389 /* TestView.swift */,
+			);
+			path = MapView;
+			sourceTree = "<group>";
+		};
 		477E42482A4B177600A902F0 /* Trip */ = {
 			isa = PBXGroup;
 			children = (
 				47CDBCAC2A507F800013322E /* TripDataManager.swift */,
 				477E42492A4B178500A902F0 /* Trip.swift */,
 				474905882A4DEF84006C347C /* LocationManager.swift */,
+				47B3D8282A59D3B400E36389 /* TripRepresented.swift */,
 			);
 			path = Trip;
 			sourceTree = "<group>";
@@ -360,6 +395,7 @@
 		47CDBD0B2A52D3D20013322E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				470A92552A595E2B00237240 /* MapView */,
 				47CDBD162A52FD820013322E /* Trip */,
 				47CDBD0C2A52D3EC0013322E /* StatisticsView.swift */,
 				47CDBD112A52D7310013322E /* CustomGauge.swift */,
@@ -372,6 +408,8 @@
 			isa = PBXGroup;
 			children = (
 				47CDBD172A52FD910013322E /* TripCard.swift */,
+				47B3D82D2A59E45C00E36389 /* TripGridView.swift */,
+				47B3D8322A59E79500E36389 /* RecentTripsList.swift */,
 			);
 			path = Trip;
 			sourceTree = "<group>";
@@ -614,11 +652,14 @@
 			files = (
 				478A558F2A46ECC5000759D3 /* Packet.swift in Sources */,
 				47D665192A49D27F00E25DCE /* Packets.swift in Sources */,
+				47B3D8312A59E45C00E36389 /* TripGridView.swift in Sources */,
 				47C077D32A34BFDD001A85E2 /* CarWidgetBundle.swift in Sources */,
 				47CDBD152A52D7310013322E /* CustomGauge.swift in Sources */,
+				470A925A2A595E8D00237240 /* MapToolbar.swift in Sources */,
 				478A55942A4705B4000759D3 /* BluetoothManager.swift in Sources */,
 				4749058C2A4DEF84006C347C /* LocationManager.swift in Sources */,
 				47CDBCF92A52D2790013322E /* Useful.swift in Sources */,
+				47B3D8362A59E79500E36389 /* RecentTripsList.swift in Sources */,
 				47CDBCE02A52C5A80013322E /* LogEntity+CoreDataClass.swift in Sources */,
 				47CDBD0A2A52D30B0013322E /* ResponseBuilder.swift in Sources */,
 				47CDBCD02A52C13F0013322E /* CarInfo.xcdatamodeld in Sources */,
@@ -632,6 +673,7 @@
 				474905872A4CD656006C347C /* Request.swift in Sources */,
 				47C956802A55939600E52853 /* LogListView.swift in Sources */,
 				47CDBD1B2A52FD910013322E /* TripCard.swift in Sources */,
+				47B3D8272A59C95A00E36389 /* TestView.swift in Sources */,
 				47CDBD102A52D3EC0013322E /* StatisticsView.swift in Sources */,
 				47D6651E2A49DC3B00E25DCE /* Errors.swift in Sources */,
 				47C077D72A34BFDD001A85E2 /* CarWidget.swift in Sources */,
@@ -642,6 +684,7 @@
 				47CDBCE42A52C5A80013322E /* LogEntity+CoreDataProperties.swift in Sources */,
 				477E424B2A4B187E00A902F0 /* Trip.swift in Sources */,
 				47CDBCBD2A5087AC0013322E /* CoordinateEntity+CoreDataClass.swift in Sources */,
+				47B3D82C2A59D3B400E36389 /* TripRepresented.swift in Sources */,
 				47C9568A2A56B31100E52853 /* TripEntity+CoreDataProperties.swift in Sources */,
 				47C077E72A34D265001A85E2 /* FuelView.swift in Sources */,
 				47C956892A56B31100E52853 /* TripEntity+CoreDataClass.swift in Sources */,
@@ -660,6 +703,7 @@
 				47D665112A49ABFB00E25DCE /* ByteBuffer.swift in Sources */,
 				47CDBD0D2A52D3EC0013322E /* StatisticsView.swift in Sources */,
 				47C9567D2A55939600E52853 /* LogListView.swift in Sources */,
+				47B3D8242A59C95A00E36389 /* TestView.swift in Sources */,
 				478A558C2A46ECC5000759D3 /* Packet.swift in Sources */,
 				47CDBD182A52FD910013322E /* TripCard.swift in Sources */,
 				47CDBCAD2A507F800013322E /* TripDataManager.swift in Sources */,
@@ -672,15 +716,19 @@
 				47C956842A56B0CB00E52853 /* TripEntity+CoreDataProperties.swift in Sources */,
 				47C077DD2A34BFDF001A85E2 /* CarWidget.intentdefinition in Sources */,
 				47D665162A49D27F00E25DCE /* Packets.swift in Sources */,
+				470A92572A595E3D00237240 /* MapToolbar.swift in Sources */,
 				47D6651B2A49DC3B00E25DCE /* Errors.swift in Sources */,
 				BFF89A17309A3399CFA86C3D /* ContentView.swift in Sources */,
 				478A55962A4706D9000759D3 /* Queue.swift in Sources */,
+				47B3D82E2A59E45C00E36389 /* TripGridView.swift in Sources */,
 				47CDBCFD2A52D2AB0013322E /* PIDs.swift in Sources */,
 				47FC02DA2A4C211600E432F6 /* ResponseManager.swift in Sources */,
 				47CDBCE12A52C5A80013322E /* LogEntity+CoreDataProperties.swift in Sources */,
 				47CDBCDD2A52C5A80013322E /* LogEntity+CoreDataClass.swift in Sources */,
+				47B3D8332A59E79500E36389 /* RecentTripsList.swift in Sources */,
 				BFF89E9472E3B716C83C92F4 /* CarInfo.xcdatamodeld in Sources */,
 				47C077E62A34CC9C001A85E2 /* FuelView.swift in Sources */,
+				47B3D8292A59D3B400E36389 /* TripRepresented.swift in Sources */,
 				478A55912A4705B4000759D3 /* BluetoothManager.swift in Sources */,
 				47CDBCA82A507EC00013322E /* CoordinateEntity+CoreDataClass.swift in Sources */,
 				47EF1B632A3B49A7001DC39B /* ScopeFunctions.swift in Sources */,
@@ -691,6 +739,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47B3D82B2A59D3B400E36389 /* TripRepresented.swift in Sources */,
 				47CDBD042A52D2F00013322E /* MeasuredValue.swift in Sources */,
 				47CDBD0F2A52D3EC0013322E /* StatisticsView.swift in Sources */,
 				47CDBD1A2A52FD910013322E /* TripCard.swift in Sources */,
@@ -709,19 +758,23 @@
 				478A558E2A46ECC5000759D3 /* Packet.swift in Sources */,
 				47CDBCB92A5087AB0013322E /* CoordinateEntity+CoreDataClass.swift in Sources */,
 				BFF898E190A00FB5E7CBF0AF /* CarInfoUITestsLaunchTests.swift in Sources */,
+				47B3D8302A59E45C00E36389 /* TripGridView.swift in Sources */,
 				47EF1B652A3B49A8001DC39B /* ScopeFunctions.swift in Sources */,
 				47FC02DC2A4C211600E432F6 /* ResponseManager.swift in Sources */,
 				47CDBCE32A52C5A80013322E /* LogEntity+CoreDataProperties.swift in Sources */,
 				47C956872A56B31100E52853 /* TripEntity+CoreDataClass.swift in Sources */,
 				4749058B2A4DEF84006C347C /* LocationManager.swift in Sources */,
 				47CDBD092A52D30B0013322E /* ResponseBuilder.swift in Sources */,
+				47B3D8262A59C95A00E36389 /* TestView.swift in Sources */,
 				47CDBCF42A52D2780013322E /* Useful.swift in Sources */,
 				47D6651D2A49DC3B00E25DCE /* Errors.swift in Sources */,
 				47CDBCFF2A52D2AB0013322E /* PIDs.swift in Sources */,
 				478A55932A4705B4000759D3 /* BluetoothManager.swift in Sources */,
+				470A92592A595E8C00237240 /* MapToolbar.swift in Sources */,
 				47C956882A56B31100E52853 /* TripEntity+CoreDataProperties.swift in Sources */,
 				47CDBCBA2A5087AB0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */,
 				47D665182A49D27F00E25DCE /* Packets.swift in Sources */,
+				47B3D8352A59E79500E36389 /* RecentTripsList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -733,6 +786,7 @@
 				477E424D2A4B187F00A902F0 /* Trip.swift in Sources */,
 				474905852A4CD656006C347C /* Request.swift in Sources */,
 				47CDBCEF2A52D2770013322E /* Useful.swift in Sources */,
+				47B3D8252A59C95A00E36389 /* TestView.swift in Sources */,
 				47C956862A56B31000E52853 /* TripEntity+CoreDataProperties.swift in Sources */,
 				478A55972A4706D9000759D3 /* Queue.swift in Sources */,
 				47C956852A56B31000E52853 /* TripEntity+CoreDataClass.swift in Sources */,
@@ -745,19 +799,23 @@
 				478A558D2A46ECC5000759D3 /* Packet.swift in Sources */,
 				47CDBCE22A52C5A80013322E /* LogEntity+CoreDataProperties.swift in Sources */,
 				47CDBCB12A5087900013322E /* TripDataManager.swift in Sources */,
+				47B3D82A2A59D3B400E36389 /* TripRepresented.swift in Sources */,
 				47CDBCB52A5087AB0013322E /* CoordinateEntity+CoreDataClass.swift in Sources */,
 				47C9567E2A55939600E52853 /* LogListView.swift in Sources */,
 				47D665172A49D27F00E25DCE /* Packets.swift in Sources */,
 				478A55922A4705B4000759D3 /* BluetoothManager.swift in Sources */,
 				47CDBD192A52FD910013322E /* TripCard.swift in Sources */,
 				47CDBCFE2A52D2AB0013322E /* PIDs.swift in Sources */,
+				47B3D8342A59E79500E36389 /* RecentTripsList.swift in Sources */,
 				47CDBCDE2A52C5A80013322E /* LogEntity+CoreDataClass.swift in Sources */,
 				477E424E2A4B66F900A902F0 /* CarWidgetLiveActivity.swift in Sources */,
 				47CDBD032A52D2F00013322E /* MeasuredValue.swift in Sources */,
 				47D6651C2A49DC3B00E25DCE /* Errors.swift in Sources */,
 				47CDBD132A52D7310013322E /* CustomGauge.swift in Sources */,
+				47B3D82F2A59E45C00E36389 /* TripGridView.swift in Sources */,
 				47FC02DB2A4C211600E432F6 /* ResponseManager.swift in Sources */,
 				BFF898DF4878E0510529C2DC /* CarInfoTests.swift in Sources */,
+				470A92582A595E8C00237240 /* MapToolbar.swift in Sources */,
 				4749058A2A4DEF84006C347C /* LocationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

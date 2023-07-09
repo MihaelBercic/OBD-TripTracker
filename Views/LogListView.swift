@@ -36,7 +36,7 @@ struct LogListView: View {
 							.font(.footnote)
 							.opacity(0.5)
 							.foregroundColor(log.type == 0 ? .blue : .red)
-						Text(log.message ?? "No message")
+						Text(log.message)
 					}.listRowInsets(.none)
 				}
 			}
