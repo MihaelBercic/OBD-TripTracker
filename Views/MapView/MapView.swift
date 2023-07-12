@@ -73,10 +73,10 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 		colors = []
 		locations = []
 		currentTimer?.invalidate()
+		mapView.removeOverlays(mapView.overlays)
 		let coordinates = path.map { $0.coordinate }
 		let totalPolyline = MKPolyline(coordinates: coordinates, count: coordinates.count)
 		mapView.setVisibleMapRect(totalPolyline.boundingMapRect, edgePadding: UIEdgeInsets(top: 0.0, left: 100.0, bottom: 400.0, right: 100.0), animated: true)
-		mapView.removeOverlays(mapView.overlays)
 	}
 
 	func mapView(_ mapView: MKMapView, regionDidChangeAnimated _: Bool) {
@@ -87,10 +87,12 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 			currentSegment = 1
 			canRenderSpeed = false
 			currentTimer?.invalidate()
+
 			currentTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [self] timer in
 				let currentMaxIndex = min(coordinates.count - 1, currentSegment * segmentSize)
+				let minimumIndex = max(currentMaxIndex - segmentSize - 1, 0)
 				let toDraw = coordinates[0 ... currentMaxIndex]
-				let forSpeedComputation = Array(self.path[currentMaxIndex - segmentSize ... currentMaxIndex])
+				let forSpeedComputation = Array(self.path[minimumIndex ... currentMaxIndex])
 				let currentPercentage = Double(currentMaxIndex) / Double(coordinates.count)
 
 				let averageDistance = forSpeedComputation.enumerated().reduce(0.0) { total, current in
@@ -102,30 +104,34 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 				}
 
 				var colorToAdd: UIColor = .systemGreen
+				var description = "green"
 
 				if averageDistance < 5 {
 					colorToAdd = .systemRed
+					description = "systemRed"
 				} else if averageDistance < 10 {
 					colorToAdd = .systemOrange
+					description = "systemOrange"
 				} else if averageDistance < 20 {
 					colorToAdd = .systemGreen.darker(by: 0.5)!
+					description = "systemGreenDark"
 				}
 
 				self.colors.append(colorToAdd)
 				self.locations.append(CGFloat(currentPercentage))
 
-				let polyline = MKPolyline(coordinates: Array(toDraw), count: toDraw.count)
+				let polyline = MKPolyline(coordinates: forSpeedComputation.map { $0.coordinate }, count: forSpeedComputation.count)
 				let isLast = currentMaxIndex >= coordinates.count - 1
 				canRenderSpeed = isLast
 
-				mapView.removeOverlays(mapView.overlays)
-				mapView.addOverlay(polyline, level: .aboveLabels)
+				// mapView.removeOverlays(mapView.overlays)
+				polyline.subtitle = description
+				let border = MKPolyline(coordinates: forSpeedComputation.map { $0.coordinate }, count: forSpeedComputation.count)
+				border.title = "border"
+				mapView.addOverlays([border, polyline], level: .aboveLabels)
 
 				if isLast {
 					print("Drawn all \(toDraw.count) = \(currentPercentage)")
-					let border = MKPolyline(coordinates: Array(toDraw), count: toDraw.count)
-					border.title = "border"
-					mapView.insertOverlay(border, below: polyline)
 					timer.invalidate()
 				}
 				currentSegment += 1
@@ -139,23 +145,30 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 			return MKOverlayRenderer()
 		}
 
+		var color: UIColor = .systemGreen
+		switch polyline.subtitle {
+		case "systemRed":
+			color = .systemRed
+		case "systemOrange":
+			color = .systemOrange
+		case "systemGreenDark":
+			color = .systemGreen.darker(by: 0.5)!
+		default: ()
+		}
+
 		if polyline.title != "border" {
 			let renderer = MKPolylineRenderer(polyline: polyline)
-			renderer.lineWidth = 2
+			renderer.lineWidth = 3
 			renderer.strokeColor = UIColor.label.withAlphaComponent(0.5)
-			renderer.strokeColor = .systemBlue
-			renderer.lineCap = .round
+			renderer.strokeColor = color
+			renderer.lineCap = .butt
 			return renderer
 		}
 
-		let gradientRenderer = MKGradientPolylineRenderer(polyline: polyline)
-		gradientRenderer.lineWidth = 2.1
-		gradientRenderer.lineCap = .round
+		let gradientRenderer = MKPolylineRenderer(polyline: polyline)
+		gradientRenderer.lineWidth = 5
+		gradientRenderer.lineCap = .butt
 		gradientRenderer.strokeColor = .systemBlue
-		if canRenderSpeed {
-			gradientRenderer.alpha = 0.5
-			gradientRenderer.setColors(colors, locations: locations)
-		}
 		return gradientRenderer
 	}
 
