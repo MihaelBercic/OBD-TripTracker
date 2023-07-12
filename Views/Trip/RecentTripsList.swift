@@ -36,11 +36,24 @@ struct RecentTripsList: View {
 								TripCard(tripEntity: trip)
 									.id("\(id)")
 									.padding(10)
-									.frame(width: screenWidth * 0.8)
-									.background(backgroundColor)
+									.frame(width: screenWidth * 0.6)
+									.background(LinearGradient(
+										colors: [.pink, .red],
+										startPoint: .leading,
+										endPoint: .trailing
+									))
 									.cornerRadius(10)
 									.shadow(color: .black.opacity(0.15), radius: 5, x: 0, y: 5)
 									.foregroundColor(.white)
+									.contextMenu {
+										Button {
+											
+										} label: {
+											Label("Remove", systemImage: "trash")
+												.foregroundStyle(.red)
+												.symbolRenderingMode(.hierarchical)
+										}
+									}
 							}
 						}
 						.padding([.leading, .trailing], 60)

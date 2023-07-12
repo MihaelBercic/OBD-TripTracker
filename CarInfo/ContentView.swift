@@ -39,7 +39,7 @@ struct ContentView: View {
 			.chunked(into: 10).first ?? []
 
 		ZStack(alignment: .bottomLeading) {
-			Map(mapRect: .constant(.world))
+			MapView(currentTrip: $currentTrip)
 				.ignoresSafeArea()
 
 			VStack(alignment: .leading) {
@@ -78,6 +78,15 @@ struct ContentView: View {
 			}
 		}
 	}
+}
+
+struct InnerHeightPreferenceKey: PreferenceKey {
+
+	static var defaultValue: Double = .zero
+	static func reduce(value: inout Double, nextValue: () -> Double) {
+		value = nextValue()
+	}
+
 }
 
 struct Previews_ContentView_Previews: PreviewProvider {

@@ -10,6 +10,8 @@ import SwiftUI
 struct TripGridView: View {
 
 	@Binding var currentTrip: TripEntity?
+	private let backgroundColor: UIColor = .systemBackground.darker(by: 0.8)!
+	private let foregroundColor: UIColor = .label
 
 	private let formatter: DateComponentsFormatter = DateComponentsFormatter().apply { formatter in
 		formatter.unitsStyle = .abbreviated
@@ -127,8 +129,8 @@ struct TripGridView: View {
 				}
 				.padding(10)
 				.padding([.leading, .trailing], 10)
-				.background(.black)
-				.foregroundColor(.white)
+				.background(Color(backgroundColor))
+				.foregroundColor(Color(foregroundColor))
 				.cornerRadius(5)
 
 				GridRow {
@@ -140,7 +142,7 @@ struct TripGridView: View {
 							let fuelStart = currentTrip.fuelStart.doubleValue
 							let fuelEnd = currentTrip.fuelEnd.doubleValue
 							let fuelUsed = (fuelStart - fuelEnd) * 0.70
-							Text(String(format: "%.0f", abs(fuelUsed)))
+							Text(String(format: "%.1f", abs(fuelUsed)))
 								.fontDesign(.rounded)
 								.fontWeight(.semibold)
 							Text("L")
@@ -204,8 +206,8 @@ struct TripGridView: View {
 				}
 				.padding(10)
 				.padding([.leading, .trailing], 10)
-				.background(.black)
-				.foregroundColor(.white)
+				.background(Color(backgroundColor))
+				.foregroundColor(Color(foregroundColor))
 				.cornerRadius(5)
 			}
 		)

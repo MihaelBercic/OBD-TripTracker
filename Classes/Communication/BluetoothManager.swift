@@ -144,13 +144,15 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 		print("Will try to reconnect! Cleared queues.")
 	}
 
-	func centralManager(_: CBCentralManager, willRestoreState state: [String: Any]) {
+	func centralManager(_ central: CBCentralManager, willRestoreState state: [String: Any]) {
 		print("Will restore state!")
 		guard let restoredPeripherals = state[CBCentralManagerRestoredStatePeripheralsKey] as? [CBPeripheral] else { return }
 		guard let ourAdapter = restoredPeripherals.first(where: { $0.name == adapterName }) else { return }
 		print("Restoring state and adapter exists!")
 		adapter = ourAdapter.apply {
 			$0.delegate = self
+			if $0.state == .connected { $0.discoverServices([serviceUUID]) }
+			else { central.connect($0) }
 		}
 	}
 
