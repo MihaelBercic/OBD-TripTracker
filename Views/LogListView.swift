@@ -22,7 +22,7 @@ struct LogListView: View {
 				do {
 					let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "LogEntity")
 					let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
-					let context = TripSingleton.shared.viewContext
+					let context = CoreDataManager.shared.viewContext
 					try context.execute(deleteRequest)
 					try context.save()
 				} catch {
@@ -34,7 +34,6 @@ struct LogListView: View {
 					VStack(alignment: .leading) {
 						Text(log.timestamp.formatted(date: .omitted, time: .standard))
 							.font(.footnote)
-							.opacity(0.5)
 							.foregroundColor(log.type == 0 ? .blue : .red)
 						Text(log.message)
 					}.listRowInsets(.none)

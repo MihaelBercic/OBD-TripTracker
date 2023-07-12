@@ -74,7 +74,7 @@ struct TripCard: View {
 
 struct TripCard_Previews: PreviewProvider {
 
-	public static let tripEntity = TripEntity(context: TripSingleton.shared.viewContext).apply {
+	public static let tripEntity = TripEntity(context: CoreDataManager.shared.viewContext).apply {
 		$0.start = .now - 3600
 	}
 

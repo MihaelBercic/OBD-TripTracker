@@ -16,7 +16,6 @@ import WidgetKit
 
 struct ContentView: View {
 
-	@EnvironmentObject private var manager: TripDataManager
 	@Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
 	@FetchRequest(sortDescriptors: []) private var previousTrips: FetchedResults<TripEntity>
 	@FetchRequest(sortDescriptors: []) private var logHistory: FetchedResults<LogEntity>
@@ -63,7 +62,7 @@ struct ContentView: View {
 				RecentTripsList(trips: trips, currentTrip: $currentTrip)
 					.preference(key: InnerHeightPreferenceKey.self, value: containerReader.size.height)
 					.onPreferenceChange(InnerHeightPreferenceKey.self) { newHeight in
-						withAnimation(.spring(response: 0.5, dampingFraction: 0.75)) {
+						withAnimation(.spring(response: 0.25, dampingFraction: 0.75)) {
 							off = newHeight
 						}
 					}

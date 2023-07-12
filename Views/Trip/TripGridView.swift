@@ -216,7 +216,7 @@ struct TripGridView: View {
 
 struct TripGridView_Previews: PreviewProvider {
 
-	@State static var entity: TripEntity? = TripEntity(context: TripSingleton.shared.viewContext).apply {
+	@State static var entity: TripEntity? = TripEntity(context: CoreDataManager.shared.viewContext).apply {
 		$0.start = .now
 		$0.startCity = "Ljubljana"
 		$0.startCountry = "Slovenija"

@@ -46,9 +46,7 @@ struct RecentTripsList: View {
 									.shadow(color: .black.opacity(0.15), radius: 5, x: 0, y: 5)
 									.foregroundColor(.white)
 									.contextMenu {
-										Button {
-											
-										} label: {
+										Button {} label: {
 											Label("Remove", systemImage: "trash")
 												.foregroundStyle(.red)
 												.symbolRenderingMode(.hierarchical)
@@ -83,7 +81,7 @@ struct RecentTripsList: View {
 }
 
 struct RecentTripsList_Previews: PreviewProvider {
-	@State static var entity: TripEntity? = TripEntity(context: TripSingleton.shared.viewContext).apply {
+	@State static var entity: TripEntity? = TripEntity(context: CoreDataManager.shared.viewContext).apply {
 		$0.start = .now
 		$0.startCity = "Ljubljana"
 		$0.startCountry = "Slovenija"

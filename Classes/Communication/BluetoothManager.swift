@@ -36,21 +36,23 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 
 		Thread(block: processOutgoing).start()
 		Thread(block: processRequests).start()
-		print("BM initialised")
+		Logger.info("🛜 Bluetooth Manager set up")
 	}
 
 	func centralManagerDidUpdateState(_ central: CBCentralManager) {
-		// print("Updated CBManager state to \(central.state) vs \(CBManagerState.poweredOn) with \(adapter)")
 		if central.state == .poweredOn {
 			let isConnected = adapter != nil
 			if isConnected {
-				print("Adapter is connected, discovering services...")
+				Logger.info("CM updated state, adapter not nil...")
 				adapter?.use {
-					if $0.state == .connected { $0.discoverServices([serviceUUID]) }
-					else { central.connect($0) }
+					if $0.state == .connected {
+						$0.discoverServices([serviceUUID])
+					} else {
+						central.connect($0)
+					}
 				}
 			} else {
-				print("📡 Scanning for peripherals...")
+				Logger.info("📡 Scanning for peripherals...")
 				central.scanForPeripherals(withServices: [advertisedUUID])
 			}
 		}
@@ -59,7 +61,7 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 	func centralManager(_ manager: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData _: [String: Any], rssi _: NSNumber) {
 		if peripheral.name != "IOS-Vlink" { return }
 		manager.stopScan()
-		print("📍 Discovered our adapter!")
+		Logger.info("📍 Discovered our adapter!")
 		adapter = peripheral.apply {
 			$0.delegate = self
 			manager.connect($0)
@@ -67,21 +69,21 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 	}
 
 	func centralManager(_: CBCentralManager, didConnect peripheral: CBPeripheral) {
-		print("✅ Connected to our adapter!")
+		Logger.info("✅ Connected to our adapter!")
 		adapter = peripheral
 		peripheral.discoverServices([serviceUUID])
 	}
 
 	func peripheral(_ peripheral: CBPeripheral, didDiscoverServices _: Error?) {
 		guard let importantService = peripheral.services?.first(where: { $0.uuid == serviceUUID }) else { return }
-		print("📍 Discovered the important service!")
+		Logger.info("💭 Discovered the important service!")
 		peripheral.discoverCharacteristics([characteristicUUID], for: importantService)
 	}
 
 	func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error _: Error?) {
 		guard let characteristic = service.characteristics?.first(where: { $0.uuid == characteristicUUID }) else { return }
 		self.characteristic = characteristic
-		print("📍 Discovered the important characteristic!")
+		Logger.info("💭 Discovered the important characteristic!")
 
 		peripheral.setNotifyValue(true, for: characteristic)
 		addToOutgoingQueue("AT E0",
@@ -100,7 +102,7 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 		guard let encodedData = String(bytes: data, encoding: .utf8)?.trimmingCharacters(in: trimmingCharacterSet) else { return }
 
 		let shouldIgnoreResponse = encodedData.count <= 1 || encodedData.contains(/SEARCHING/)
-		print("🔊 \(encodedData)")
+		// print("🔊 \(encodedData)")
 		if shouldIgnoreResponse { return }
 		messageInterval = 1
 
@@ -110,12 +112,12 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 		}
 
 		if encodedData.contains(/NO|UNABLE|ERROR|STOPPED/) {
-			print(encodedData)
+			Logger.error(encodedData)
 			messageInterval = 5
 			requestQueue.moveToTheBack()
 		} else {
 			if encodedData.split(separator: " ").count < 3 {
-				print("Data is shorter |\(encodedData)|")
+				Logger.debug("Short data: |\(encodedData)|")
 				return
 			}
 
@@ -141,18 +143,32 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 		outgoingMessageQueue.clear()
 		requestQueue.clear()
 		TripSingleton.shared.stopTrip()
-		print("Will try to reconnect! Cleared queues.")
+		Logger.info("Will try to reconnect! Cleared queues.")
 	}
 
 	func centralManager(_ central: CBCentralManager, willRestoreState state: [String: Any]) {
-		print("Will restore state!")
+		Logger.info("Will restore state!")
 		guard let restoredPeripherals = state[CBCentralManagerRestoredStatePeripheralsKey] as? [CBPeripheral] else { return }
 		guard let ourAdapter = restoredPeripherals.first(where: { $0.name == adapterName }) else { return }
-		print("Restoring state and adapter exists!")
+		var adapterState = ""
+		switch ourAdapter.state {
+		case .disconnected:
+			adapterState = "disconnected"
+		case .connecting:
+			adapterState = "connecting"
+		case .connected:
+			adapterState = "connected"
+		case .disconnecting:
+			adapterState = "disconnecting"
+		}
+		Logger.info("Restoring state, adapter exists \(adapterState)!")
 		adapter = ourAdapter.apply {
 			$0.delegate = self
-			if $0.state == .connected { $0.discoverServices([serviceUUID]) }
-			else { central.connect($0) }
+			if $0.state == .connected {
+				$0.discoverServices([serviceUUID])
+			} else {
+				central.connect($0)
+			}
 		}
 	}
 

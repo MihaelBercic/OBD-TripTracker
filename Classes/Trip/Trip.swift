@@ -39,15 +39,13 @@ public struct Trip: Codable, Hashable, ScopeFunctions {
 
 class TripSingleton {
 
+	let measurementQueue = Queue<MeasuredValue>()
+
 	static let shared: TripSingleton = .init()
 
 	private let geocoder = CLGeocoder()
-
 	private let locationManager = LocationManager()
-	lazy var tripDataManager = TripDataManager()
-	lazy var viewContext: NSManagedObjectContext = tripDataManager.container.viewContext
 
-	let measurementQueue = Queue<MeasuredValue>()
 	private var liveActivityTimer: Timer?
 	private(set) var currentTrip: Trip?
 	private(set) var currentActivity: Activity<CarWidgetAttributes>?
@@ -118,20 +116,17 @@ class TripSingleton {
 		guard let firstLocation = locations.first else { return }
 		guard let lastLocation = locations.last else { return }
 		guard var trip = currentTrip else { return }
+		let coreDataContext = CoreDataManager.shared.viewContext
 
 		// if trip.distance < 0.1 { return }
 
 		geocoder.reverseGeocodeLocation(firstLocation) { [self] startPlacemarks, _ in
 			print("Start locations \(startPlacemarks?.count ?? 0)")
 			guard let startPlacemark = startPlacemarks?[0] else { return }
-			geocoder.reverseGeocodeLocation(lastLocation) { [self] endPlacemarks, _ in
-				print("End locations \(endPlacemarks?.count ?? 0)")
+			geocoder.reverseGeocodeLocation(lastLocation) { endPlacemarks, _ in
 				guard let endPlacemark = endPlacemarks?[0] else { return }
 
-				print("Start \(startPlacemark.locality), \(startPlacemark.country)")
-				print("End \(endPlacemark.locality), \(endPlacemark.country)")
-
-				let tripEntity = TripEntity(context: viewContext).apply { entity in
+				let tripEntity = TripEntity(context: coreDataContext).apply { entity in
 					entity.end = .now
 					entity.start = trip.start
 					entity.averageSpeed = trip.speed
@@ -149,20 +144,14 @@ class TripSingleton {
 
 					locations.forEach { location in
 						let coordinate = location.coordinate
-						let coordinateEntity = CoordinateEntity(context: self.viewContext)
+						let coordinateEntity = CoordinateEntity(context: coreDataContext)
 						coordinateEntity.latitude = NSDecimalNumber(value: coordinate.latitude)
 						coordinateEntity.longitude = NSDecimalNumber(value: coordinate.longitude)
 						entity.addToLocations(coordinateEntity)
 					}
 					print("Stopped the trip: \(trip.distance)km")
 				}
-				do {
-					viewContext.insert(tripEntity)
-					try viewContext.save()
-					print("Saved the trip!")
-				} catch {
-					print(error)
-				}
+				CoreDataManager.shared.insert(entity: tripEntity)
 			}
 		}
 	}

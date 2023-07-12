@@ -176,7 +176,7 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 
 struct MapView_Previews: PreviewProvider {
 
-	@State static var currentTrip: TripEntity? = TripEntity(context: TripSingleton.shared.viewContext).apply { entity in
+	@State static var currentTrip: TripEntity? = TripEntity(context: CoreDataManager.shared.viewContext).apply { entity in
 		entity.start = .now
 		entity.end = .now
 		entity.timestamp = .now
@@ -188,7 +188,7 @@ struct MapView_Previews: PreviewProvider {
 			CLLocation(latitude: 46.02467, longitude: 14.54008),
 			CLLocation(latitude: 46.02450, longitude: 14.53948),
 		].map { location in
-			CoordinateEntity(context: TripSingleton.shared.viewContext).apply {
+			CoordinateEntity(context: CoreDataManager.shared.viewContext).apply {
 				$0.latitude = location.coordinate.latitude.asDecimal
 				$0.longitude = location.coordinate.longitude.asDecimal
 			}
