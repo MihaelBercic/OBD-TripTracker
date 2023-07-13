@@ -57,8 +57,9 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 	private var currentSegment = 1
 	private var canRenderSpeed: Bool = false
 
+	private var previousPolyline: MKPolyline? = nil
+
 	func setCurrentTrip(mapView: MKMapView, _ newTrip: TripEntity) {
-		print("Setting new trip: \(newTrip.hash)")
 		newRenderNeeded = currentTrip != newTrip
 		currentTrip = newTrip
 		self.mapView = mapView
@@ -70,23 +71,24 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 	}
 
 	private func animateTrip(mapView: MKMapView) {
+		mapView.removeOverlays(mapView.overlays)
 		colors = []
 		locations = []
 		currentTimer?.invalidate()
-		mapView.removeOverlays(mapView.overlays)
 		let coordinates = path.map { $0.coordinate }
 		let totalPolyline = MKPolyline(coordinates: coordinates, count: coordinates.count)
-		mapView.setVisibleMapRect(totalPolyline.boundingMapRect, edgePadding: UIEdgeInsets(top: 0.0, left: 100.0, bottom: 400.0, right: 100.0), animated: true)
+		mapView.setVisibleMapRect(totalPolyline.boundingMapRect, edgePadding: UIEdgeInsets(top: 50.0, left: 50.0, bottom: 500.0, right: 50.0), animated: true)
 	}
 
 	func mapView(_ mapView: MKMapView, regionDidChangeAnimated _: Bool) {
-		print("Did change and \(newRenderNeeded)")
 		if newRenderNeeded {
 			let coordinates = path.map { $0.coordinate }
 			let segmentSize = coordinates.count / 20
 			currentSegment = 1
 			canRenderSpeed = false
+			previousPolyline = nil
 			currentTimer?.invalidate()
+			newRenderNeeded = false
 
 			currentTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [self] timer in
 				let currentMaxIndex = min(coordinates.count - 1, currentSegment * segmentSize)
@@ -128,15 +130,20 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 				polyline.subtitle = description
 				let border = MKPolyline(coordinates: forSpeedComputation.map { $0.coordinate }, count: forSpeedComputation.count)
 				border.title = "border"
-				mapView.addOverlays([border, polyline], level: .aboveLabels)
+
+				if let previousPolyline = previousPolyline {
+					mapView.insertOverlay(border, below: previousPolyline)
+				} else {
+					mapView.addOverlay(border, level: .aboveLabels)
+				}
+				mapView.addOverlay(polyline, level: .aboveLabels)
+				previousPolyline = polyline
 
 				if isLast {
-					print("Drawn all \(toDraw.count) = \(currentPercentage)")
 					timer.invalidate()
 				}
 				currentSegment += 1
 			}
-			newRenderNeeded = false
 		}
 	}
 
@@ -148,27 +155,26 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 		var color: UIColor = .systemGreen
 		switch polyline.subtitle {
 		case "systemRed":
-			color = .systemRed
+			color = .red
 		case "systemOrange":
-			color = .systemOrange
+			color = .orange
 		case "systemGreenDark":
-			color = .systemGreen.darker(by: 0.5)!
+			color = .green.darker(by: 0.5)!
 		default: ()
 		}
 
 		if polyline.title != "border" {
 			let renderer = MKPolylineRenderer(polyline: polyline)
-			renderer.lineWidth = 3
-			renderer.strokeColor = UIColor.label.withAlphaComponent(0.5)
+			renderer.lineWidth = 2
 			renderer.strokeColor = color
-			renderer.lineCap = .butt
+			renderer.lineCap = .round
 			return renderer
 		}
 
 		let gradientRenderer = MKPolylineRenderer(polyline: polyline)
-		gradientRenderer.lineWidth = 5
-		gradientRenderer.lineCap = .butt
-		gradientRenderer.strokeColor = .systemBlue
+		gradientRenderer.lineWidth = 4
+		gradientRenderer.lineCap = .round
+		gradientRenderer.strokeColor = UIColor(named: "RouteBorderColor")
 		return gradientRenderer
 	}
 

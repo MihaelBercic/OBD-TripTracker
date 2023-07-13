@@ -8,6 +8,7 @@
 import ActivityKit
 import CoreData
 import CoreLocation
+import NotificationCenter
 
 public struct Trip: Codable, Hashable, ScopeFunctions {
 	let start: Date
@@ -140,17 +141,17 @@ class TripSingleton {
 					entity.endCity = endPlacemark.locality ?? "Unknown"
 					entity.endCountry = endPlacemark.country ?? "Unknown"
 
-					print("Set entity values to: \(entity.startCity), \(entity.startCountry) -> \(entity.endCity), \(entity.endCountry)")
-
-					locations.forEach { location in
+					locations.dropFirst(10).forEach { location in
 						let coordinate = location.coordinate
 						let coordinateEntity = CoordinateEntity(context: coreDataContext)
 						coordinateEntity.latitude = NSDecimalNumber(value: coordinate.latitude)
 						coordinateEntity.longitude = NSDecimalNumber(value: coordinate.longitude)
+						coordinateEntity.speed = Int16(location.speed.magnitude)
 						entity.addToLocations(coordinateEntity)
 					}
-					print("Stopped the trip: \(trip.distance)km")
+					Logger.info("Stopped the trip: \(trip.distance)km")
 				}
+				Logger.info("Inserting the trip!")
 				CoreDataManager.shared.insert(entity: tripEntity)
 			}
 		}
@@ -164,10 +165,19 @@ class TripSingleton {
 		DispatchQueue.main.async { [weak self] in
 			self?.liveActivityTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
 				TripSingleton.shared.updateActivity()
-				print("Timer is running!")
 			}
 		}
 		print("Started the trip!")
+		let notification = UNMutableNotificationContent()
+		notification.title = "Car Trip"
+		notification.body = "Trip has started 🚦"
+		let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1.0, repeats: false)
+		let uuid = UUID().uuidString
+		let request = UNNotificationRequest(identifier: uuid, content: notification, trigger: trigger)
+		let center = UNUserNotificationCenter.current()
+		center.add(request) { error in
+			Logger.error("Notification: \(error)")
+		}
 	}
 
 	func startTheActivity() {

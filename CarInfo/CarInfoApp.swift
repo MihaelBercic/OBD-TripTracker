@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import NotificationCenter
 import SwiftUI
 
 @main
@@ -24,6 +25,11 @@ struct CarInfoApp: App {
 		WindowGroup {
 			ContentView()
 				.environment(\.managedObjectContext, CoreDataManager.shared.viewContext)
+				.onAppear {
+					UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { allowed, error in
+						print("Complete: \(allowed) \(error)")
+					}
+				}
 		}.onChange(of: scenePhase) { scene in
 			if scene == .active {
 				UIApplication.shared.isIdleTimerDisabled = true

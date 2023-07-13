@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F82" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="TripModel">
     <entity name="Coordinate" representedClassName="CoordinateEntity" syncable="YES">
-        <attribute name="latitude" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="longitude" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="latitude" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="longitude" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="speed" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="trip" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Trip" inverseName="locations" inverseEntity="Trip"/>
     </entity>
     <entity name="LogEntity" representedClassName="LogEntity" syncable="YES">

@@ -61,6 +61,14 @@
 		47B3D8442A5F3CEA00E36389 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D8422A5F3CEA00E36389 /* Logger.swift */; };
 		47B3D8452A5F3CEA00E36389 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D8422A5F3CEA00E36389 /* Logger.swift */; };
 		47B3D8462A5F3CEA00E36389 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D8422A5F3CEA00E36389 /* Logger.swift */; };
+		47B3D84E2A5F48B500E36389 /* CoordinateEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D84C2A5F48B500E36389 /* CoordinateEntity+CoreDataClass.swift */; };
+		47B3D84F2A5F48B500E36389 /* CoordinateEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D84C2A5F48B500E36389 /* CoordinateEntity+CoreDataClass.swift */; };
+		47B3D8502A5F48B500E36389 /* CoordinateEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D84C2A5F48B500E36389 /* CoordinateEntity+CoreDataClass.swift */; };
+		47B3D8512A5F48B500E36389 /* CoordinateEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D84C2A5F48B500E36389 /* CoordinateEntity+CoreDataClass.swift */; };
+		47B3D8522A5F48B500E36389 /* CoordinateEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D84D2A5F48B500E36389 /* CoordinateEntity+CoreDataProperties.swift */; };
+		47B3D8532A5F48B500E36389 /* CoordinateEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D84D2A5F48B500E36389 /* CoordinateEntity+CoreDataProperties.swift */; };
+		47B3D8542A5F48B500E36389 /* CoordinateEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D84D2A5F48B500E36389 /* CoordinateEntity+CoreDataProperties.swift */; };
+		47B3D8552A5F48B500E36389 /* CoordinateEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D84D2A5F48B500E36389 /* CoordinateEntity+CoreDataProperties.swift */; };
 		47C077CE2A34BFDD001A85E2 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C077CD2A34BFDD001A85E2 /* WidgetKit.framework */; };
 		47C077D02A34BFDD001A85E2 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47C077CF2A34BFDD001A85E2 /* SwiftUI.framework */; };
 		47C077D32A34BFDD001A85E2 /* CarWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C077D22A34BFDD001A85E2 /* CarWidgetBundle.swift */; };
@@ -85,14 +93,6 @@
 		47C956882A56B31100E52853 /* TripEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C956822A56B0CB00E52853 /* TripEntity+CoreDataProperties.swift */; };
 		47C956892A56B31100E52853 /* TripEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C956812A56B0CB00E52853 /* TripEntity+CoreDataClass.swift */; };
 		47C9568A2A56B31100E52853 /* TripEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47C956822A56B0CB00E52853 /* TripEntity+CoreDataProperties.swift */; };
-		47CDBCA82A507EC00013322E /* CoordinateEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA42A507EC00013322E /* CoordinateEntity+CoreDataClass.swift */; };
-		47CDBCA92A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA52A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift */; };
-		47CDBCB52A5087AB0013322E /* CoordinateEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA42A507EC00013322E /* CoordinateEntity+CoreDataClass.swift */; };
-		47CDBCB62A5087AB0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA52A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift */; };
-		47CDBCB92A5087AB0013322E /* CoordinateEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA42A507EC00013322E /* CoordinateEntity+CoreDataClass.swift */; };
-		47CDBCBA2A5087AB0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA52A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift */; };
-		47CDBCBD2A5087AC0013322E /* CoordinateEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA42A507EC00013322E /* CoordinateEntity+CoreDataClass.swift */; };
-		47CDBCBE2A5087AC0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47CDBCA52A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift */; };
 		47CDBCC62A51D0290013322E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF895298CD94DBDA8193722 /* ContentView.swift */; };
 		47CDBCC72A51D0290013322E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF895298CD94DBDA8193722 /* ContentView.swift */; };
 		47CDBCC82A51D02A0013322E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF895298CD94DBDA8193722 /* ContentView.swift */; };
@@ -228,6 +228,9 @@
 		47B3D8372A5AB37200E36389 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		47B3D83C2A5F386300E36389 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		47B3D8422A5F3CEA00E36389 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		47B3D84C2A5F48B500E36389 /* CoordinateEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoordinateEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		47B3D84D2A5F48B500E36389 /* CoordinateEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoordinateEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		47B3D8562A5FF88C00E36389 /* CarInfo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CarInfo.entitlements; sourceTree = "<group>"; };
 		47C077CB2A34BFDD001A85E2 /* CarWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CarWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		47C077CD2A34BFDD001A85E2 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		47C077CF2A34BFDD001A85E2 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -241,8 +244,6 @@
 		47C9567C2A55939600E52853 /* LogListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogListView.swift; sourceTree = "<group>"; };
 		47C956812A56B0CB00E52853 /* TripEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TripEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		47C956822A56B0CB00E52853 /* TripEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TripEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		47CDBCA42A507EC00013322E /* CoordinateEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoordinateEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
-		47CDBCA52A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoordinateEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		47CDBCDB2A52C5A80013322E /* LogEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		47CDBCDC2A52C5A80013322E /* LogEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LogEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		47CDBCFC2A52D2AB0013322E /* PIDs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PIDs.swift; sourceTree = "<group>"; };
@@ -369,12 +370,12 @@
 		47CDBCE52A52D2000013322E /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				47B3D84C2A5F48B500E36389 /* CoordinateEntity+CoreDataClass.swift */,
+				47B3D84D2A5F48B500E36389 /* CoordinateEntity+CoreDataProperties.swift */,
 				47C956812A56B0CB00E52853 /* TripEntity+CoreDataClass.swift */,
 				47C956822A56B0CB00E52853 /* TripEntity+CoreDataProperties.swift */,
 				47CDBCDB2A52C5A80013322E /* LogEntity+CoreDataClass.swift */,
 				47CDBCDC2A52C5A80013322E /* LogEntity+CoreDataProperties.swift */,
-				47CDBCA42A507EC00013322E /* CoordinateEntity+CoreDataClass.swift */,
-				47CDBCA52A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift */,
 				47B3D83C2A5F386300E36389 /* CoreDataManager.swift */,
 			);
 			path = Storage;
@@ -465,6 +466,7 @@
 		BFF898926E76566EAC30CD27 /* CarInfo */ = {
 			isa = PBXGroup;
 			children = (
+				47B3D8562A5FF88C00E36389 /* CarInfo.entitlements */,
 				478A55872A45C7C9000759D3 /* Info.plist */,
 				BFF8998AC289C4ED3A1E623F /* Assets.xcassets */,
 				BFF89B920079F72DB8964F12 /* Preview Content */,
@@ -672,13 +674,13 @@
 				470A925A2A595E8D00237240 /* MapToolbar.swift in Sources */,
 				478A55942A4705B4000759D3 /* BluetoothManager.swift in Sources */,
 				4749058C2A4DEF84006C347C /* LocationManager.swift in Sources */,
+				47B3D8552A5F48B500E36389 /* CoordinateEntity+CoreDataProperties.swift in Sources */,
 				47CDBCF92A52D2790013322E /* Useful.swift in Sources */,
 				47B3D8362A59E79500E36389 /* RecentTripsList.swift in Sources */,
 				47CDBCE02A52C5A80013322E /* LogEntity+CoreDataClass.swift in Sources */,
 				47CDBD0A2A52D30B0013322E /* ResponseBuilder.swift in Sources */,
 				47CDBCD02A52C13F0013322E /* CarInfo.xcdatamodeld in Sources */,
 				47C077DC2A34BFDF001A85E2 /* CarWidget.intentdefinition in Sources */,
-				47CDBCBE2A5087AC0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */,
 				47B3D83B2A5AB37200E36389 /* MapView.swift in Sources */,
 				47CDBD052A52D2F00013322E /* MeasuredValue.swift in Sources */,
 				47EF1B662A3B49A8001DC39B /* ScopeFunctions.swift in Sources */,
@@ -696,9 +698,9 @@
 				47FC02DD2A4C211600E432F6 /* ResponseManager.swift in Sources */,
 				478A55992A4706D9000759D3 /* Queue.swift in Sources */,
 				47CDBCE42A52C5A80013322E /* LogEntity+CoreDataProperties.swift in Sources */,
+				47B3D8512A5F48B500E36389 /* CoordinateEntity+CoreDataClass.swift in Sources */,
 				477E424B2A4B187E00A902F0 /* Trip.swift in Sources */,
 				47B3D8402A5F386300E36389 /* CoreDataManager.swift in Sources */,
-				47CDBCBD2A5087AC0013322E /* CoordinateEntity+CoreDataClass.swift in Sources */,
 				47B3D82C2A59D3B400E36389 /* TripRepresented.swift in Sources */,
 				47C9568A2A56B31100E52853 /* TripEntity+CoreDataProperties.swift in Sources */,
 				47C077E72A34D265001A85E2 /* FuelView.swift in Sources */,
@@ -723,7 +725,6 @@
 				47CDBD182A52FD910013322E /* TripCard.swift in Sources */,
 				47CDBD072A52D30B0013322E /* ResponseBuilder.swift in Sources */,
 				47C956832A56B0CB00E52853 /* TripEntity+CoreDataClass.swift in Sources */,
-				47CDBCA92A507EC00013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */,
 				47CDBD022A52D2F00013322E /* MeasuredValue.swift in Sources */,
 				47CDBD122A52D7310013322E /* CustomGauge.swift in Sources */,
 				47C077E82A34E843001A85E2 /* CarWidgetLiveActivity.swift in Sources */,
@@ -738,6 +739,8 @@
 				478A55962A4706D9000759D3 /* Queue.swift in Sources */,
 				47B3D82E2A59E45C00E36389 /* TripGridView.swift in Sources */,
 				47CDBCFD2A52D2AB0013322E /* PIDs.swift in Sources */,
+				47B3D8522A5F48B500E36389 /* CoordinateEntity+CoreDataProperties.swift in Sources */,
+				47B3D84E2A5F48B500E36389 /* CoordinateEntity+CoreDataClass.swift in Sources */,
 				47FC02DA2A4C211600E432F6 /* ResponseManager.swift in Sources */,
 				47CDBCE12A52C5A80013322E /* LogEntity+CoreDataProperties.swift in Sources */,
 				47CDBCDD2A52C5A80013322E /* LogEntity+CoreDataClass.swift in Sources */,
@@ -746,7 +749,6 @@
 				47C077E62A34CC9C001A85E2 /* FuelView.swift in Sources */,
 				47B3D8292A59D3B400E36389 /* TripRepresented.swift in Sources */,
 				478A55912A4705B4000759D3 /* BluetoothManager.swift in Sources */,
-				47CDBCA82A507EC00013322E /* CoordinateEntity+CoreDataClass.swift in Sources */,
 				47EF1B632A3B49A7001DC39B /* ScopeFunctions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -771,7 +773,6 @@
 				47D665132A49ABFB00E25DCE /* ByteBuffer.swift in Sources */,
 				478A55982A4706D9000759D3 /* Queue.swift in Sources */,
 				478A558E2A46ECC5000759D3 /* Packet.swift in Sources */,
-				47CDBCB92A5087AB0013322E /* CoordinateEntity+CoreDataClass.swift in Sources */,
 				BFF898E190A00FB5E7CBF0AF /* CarInfoUITestsLaunchTests.swift in Sources */,
 				47B3D8302A59E45C00E36389 /* TripGridView.swift in Sources */,
 				47EF1B652A3B49A8001DC39B /* ScopeFunctions.swift in Sources */,
@@ -785,12 +786,13 @@
 				47CDBD092A52D30B0013322E /* ResponseBuilder.swift in Sources */,
 				47CDBCF42A52D2780013322E /* Useful.swift in Sources */,
 				47D6651D2A49DC3B00E25DCE /* Errors.swift in Sources */,
+				47B3D8542A5F48B500E36389 /* CoordinateEntity+CoreDataProperties.swift in Sources */,
 				47CDBCFF2A52D2AB0013322E /* PIDs.swift in Sources */,
 				478A55932A4705B4000759D3 /* BluetoothManager.swift in Sources */,
 				470A92592A595E8C00237240 /* MapToolbar.swift in Sources */,
 				47C956882A56B31100E52853 /* TripEntity+CoreDataProperties.swift in Sources */,
-				47CDBCBA2A5087AB0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */,
 				47D665182A49D27F00E25DCE /* Packets.swift in Sources */,
+				47B3D8502A5F48B500E36389 /* CoordinateEntity+CoreDataClass.swift in Sources */,
 				47B3D8352A59E79500E36389 /* RecentTripsList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -805,19 +807,18 @@
 				47CDBCEF2A52D2770013322E /* Useful.swift in Sources */,
 				47C956862A56B31000E52853 /* TripEntity+CoreDataProperties.swift in Sources */,
 				478A55972A4706D9000759D3 /* Queue.swift in Sources */,
+				47B3D8532A5F48B500E36389 /* CoordinateEntity+CoreDataProperties.swift in Sources */,
 				47B3D83E2A5F386300E36389 /* CoreDataManager.swift in Sources */,
 				47C956852A56B31000E52853 /* TripEntity+CoreDataClass.swift in Sources */,
 				47B3D8392A5AB37200E36389 /* MapView.swift in Sources */,
 				47CDBD082A52D30B0013322E /* ResponseBuilder.swift in Sources */,
 				47CDBD0E2A52D3EC0013322E /* StatisticsView.swift in Sources */,
 				47EF1B642A3B49A8001DC39B /* ScopeFunctions.swift in Sources */,
-				47CDBCB62A5087AB0013322E /* CoordinateEntity+CoreDataProperties.swift in Sources */,
 				47D665122A49ABFB00E25DCE /* ByteBuffer.swift in Sources */,
 				47CDBCC62A51D0290013322E /* ContentView.swift in Sources */,
 				478A558D2A46ECC5000759D3 /* Packet.swift in Sources */,
 				47CDBCE22A52C5A80013322E /* LogEntity+CoreDataProperties.swift in Sources */,
 				47B3D82A2A59D3B400E36389 /* TripRepresented.swift in Sources */,
-				47CDBCB52A5087AB0013322E /* CoordinateEntity+CoreDataClass.swift in Sources */,
 				47C9567E2A55939600E52853 /* LogListView.swift in Sources */,
 				47D665172A49D27F00E25DCE /* Packets.swift in Sources */,
 				478A55922A4705B4000759D3 /* BluetoothManager.swift in Sources */,
@@ -829,6 +830,7 @@
 				47CDBD032A52D2F00013322E /* MeasuredValue.swift in Sources */,
 				47D6651C2A49DC3B00E25DCE /* Errors.swift in Sources */,
 				47CDBD132A52D7310013322E /* CustomGauge.swift in Sources */,
+				47B3D84F2A5F48B500E36389 /* CoordinateEntity+CoreDataClass.swift in Sources */,
 				47B3D82F2A59E45C00E36389 /* TripGridView.swift in Sources */,
 				47B3D8442A5F3CEA00E36389 /* Logger.swift in Sources */,
 				47FC02DB2A4C211600E432F6 /* ResponseManager.swift in Sources */,
@@ -998,6 +1000,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CarInfo/CarInfo.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CarInfo/Preview Content\"";
 				DEVELOPMENT_TEAM = JCPK8HNPNJ;
@@ -1123,6 +1126,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = CarInfo/CarInfo.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CarInfo/Preview Content\"";
 				DEVELOPMENT_TEAM = JCPK8HNPNJ;

@@ -149,6 +149,7 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 	func centralManager(_ central: CBCentralManager, willRestoreState state: [String: Any]) {
 		Logger.info("Will restore state!")
 		guard let restoredPeripherals = state[CBCentralManagerRestoredStatePeripheralsKey] as? [CBPeripheral] else { return }
+		Logger.info("There are \(restoredPeripherals.count) restored peripherals.")
 		guard let ourAdapter = restoredPeripherals.first(where: { $0.name == adapterName }) else { return }
 		var adapterState = ""
 		switch ourAdapter.state {
@@ -166,7 +167,7 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 			$0.delegate = self
 			if $0.state == .connected {
 				$0.discoverServices([serviceUUID])
-			} else {
+			} else if $0.state == .disconnected {
 				central.connect($0)
 			}
 		}

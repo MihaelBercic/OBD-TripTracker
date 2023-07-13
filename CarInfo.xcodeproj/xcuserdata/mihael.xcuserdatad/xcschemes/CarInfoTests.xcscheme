@@ -38,6 +38,11 @@
                BlueprintName = "CarInfoTests"
                ReferencedContainer = "container:CarInfo.xcodeproj">
             </BuildableReference>
+            <SelectedTests>
+               <Test
+                  Identifier = "CarInfoTests">
+               </Test>
+            </SelectedTests>
          </TestableReference>
       </Testables>
    </TestAction>

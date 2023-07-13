@@ -2,12 +2,14 @@
 //  CoordinateEntity+CoreDataClass.swift
 //  CarInfo
 //
-//  Created by Mihael Bercic on 01/07/2023.
+//  Created by Mihael Bercic on 12/07/2023.
 //
 //
 
-import CoreData
 import Foundation
+import CoreData
 
 @objc(CoordinateEntity)
-public class CoordinateEntity: NSManagedObject {}
+public class CoordinateEntity: NSManagedObject {
+
+}

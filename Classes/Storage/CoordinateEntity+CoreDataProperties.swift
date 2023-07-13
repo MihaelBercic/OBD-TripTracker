@@ -2,7 +2,7 @@
 //  CoordinateEntity+CoreDataProperties.swift
 //  CarInfo
 //
-//  Created by Mihael Bercic on 01/07/2023.
+//  Created by Mihael Bercic on 12/07/2023.
 //
 //
 
@@ -17,6 +17,8 @@ public extension CoordinateEntity {
 
 	@NSManaged var latitude: NSDecimalNumber
 	@NSManaged var longitude: NSDecimalNumber
+	@NSManaged var speed: Int16
+	@NSManaged var trip: TripEntity?
 
 }
 

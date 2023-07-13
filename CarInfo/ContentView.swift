@@ -16,7 +16,7 @@ import WidgetKit
 
 struct ContentView: View {
 
-	@Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
+	// @Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
 	@FetchRequest(sortDescriptors: []) private var previousTrips: FetchedResults<TripEntity>
 	@FetchRequest(sortDescriptors: []) private var logHistory: FetchedResults<LogEntity>
 

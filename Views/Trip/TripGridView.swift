@@ -132,6 +132,7 @@ struct TripGridView: View {
 				.background(Color(backgroundColor))
 				.foregroundColor(Color(foregroundColor))
 				.cornerRadius(5)
+				.shadow(radius: 2)
 
 				GridRow {
 					VStack(alignment: .leading) {
@@ -209,6 +210,7 @@ struct TripGridView: View {
 				.background(Color(backgroundColor))
 				.foregroundColor(Color(foregroundColor))
 				.cornerRadius(5)
+				.shadow(radius: 2)
 			}
 		)
 	}

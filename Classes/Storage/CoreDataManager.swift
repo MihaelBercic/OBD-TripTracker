@@ -17,13 +17,16 @@ class CoreDataManager {
 	private let entityQueue = Queue<CoreDataTuple>()
 
 	init() {
-		container.loadPersistentStores { _, error in
+		viewContext = container.viewContext
+		viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+		container.loadPersistentStores(completionHandler: { [self] (_, error) in
 			if let error = error {
 				print("Error with data loading \(error)")
 			}
-		}
-		viewContext = container.viewContext
-		Thread(block: process).start()
+			Thread(block: process).start()
+		})
+
+
 	}
 
 	func insert(entity: NSManagedObject) {
@@ -36,7 +39,6 @@ class CoreDataManager {
 
 	private func process() {
 		while true {
-			entityQueue.semaphore.wait()
 			guard let tupleToProcess = entityQueue.dequeue() else { continue }
 			let entity = tupleToProcess.entity
 			do {
@@ -45,9 +47,11 @@ class CoreDataManager {
 				} else {
 					viewContext.delete(entity)
 				}
-				try viewContext.save()
-				print("Processed CoreData queue tuple...")
+				if viewContext.hasChanges {
+					try viewContext.save()
+				}
 			} catch {
+
 				print(error)
 			}
 		}
