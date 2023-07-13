@@ -12,60 +12,41 @@ class CoreDataManager {
 
 	static let shared = CoreDataManager()
 	let container = NSPersistentContainer(name: "CarInfo")
-	let viewContext: NSManagedObjectContext
 
-	private let entityQueue = Queue<CoreDataTuple>()
+	var viewContext: NSManagedObjectContext {
+		container.viewContext
+	}
 
-	init() {
-		viewContext = container.viewContext
-		viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-		container.loadPersistentStores(completionHandler: { [self] (_, error) in
+	private init() {
+		container.loadPersistentStores { _, error in
 			if let error = error {
 				print("Error with data loading \(error)")
-			}
-			Thread(block: process).start()
-		})
-
-
-	}
-
-	func insert(entity: NSManagedObject) {
-		entityQueue.enqueue(CoreDataTuple(entity: entity, type: .insert))
-	}
-
-	func delete(entity: NSManagedObject) {
-		entityQueue.enqueue(CoreDataTuple(entity: entity, type: .delete))
-	}
-
-	private func process() {
-		while true {
-			guard let tupleToProcess = entityQueue.dequeue() else { continue }
-			let entity = tupleToProcess.entity
-			do {
-				if tupleToProcess.type == .insert {
-					viewContext.insert(entity)
-				} else {
-					viewContext.delete(entity)
-				}
-				if viewContext.hasChanges {
-					try viewContext.save()
-				}
-			} catch {
-
-				print(error)
 			}
 		}
 	}
 
-}
+	func insert(entity _: NSManagedObject) {
+		viewContext.perform {
+			// self.viewContext.insert(entity)
+			self.saveContext()
+		}
+	}
 
-struct CoreDataTuple: Equatable {
-	let entity: NSManagedObject
-	let type: CoreDataManagmentType
-}
+	func delete(entity: NSManagedObject) {
+		viewContext.perform {
+			self.viewContext.delete(entity)
+			self.saveContext()
+		}
+	}
 
-enum CoreDataManagmentType {
-	case insert
-	case delete
-	case dropAll
+	private func saveContext() {
+		do {
+			if viewContext.hasChanges {
+				try viewContext.save()
+			}
+		} catch {
+			print(error)
+		}
+	}
+
 }

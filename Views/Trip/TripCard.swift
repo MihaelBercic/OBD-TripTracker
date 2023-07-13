@@ -23,17 +23,48 @@ struct TripCard: View {
 		formatter.minimumFractionDigits = 1
 	}
 
+	var tripTime = "morning"
+	var systemIconName = "moon.stars.fill"
+	var primaryColor: Color = .white
+
 	init(tripEntity: TripEntity) {
 		self.tripEntity = tripEntity
+		let dateComponents = Calendar.current.dateComponents([.hour], from: tripEntity.start)
+		let time = dateComponents.hour ?? 0
+		if time >= 22 || time < 5 {
+			tripTime = "night"
+			systemIconName = "moon.stars.fill"
+		} else if time < 10 {
+			tripTime = "morning"
+			systemIconName = "sunrise"
+		} else if time < 18 {
+			tripTime = "day"
+			systemIconName = "sun.max.fill"
+			primaryColor = .yellow
+		} else if time < 22 {
+			tripTime = "evening"
+			systemIconName = "sunset.fill"
+		}
 	}
 
 	var body: some View {
 		VStack {
-			Text((tripEntity.start).formatted(date: .numeric, time: .shortened))
-				.font(.footnote)
-				.fontWeight(.semibold)
-				.opacity(0.5)
-
+			HStack {
+				Text((tripEntity.start).formatted(date: .omitted, time: .shortened))
+					.font(.footnote)
+					.fontWeight(.semibold)
+					.opacity(0.5)
+				Spacer()
+				Text((tripEntity.start).formatted(date: .numeric, time: .omitted))
+					.font(.caption2)
+					.fontDesign(.rounded)
+					.opacity(0.5)
+				Spacer()
+				Text((tripEntity.end).formatted(date: .omitted, time: .shortened))
+					.font(.footnote)
+					.fontWeight(.semibold)
+					.opacity(0.5)
+			}
 			HStack(alignment: .center) {
 				VStack(alignment: .leading) {
 					Text(tripEntity.startCity)
@@ -50,7 +81,11 @@ struct TripCard: View {
 						.opacity(0.5)
 				}
 				Spacer()
-				Image(systemName: "arrow.right")
+				VStack(spacing: 5) {
+					Image(systemName: systemIconName)
+						.symbolRenderingMode(.palette)
+						.foregroundStyle(primaryColor, .yellow)
+				}
 				Spacer()
 				VStack(alignment: .trailing) {
 					Text(tripEntity.endCity)
@@ -76,11 +111,17 @@ struct TripCard_Previews: PreviewProvider {
 
 	public static let tripEntity = TripEntity(context: CoreDataManager.shared.viewContext).apply {
 		$0.start = .now - 3600
+		$0.end = .now
+		$0.startCity = "Ljubljana"
+		$0.startCountry = "Slovenija"
+		$0.endCity = "Portorož"
+		$0.endCountry = "Slovenija"
 	}
 
 	static var previews: some View {
 		let _ = print(tripEntity)
 		TripCard(tripEntity: tripEntity)
 			.previewLayout(.fixed(width: 200, height: 100))
+			.background(.orange)
 	}
 }

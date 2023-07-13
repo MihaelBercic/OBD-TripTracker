@@ -31,19 +31,36 @@ struct RecentTripsList: View {
 						HStack(spacing: 20) {
 							ForEach(trips.indices, id: \.self) { id in
 								let trip = trips[id]
-								let backgroundColor = Color(UIColor(hex: colors[id]))
+								var tripTime = "morning"
+								let dateComponents = Calendar.current.dateComponents([.hour], from: trip.start)
+								let time = dateComponents.hour ?? 0
+								let _ = { if time >= 22 || time < 5 {
+									tripTime = "night"
+								} else if time < 10 {
+									tripTime = "morning"
+								} else if time < 18 {
+									tripTime = "day"
+								} else if time < 22 {
+									tripTime = "evening"
+								}}()
+								let backgroundColor = Color(UIColor(named: "\(tripTime.capitalized)RideBackground") ?? .yellow)
+								let backgroundColorEnd = Color(UIColor(named: "\(tripTime.capitalized)RideBackground")?.lighter(by: 1.6) ?? .yellow)
 
 								TripCard(tripEntity: trip)
 									.id("\(id)")
 									.padding(10)
 									.frame(width: screenWidth * 0.6)
 									.background(LinearGradient(
-										colors: [.pink, .red],
+										colors: [backgroundColor, backgroundColorEnd],
 										startPoint: .leading,
 										endPoint: .trailing
 									))
+									.overlay(
+										RoundedRectangle(cornerRadius: 10)
+											.stroke(.foreground.opacity(0.05), lineWidth: 5)
+									)
 									.cornerRadius(10)
-									.shadow(color: .black.opacity(0.15), radius: 5, x: 0, y: 5)
+									.shadow(color: .secondary.opacity(0.05), radius: 5, x: 0, y: 5)
 									.foregroundColor(.white)
 									.contextMenu {
 										Button {} label: {
@@ -54,6 +71,8 @@ struct RecentTripsList: View {
 									}
 							}
 						}
+						.padding([.top], 10)
+						.padding([.bottom], 20)
 						.padding([.leading, .trailing], 60)
 						.simultaneousGesture(DragGesture(minimumDistance: 0.0).onEnded { value in
 							let distance = value.translation.width
@@ -74,7 +93,6 @@ struct RecentTripsList: View {
 				.scrollDisabled(true)
 			}
 			.frame(maxWidth: .infinity, alignment: .leading)
-			.padding(20)
 		}
 		.coordinateSpace(name: "container")
 	}

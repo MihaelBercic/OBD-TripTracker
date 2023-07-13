@@ -16,7 +16,7 @@ import WidgetKit
 
 struct ContentView: View {
 
-	// @Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
+	/// @Environment(\.managedObjectContext) private var viewContext: NSManagedObjectContext
 	@FetchRequest(sortDescriptors: []) private var previousTrips: FetchedResults<TripEntity>
 	@FetchRequest(sortDescriptors: []) private var logHistory: FetchedResults<LogEntity>
 
@@ -59,13 +59,17 @@ struct ContentView: View {
 		}
 		.sheet(isPresented: $isPresented) {
 			GeometryReader { containerReader in
-				RecentTripsList(trips: trips, currentTrip: $currentTrip)
-					.preference(key: InnerHeightPreferenceKey.self, value: containerReader.size.height)
-					.onPreferenceChange(InnerHeightPreferenceKey.self) { newHeight in
-						withAnimation(.spring(response: 0.25, dampingFraction: 0.75)) {
-							off = newHeight
-						}
+				VStack(alignment: .leading) {
+					RecentTripsList(trips: trips, currentTrip: $currentTrip)
+						.frame(height: 130)
+				}
+				.padding(10)
+				.preference(key: InnerHeightPreferenceKey.self, value: containerReader.size.height)
+				.onPreferenceChange(InnerHeightPreferenceKey.self) { newHeight in
+					withAnimation(.spring(response: 0.25, dampingFraction: 0.75)) {
+						off = newHeight
 					}
+				}
 			}
 			.presentationDetents([.height(150), .medium], selection: $currentSheetSize)
 			.presentationDragIndicator(.visible)

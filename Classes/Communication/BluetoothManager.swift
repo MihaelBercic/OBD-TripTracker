@@ -41,16 +41,10 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 
 	func centralManagerDidUpdateState(_ central: CBCentralManager) {
 		if central.state == .poweredOn {
-			let isConnected = adapter != nil
+			let isConnected = adapter?.state == .connected
+			Logger.info("Updated state and is connected: \(isConnected)")
 			if isConnected {
-				Logger.info("CM updated state, adapter not nil...")
-				adapter?.use {
-					if $0.state == .connected {
-						$0.discoverServices([serviceUUID])
-					} else {
-						central.connect($0)
-					}
-				}
+				adapter?.discoverServices([serviceUUID])
 			} else {
 				Logger.info("📡 Scanning for peripherals...")
 				central.scanForPeripherals(withServices: [advertisedUUID])
@@ -135,6 +129,7 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 	func peripheral(_: CBPeripheral, didReadRSSI rssiValue: NSNumber, error _: Error?) {
 		if rssiValue.decimalValue < -80 {
 			messageInterval = 10
+			Logger.info("Increasing message interval to 10 (RSSI)")
 		}
 	}
 
@@ -159,7 +154,7 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 			adapterState = "connecting"
 		case .connected:
 			adapterState = "connected"
-		case .disconnecting:
+		default:
 			adapterState = "disconnecting"
 		}
 		Logger.info("Restoring state, adapter exists \(adapterState)!")

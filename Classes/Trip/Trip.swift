@@ -103,7 +103,8 @@ class TripSingleton {
 			guard let trip = currentTrip else { return }
 			guard let activity = currentActivity else { return }
 			let state = Activity<CarWidgetAttributes>.ContentState(trip: trip)
-			await activity.update(using: state)
+			let content = ActivityContent(state: state, staleDate: nil)
+			await activity.update(content)
 		}
 	}
 
@@ -114,23 +115,28 @@ class TripSingleton {
 			currentTrip = nil
 		}
 
+		guard let trip = currentTrip else { return }
 		guard let firstLocation = locations.first else { return }
 		guard let lastLocation = locations.last else { return }
-		guard var trip = currentTrip else { return }
 		let coreDataContext = CoreDataManager.shared.viewContext
 
 		// if trip.distance < 0.1 { return }
-
+		Logger.info("Trip ended...")
 		geocoder.reverseGeocodeLocation(firstLocation) { [self] startPlacemarks, _ in
 			print("Start locations \(startPlacemarks?.count ?? 0)")
 			guard let startPlacemark = startPlacemarks?[0] else { return }
 			geocoder.reverseGeocodeLocation(lastLocation) { endPlacemarks, _ in
 				guard let endPlacemark = endPlacemarks?[0] else { return }
+				let startDate = trip.start
+				let endDate: Date = .now
+				let driveDuration = startDate.distance(to: endDate)
+				let averageSpeed = (trip.distance * 1000 / driveDuration.magnitude) * 3.6
+				Logger.info("Trip average speed \(averageSpeed)km/h")
 
 				let tripEntity = TripEntity(context: coreDataContext).apply { entity in
 					entity.end = .now
 					entity.start = trip.start
-					entity.averageSpeed = trip.speed
+					entity.averageSpeed = averageSpeed
 					entity.distance = trip.distance
 					entity.timestamp = .now
 					entity.fuelEnd = trip.fuelTankLevel.asDecimal
@@ -175,9 +181,7 @@ class TripSingleton {
 		let uuid = UUID().uuidString
 		let request = UNNotificationRequest(identifier: uuid, content: notification, trigger: trigger)
 		let center = UNUserNotificationCenter.current()
-		center.add(request) { error in
-			Logger.error("Notification: \(error)")
-		}
+		center.add(request)
 	}
 
 	func startTheActivity() {
@@ -185,8 +189,9 @@ class TripSingleton {
 		if currentActivity != nil { return }
 		let attributes = CarWidgetAttributes()
 		let state = Activity<CarWidgetAttributes>.ContentState(trip: trip)
-		currentActivity = try? Activity.request(attributes: attributes, contentState: state, pushType: nil)
-		print("Started the activity.")
+		let content = ActivityContent(state: state, staleDate: nil)
+		currentActivity = try? Activity.request(attributes: attributes, content: content, pushType: nil)
+		Logger.info("Started the activity.")
 	}
 
 	private func processMeasurements() {

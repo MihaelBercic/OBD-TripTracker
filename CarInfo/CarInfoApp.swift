@@ -26,8 +26,10 @@ struct CarInfoApp: App {
 			ContentView()
 				.environment(\.managedObjectContext, CoreDataManager.shared.viewContext)
 				.onAppear {
-					UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { allowed, error in
-						print("Complete: \(allowed) \(error)")
+					UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, error in
+						if let error = error {
+							print(error)
+						}
 					}
 				}
 		}.onChange(of: scenePhase) { scene in
