@@ -35,7 +35,7 @@ struct MapView: UIViewRepresentable {
 
 	func makeUIView(context _: Context) -> some UIView {
 		let mapView = MKMapView()
-		mapView.preferredConfiguration = MKStandardMapConfiguration(elevationStyle: .flat, emphasisStyle: .muted)
+		mapView.preferredConfiguration = MKStandardMapConfiguration(elevationStyle: .flat, emphasisStyle: .default)
 		print("Made UI View")
 		return mapView
 	}
@@ -48,6 +48,9 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 	private(set) var mapView: MKMapView? = nil
 
 	private var path: [CLLocation] = []
+	private var colors: [UIColor] = []
+	private var locations: [CGFloat] = []
+
 	private var animationTimer: Timer? = nil
 	private var newRenderNeeded: Bool = false
 	private var canRender: Bool = false
@@ -56,6 +59,8 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 	private var canRenderSpeed: Bool = false
 
 	private var previousPolyline: MKPolyline? = nil
+	private var currentColor: UIColor = .black
+	private var renderers: [MKOverlayRenderer] = []
 
 	func setCurrentTrip(mapView: MKMapView, _ newTrip: TripEntity) {
 		newRenderNeeded = currentTrip != newTrip
@@ -77,6 +82,12 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 		}
 	}
 
+	func mapView(_ mapView: MKMapView, regionWillChangeAnimated _: Bool) {
+		mapView.setNeedsDisplay(mapView.bounds)
+		currentHighestScale = 0.0
+		renderers.forEach { $0.setNeedsDisplay(mapView.visibleMapRect) }
+	}
+
 	private func animateTrip(mapView: MKMapView) {
 		let coordinates = path.map { $0.coordinate }
 		let totalPolyline = MKPolyline(coordinates: coordinates, count: coordinates.count)
@@ -85,112 +96,103 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 
 	func mapView(_ mapView: MKMapView, regionDidChangeAnimated _: Bool) {
 		if newRenderNeeded {
-			let coordinates = path.map { $0.coordinate }
-			let segmentSize = coordinates.count / 20
-
+			renderers = []
+			currentHighestScale = 0.0
 			currentSegment = 1
 			canRenderSpeed = false
 			previousPolyline = nil
 			currentTimer?.invalidate()
-			newRenderNeeded = false
+			let coordinates = path.map { $0.coordinate }
+			let segmentSize = max(1, coordinates.count / 50)
 			mapView.removeOverlays(mapView.overlays)
-			currentTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [self] timer in
+			currentTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [self] timer in
 				let currentMaxIndex = min(coordinates.count - 1, currentSegment * segmentSize)
-				let minimumIndex = max(currentMaxIndex - segmentSize, 0)
-				let forSpeedComputation = Array(path[minimumIndex ... currentMaxIndex])
-
-				let averageSpeed = forSpeedComputation.enumerated().reduce(0.0) { total, current in
-					let index = current.0
-					let location = current.1
-					if index >= forSpeedComputation.endIndex - 1 { return total / Double(forSpeedComputation.count) }
-					return total + location.speed
-				}
-
-				// averageSpeed = Double.random(in: 0.0 ... 2 * 45.0)
-				var description = "systemGreen"
+				let minimumIndex = max(currentMaxIndex - segmentSize - 1, 0)
+				let isLastSegment = currentMaxIndex >= coordinates.count - 1
+				let segment = Array(path[minimumIndex ... currentMaxIndex])
+				let averageSpeed = segment.reduce(0.0) { $0 + $1.speed } / Double(segment.count) * 3.6
 				if averageSpeed == 0.0 {
-					description = "systemBlue"
+					currentColor = .black
 				} else if averageSpeed <= 0.5 {
-					description = "black"
+					currentColor = .systemBlue
 				} else if averageSpeed <= 15 {
-					description = "systemDarkRed"
+					currentColor = .systemRed.darker()!
 				} else if averageSpeed <= 30 {
-					description = "systemRed"
+					currentColor = .systemRed
 				} else if averageSpeed <= 60 {
-					description = "systemDarkOrange"
+					currentColor = .systemOrange.darker()!
 				} else if averageSpeed <= 90 {
-					description = "systemOrange"
+					currentColor = .systemOrange
 				} else if averageSpeed <= 110 {
-					description = "systemGreen"
-				} else if averageSpeed <= 110 {
-					description = "systemLightGreen"
+					currentColor = .systemGreen
+				} else {
+					currentColor = .systemGreen.lighter()!
 				}
+				let polyline = MKPolyline(coordinates: segment.map { $0.coordinate }, count: segment.count)
+				let border = MKPolyline(coordinates: segment.map { $0.coordinate }, count: segment.count)
 
-				let polyline = MKPolyline(coordinates: forSpeedComputation.map { $0.coordinate }, count: forSpeedComputation.count)
-				let border = MKPolyline(coordinates: forSpeedComputation.map { $0.coordinate }, count: forSpeedComputation.count)
-
-				let isLast = currentMaxIndex >= coordinates.count - 1
-				canRenderSpeed = isLast
-
-				polyline.subtitle = description
 				border.title = "border"
-				border.subtitle = description
-
 				if let previousPolyline = previousPolyline {
 					mapView.insertOverlay(border, below: previousPolyline)
+					mapView.insertOverlay(polyline, above: previousPolyline)
 				} else {
-					mapView.addOverlay(border, level: .aboveLabels)
+					mapView.addOverlays([border, polyline], level: .aboveLabels)
 				}
-				mapView.addOverlay(polyline, level: .aboveLabels)
 				previousPolyline = polyline
-
-				if isLast {
+				currentSegment += 1
+				if isLastSegment {
+					resetMemory()
 					timer.invalidate()
 				}
-				currentSegment += 1
 			}
 		}
+	}
+
+	private func resetMemory() {
+		newRenderNeeded = false
+		path = []
 	}
 
 	func mapView(_: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
 		guard let polyline = overlay as? MKPolyline else {
 			return MKOverlayRenderer()
 		}
+
 		let percentageChange = 20.0
-		var color: UIColor = .systemGreen
-		switch polyline.subtitle {
-		case "black":
-			color = .black
-		case "systemDarkRed":
-			color = .systemRed.darker(by: percentageChange)!
-		case "systemRed":
-			color = .systemRed
-		case "systemDarkOrange":
-			color = .systemOrange.darker(by: percentageChange)!
-		case "systemOrange":
-			color = .systemOrange
-		case "systemGreen":
-			color = .systemGreen
-		case "systemLightGreen":
-			color = .systemGreen.lighter(by: percentageChange)!
-		default:
-			color = .systemBlue
+		let isBorder = polyline.title == "border"
+		let isLightMode = UIScreen.main.traitCollection.userInterfaceStyle == .light
+		let renderer = MyRenderer(polyline: polyline).apply {
+			$0.shouldRasterize = true
+			$0.lineWidth = isBorder ? 7 : 5
+			$0.strokeColor = isBorder ? (isLightMode ? currentColor.darker(by: percentageChange) : currentColor.lighter(by: percentageChange)) : currentColor
+			$0.lineCap = .round
 		}
+		renderers.append(renderer)
+		return renderer
+	}
 
-		if polyline.title != "border" {
-			let renderer = MKPolylineRenderer(polyline: polyline)
-			renderer.lineWidth = 3
-			renderer.strokeColor = color
-			renderer.lineCap = .round
-			return renderer
+}
+
+let minZoomScale: MKZoomScale = 0.01
+let maxZoomScale: MKZoomScale = 0.15
+var currentHighestScale: MKZoomScale = 0.0
+
+class MyRenderer: MKGradientPolylineRenderer {
+
+	override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
+		let decidedZoomScale = min(maxZoomScale, max(zoomScale, minZoomScale))
+		if decidedZoomScale > currentHighestScale {
+			currentHighestScale = decidedZoomScale
 		}
-
-		let borderColor = UIScreen.main.traitCollection.userInterfaceStyle == .light ? color.darker(by: percentageChange)! : color.lighter(by: percentageChange)!
-		let gradientRenderer = MKPolylineRenderer(polyline: polyline)
-		gradientRenderer.lineWidth = 5
-		gradientRenderer.lineCap = .round
-		gradientRenderer.strokeColor = borderColor
-		return gradientRenderer
+		let roadWidth = MKRoadWidthAtZoomScale(zoomScale)
+		let isBorder = polyline.subtitle == "border"
+		super.draw(mapRect, zoomScale: currentHighestScale, in: context)
+		// context.addPath(path)
+		// context.setLineCap(.round)
+		// context.setLineJoin(.round)
+		// context.setLineWidth(isBorder ? roadWidth * 1.5 : roadWidth)
+		// context.setStrokeColor(strokeColor!.cgColor)
+		// context.strokePath()
 	}
 
 }
@@ -221,5 +223,37 @@ struct MapView_Previews: PreviewProvider {
 
 	static var previews: some View {
 		MapView(currentTrip: $currentTrip)
+	}
+}
+
+extension UIBezierPath {
+	private static func midpoint(_ a: CGPoint, b: CGPoint) -> CGPoint {
+		CGPoint(
+			x: (b.x + a.x) / 2,
+			y: (b.y + a.y) / 2
+		)
+	}
+
+	static func chaikinPath(_ pts: [CGPoint]) -> UIBezierPath? {
+		guard pts.count > 2 else {
+			return nil
+		}
+
+		let path = UIBezierPath()
+		for i in 1 ... pts.count {
+			let prev = pts[i - 1]
+			let cp = pts[i % pts.count]
+			let next = pts[(i + 1) % pts.count]
+
+			path.move(
+				to: midpoint(prev, b: cp)
+			)
+			path.addQuadCurve(
+				to: midpoint(cp, b: next),
+				controlPoint: cp
+			)
+		}
+		path.close()
+		return path
 	}
 }
