@@ -22,8 +22,7 @@ struct ContentView: View {
 
 	@State private var currentTrip: TripEntity? = nil
 
-	@State private var currentSheetSize: PresentationDetent = .height(150)
-	@State private var offset: Double = 150.0
+	@State private var currentSheetSize: PresentationDetent = .height(300)
 
 	@State var selectedView: String = "trip"
 	@State var cardIndex: Int = 0
@@ -35,7 +34,6 @@ struct ContentView: View {
 	var body: some View {
 		let trips: [TripEntity] = previousTrips
 			.sorted(by: { $0.timestamp > $1.timestamp })
-			.chunked(into: 10).first ?? []
 
 		ZStack(alignment: .bottomLeading) {
 			MapView(currentTrip: $currentTrip)
@@ -61,9 +59,9 @@ struct ContentView: View {
 			GeometryReader { containerReader in
 				VStack(alignment: .leading) {
 					RecentTripsList(trips: trips, currentTrip: $currentTrip)
-						.frame(height: 130)
+						.frame(height: 300)
 				}
-				.padding(10)
+				.padding(20)
 				.preference(key: InnerHeightPreferenceKey.self, value: containerReader.size.height)
 				.onPreferenceChange(InnerHeightPreferenceKey.self) { newHeight in
 					withAnimation(.spring(response: 0.25, dampingFraction: 0.75)) {
@@ -71,7 +69,8 @@ struct ContentView: View {
 					}
 				}
 			}
-			.presentationDetents([.height(150), .medium], selection: $currentSheetSize)
+			.presentationBackground(.bar)
+			.presentationDetents([.height(300), .fraction(0.1)], selection: $currentSheetSize)
 			.presentationDragIndicator(.visible)
 			.presentationBackgroundInteraction(.enabled)
 			.interactiveDismissDisabled()

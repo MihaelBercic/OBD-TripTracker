@@ -37,6 +37,7 @@ struct TripCard: View {
 		} else if time < 10 {
 			tripTime = "morning"
 			systemIconName = "sunrise"
+			primaryColor = .orange
 		} else if time < 18 {
 			tripTime = "day"
 			systemIconName = "sun.max.fill"
@@ -48,24 +49,24 @@ struct TripCard: View {
 	}
 
 	var body: some View {
-		VStack {
-			HStack {
-				Text((tripEntity.start).formatted(date: .omitted, time: .shortened))
-					.font(.footnote)
-					.fontWeight(.semibold)
-					.opacity(0.5)
+		VStack(spacing: 3) {
+			HStack(alignment: .center) {
 				Spacer()
 				Text((tripEntity.start).formatted(date: .numeric, time: .omitted))
 					.font(.caption2)
 					.fontDesign(.rounded)
-					.opacity(0.5)
-				Spacer()
-				Text((tripEntity.end).formatted(date: .omitted, time: .shortened))
-					.font(.footnote)
 					.fontWeight(.semibold)
-					.opacity(0.5)
-			}
-			HStack(alignment: .center) {
+					.opacity(0.3)
+
+				Image(systemName: systemIconName)
+					.resizable()
+					.frame(width: 16, height: 16)
+					.symbolRenderingMode(.palette)
+					.foregroundStyle(primaryColor, .yellow)
+				Spacer()
+			}.padding([.top], 5)
+
+			HStack {
 				VStack(alignment: .leading) {
 					Text(tripEntity.startCity)
 						.font(.body)
@@ -81,13 +82,13 @@ struct TripCard: View {
 						.opacity(0.5)
 				}
 				Spacer()
-				VStack(spacing: 5) {
-					Image(systemName: systemIconName)
-						.symbolRenderingMode(.palette)
-						.foregroundStyle(primaryColor, .yellow)
-				}
-				Spacer()
-				VStack(alignment: .trailing) {
+				Text((tripEntity.start).formatted(date: .omitted, time: .shortened))
+					.font(.footnote)
+					.fontWeight(.semibold)
+			}
+			Divider().background(.foreground).opacity(0.25)
+			HStack {
+				VStack(alignment: .leading) {
 					Text(tripEntity.endCity)
 						.font(.body)
 						.fontWeight(.semibold)
@@ -101,6 +102,10 @@ struct TripCard: View {
 						.dynamicTypeSize(.xSmall)
 						.opacity(0.5)
 				}
+				Spacer()
+				Text((tripEntity.end).formatted(date: .omitted, time: .shortened))
+					.font(.footnote)
+					.fontWeight(.semibold)
 			}
 		}
 	}
@@ -121,7 +126,7 @@ struct TripCard_Previews: PreviewProvider {
 	static var previews: some View {
 		let _ = print(tripEntity)
 		TripCard(tripEntity: tripEntity)
-			.previewLayout(.fixed(width: 200, height: 100))
-			.background(.orange)
+			.previewLayout(.fixed(width: 150, height: 200))
+			.background(.secondary)
 	}
 }

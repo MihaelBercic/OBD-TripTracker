@@ -36,7 +36,9 @@ struct MapView: UIViewRepresentable {
 	func makeUIView(context _: Context) -> some UIView {
 		let mapView = MKMapView()
 		mapView.preferredConfiguration = MKStandardMapConfiguration(elevationStyle: .flat, emphasisStyle: .default)
-		print("Made UI View")
+		mapView.showsCompass = false
+		mapView.showsScale = true
+		// mapView.isPitchEnabled = false
 		return mapView
 	}
 
@@ -58,9 +60,10 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 	private var currentSegment = 1
 	private var canRenderSpeed: Bool = false
 
+	private var totalPolyline: MKPolyline? = nil
 	private var previousPolyline: MKPolyline? = nil
 	private var currentColor: UIColor = .black
-	private var renderers: [MKOverlayRenderer] = []
+	private var renderers: [MyRenderer] = []
 
 	func setCurrentTrip(mapView: MKMapView, _ newTrip: TripEntity) {
 		newRenderNeeded = currentTrip != newTrip
@@ -68,7 +71,6 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 		self.mapView = mapView
 
 		if newRenderNeeded {
-			currentTimer?.invalidate()
 			path = newTrip.locations.map { coordinate in
 				let latitude = coordinate.latitude.doubleValue
 				let longitude = coordinate.longitude.doubleValue
@@ -82,54 +84,61 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 		}
 	}
 
-	func mapView(_ mapView: MKMapView, regionWillChangeAnimated _: Bool) {
-		mapView.setNeedsDisplay(mapView.bounds)
-		currentHighestScale = 0.0
-		renderers.forEach { $0.setNeedsDisplay(mapView.visibleMapRect) }
-	}
-
 	private func animateTrip(mapView: MKMapView) {
 		let coordinates = path.map { $0.coordinate }
-		let totalPolyline = MKPolyline(coordinates: coordinates, count: coordinates.count)
-		mapView.setVisibleMapRect(totalPolyline.boundingMapRect, edgePadding: UIEdgeInsets(top: 50.0, left: 50.0, bottom: 500.0, right: 50.0), animated: true)
+		let polyline = MKPolyline(coordinates: coordinates, count: coordinates.count)
+		totalPolyline = polyline
+		mapView.setVisibleMapRect(polyline.boundingMapRect, edgePadding: UIEdgeInsets(top: 50.0, left: 50.0, bottom: 500.0, right: 50.0), animated: true)
+	}
+
+	func mapViewWillStartRenderingMap(_ mapView: MKMapView) {
+		currentScale = .zero
+		guard let totalPolyline = totalPolyline else { return }
+		let scale = totalPolyline.boundingMapRect.width / mapView.visibleMapRect.width * minZoomScale
+		let decidedScale = min(maxZoomScale, max(minZoomScale, scale))
+		renderers.forEach { renderer in
+			renderer.scale = decidedScale
+			renderer.setNeedsDisplay()
+		}
 	}
 
 	func mapView(_ mapView: MKMapView, regionDidChangeAnimated _: Bool) {
 		if newRenderNeeded {
 			renderers = []
-			currentHighestScale = 0.0
 			currentSegment = 1
 			canRenderSpeed = false
 			previousPolyline = nil
-			currentTimer?.invalidate()
-			let coordinates = path.map { $0.coordinate }
-			let segmentSize = max(1, coordinates.count / 50)
+			colors = []
+			locations = []
 			mapView.removeOverlays(mapView.overlays)
+
+			let coordinates = path.map { $0.coordinate }
+			let segmentSize = max(1, coordinates.count / 25)
+
+			currentTimer?.invalidate()
 			currentTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [self] timer in
 				let currentMaxIndex = min(coordinates.count - 1, currentSegment * segmentSize)
 				let minimumIndex = max(currentMaxIndex - segmentSize - 1, 0)
 				let isLastSegment = currentMaxIndex >= coordinates.count - 1
 				let segment = Array(path[minimumIndex ... currentMaxIndex])
 				let averageSpeed = segment.reduce(0.0) { $0 + $1.speed } / Double(segment.count) * 3.6
+
 				if averageSpeed == 0.0 {
-					currentColor = .black
-				} else if averageSpeed <= 0.5 {
-					currentColor = .systemBlue
+					currentColor = UIColor(named: "RouteStop")!
 				} else if averageSpeed <= 15 {
-					currentColor = .systemRed.darker()!
+					currentColor = UIColor(named: "RouteSuperSlow")!
 				} else if averageSpeed <= 30 {
-					currentColor = .systemRed
+					currentColor = UIColor(named: "RouteSlow")!
 				} else if averageSpeed <= 60 {
-					currentColor = .systemOrange.darker()!
+					currentColor = UIColor(named: "RouteMedium")!
 				} else if averageSpeed <= 90 {
-					currentColor = .systemOrange
-				} else if averageSpeed <= 110 {
-					currentColor = .systemGreen
+					currentColor = UIColor(named: "RouteFast")!
 				} else {
-					currentColor = .systemGreen.lighter()!
+					currentColor = UIColor(named: "RouteSuperFast")!
 				}
-				let polyline = MKPolyline(coordinates: segment.map { $0.coordinate }, count: segment.count)
-				let border = MKPolyline(coordinates: segment.map { $0.coordinate }, count: segment.count)
+				let cleanedCoordinates = segment.map { $0.coordinate }
+				let polyline = MKPolyline(coordinates: cleanedCoordinates, count: cleanedCoordinates.count)
+				let border = MKPolyline(coordinates: cleanedCoordinates, count: cleanedCoordinates.count)
 
 				border.title = "border"
 				if let previousPolyline = previousPolyline {
@@ -145,6 +154,7 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 					timer.invalidate()
 				}
 			}
+			newRenderNeeded = false
 		}
 	}
 
@@ -158,14 +168,14 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 			return MKOverlayRenderer()
 		}
 
-		let percentageChange = 20.0
+		let percentageChange = 15.0
 		let isBorder = polyline.title == "border"
 		let isLightMode = UIScreen.main.traitCollection.userInterfaceStyle == .light
 		let renderer = MyRenderer(polyline: polyline).apply {
-			$0.shouldRasterize = true
-			$0.lineWidth = isBorder ? 7 : 5
+			$0.lineWidth = isBorder ? 2.5 : 1.5
 			$0.strokeColor = isBorder ? (isLightMode ? currentColor.darker(by: percentageChange) : currentColor.lighter(by: percentageChange)) : currentColor
 			$0.lineCap = .round
+			// $0.setColors(isBorder ? colors.map { isLightMode ? $0.darker(by: percentageChange)! : $0.lighter(by: percentageChange)! } : colors, locations: locations)
 		}
 		renderers.append(renderer)
 		return renderer
@@ -173,28 +183,21 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 
 }
 
-let minZoomScale: MKZoomScale = 0.01
-let maxZoomScale: MKZoomScale = 0.15
-var currentHighestScale: MKZoomScale = 0.0
+let minZoomScale: MKZoomScale = 0.0001
+let maxZoomScale: MKZoomScale = 0.1
+var currentScale: CGFloat = .zero
 
-class MyRenderer: MKGradientPolylineRenderer {
+class MyRenderer: MKPolylineRenderer {
+
+	var scale: CGFloat? = nil
 
 	override func draw(_ mapRect: MKMapRect, zoomScale: MKZoomScale, in context: CGContext) {
-		let decidedZoomScale = min(maxZoomScale, max(zoomScale, minZoomScale))
-		if decidedZoomScale > currentHighestScale {
-			currentHighestScale = decidedZoomScale
+		let decidedScale = min(maxZoomScale, max(minZoomScale, zoomScale))
+		if decidedScale >= currentScale {
+			currentScale = decidedScale
 		}
-		let roadWidth = MKRoadWidthAtZoomScale(zoomScale)
-		let isBorder = polyline.subtitle == "border"
-		super.draw(mapRect, zoomScale: currentHighestScale, in: context)
-		// context.addPath(path)
-		// context.setLineCap(.round)
-		// context.setLineJoin(.round)
-		// context.setLineWidth(isBorder ? roadWidth * 1.5 : roadWidth)
-		// context.setStrokeColor(strokeColor!.cgColor)
-		// context.strokePath()
+		super.draw(mapRect, zoomScale: currentScale, in: context)
 	}
-
 }
 
 struct MapView_Previews: PreviewProvider {
@@ -204,16 +207,17 @@ struct MapView_Previews: PreviewProvider {
 		entity.end = .now
 		entity.timestamp = .now
 		[
-			CLLocation(latitude: 46.02550, longitude: 14.54126),
-			CLLocation(latitude: 46.02531, longitude: 14.54096),
-			CLLocation(latitude: 46.02504, longitude: 14.54070),
-			CLLocation(latitude: 46.02489, longitude: 14.54038),
-			CLLocation(latitude: 46.02467, longitude: 14.54008),
-			CLLocation(latitude: 46.02450, longitude: 14.53948),
+			CLLocation(coordinate: CLLocationCoordinate2D(latitude: 46.02550, longitude: 14.54126), altitude: 0.0, horizontalAccuracy: 0.0, verticalAccuracy: 0.0, course: 0.0, speed: 10.0, timestamp: .now),
+			CLLocation(coordinate: CLLocationCoordinate2D(latitude: 46.02531, longitude: 14.54096), altitude: 0.0, horizontalAccuracy: 0.0, verticalAccuracy: 0.0, course: 0.0, speed: 30.0, timestamp: .now),
+			CLLocation(coordinate: CLLocationCoordinate2D(latitude: 46.02504, longitude: 14.54070), altitude: 0.0, horizontalAccuracy: 0.0, verticalAccuracy: 0.0, course: 0.0, speed: 50.0, timestamp: .now),
+			CLLocation(coordinate: CLLocationCoordinate2D(latitude: 46.02489, longitude: 14.54038), altitude: 0.0, horizontalAccuracy: 0.0, verticalAccuracy: 0.0, course: 0.0, speed: 23.0, timestamp: .now),
+			CLLocation(coordinate: CLLocationCoordinate2D(latitude: 46.02467, longitude: 14.54008), altitude: 0.0, horizontalAccuracy: 0.0, verticalAccuracy: 0.0, course: 0.0, speed: 100.0, timestamp: .now),
+			CLLocation(coordinate: CLLocationCoordinate2D(latitude: 46.02450, longitude: 14.53948), altitude: 0.0, horizontalAccuracy: 0.0, verticalAccuracy: 0.0, course: 0.0, speed: 5.0, timestamp: .now),
 		].map { location in
 			CoordinateEntity(context: CoreDataManager.shared.viewContext).apply {
 				$0.latitude = location.coordinate.latitude.asDecimal
 				$0.longitude = location.coordinate.longitude.asDecimal
+				$0.speed = Int16(location.speed.rounded())
 			}
 		}
 		.forEach { coord in

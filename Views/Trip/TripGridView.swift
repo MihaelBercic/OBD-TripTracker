@@ -129,8 +129,8 @@ struct TripGridView: View {
 				}
 				.padding(10)
 				.padding([.leading, .trailing], 10)
-				.background(Color(backgroundColor))
 				.foregroundColor(Color(foregroundColor))
+				.background(.background.opacity(0.8))
 				.cornerRadius(5)
 				.shadow(radius: 1)
 
@@ -207,7 +207,7 @@ struct TripGridView: View {
 				}
 				.padding(10)
 				.padding([.leading, .trailing], 10)
-				.background(Color(backgroundColor))
+				.background(.background.opacity(0.8))
 				.foregroundColor(Color(foregroundColor))
 				.cornerRadius(5)
 				.shadow(radius: 1)

@@ -29,13 +29,13 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 	private let requestQueue = Queue<Request>()
 	private let outgoingMessageQueue = Queue<String>()
 
+	private var outgoingMessageThread: Thread? = nil
+	private var requestProcessingThread: Thread? = nil
+
 	init(interestedIn: [PIDs] = []) {
 		super.init()
 		self.interestedIn.append(contentsOf: interestedIn)
 		manager = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionRestoreIdentifierKey: "central-manager-identifier"])
-
-		Thread(block: processOutgoing).start()
-		Thread(block: processRequests).start()
 		Logger.info("🛜 Bluetooth Manager set up")
 	}
 
@@ -65,6 +65,10 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 	func centralManager(_: CBCentralManager, didConnect peripheral: CBPeripheral) {
 		Logger.info("✅ Connected to our adapter!")
 		adapter = peripheral
+		outgoingMessageThread?.cancel()
+		requestProcessingThread?.cancel()
+		outgoingMessageThread = Thread(block: processOutgoing).apply { $0.start() }
+		requestProcessingThread = Thread(block: processRequests).apply { $0.start() }
 		peripheral.discoverServices([serviceUUID])
 	}
 
@@ -80,7 +84,8 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 		Logger.info("💭 Discovered the important characteristic!")
 
 		peripheral.setNotifyValue(true, for: characteristic)
-		addToOutgoingQueue("AT E0",
+		addToOutgoingQueue("AT FE",
+		                   "AT E0",
 		                   "AT SP 0",
 		                   "AT L0",
 		                   "AT H1")
@@ -89,6 +94,7 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 		let requestsMapped = pidsChunked.map { Request(sid: "01", pids: $0) }
 
 		requestsMapped.forEach { requestQueue.enqueue($0) }
+		Logger.info("Added {SETUP} to outgoing queue.")
 	}
 
 	func peripheral(_: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error _: Error?) {
@@ -190,7 +196,9 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 
 	private func addToOutgoingQueue(_ messages: String...) {
 		messages.forEach {
-			outgoingMessageQueue.enqueue($0, quietly: !outgoingMessageQueue.isEmpty)
+			let isEmpty = outgoingMessageQueue.isEmpty
+			Logger.info("Adding to outgoing queue, quietly: \(!isEmpty)")
+			outgoingMessageQueue.enqueue($0, quietly: !isEmpty)
 		}
 	}
 
