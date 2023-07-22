@@ -12,32 +12,42 @@ struct MapToolbar: View {
 	@Binding var isLogSheetPresented: Bool
 
 	var body: some View {
-		VStack(alignment: .center, spacing: 10) {
-			Button {} label: {
-				Image(systemName: "gear")
-					.symbolRenderingMode(SymbolRenderingMode.hierarchical)
-					.foregroundStyle(.foreground)
-			}
-			Divider()
-				.frame(width: 35)
-				.background(.foreground.opacity(0.1))
-			Button {} label: {
-				Image(systemName: "info")
-					.symbolRenderingMode(SymbolRenderingMode.hierarchical)
-					.foregroundStyle(.foreground)
-			}
-			Divider()
-				.frame(width: 35)
-				.background(.foreground.opacity(0.1))
-			Button {
-				isLogSheetPresented = true
-			} label: {
-				Image(systemName: "list.bullet")
-					.symbolRenderingMode(SymbolRenderingMode.hierarchical)
-					.foregroundStyle(.foreground)
+		Grid(alignment: .center, horizontalSpacing: 10) {
+			GridRow {
+				Button {} label: {
+					Image(systemName: "gearshape")
+						.foregroundStyle(.foreground)
+						.imageScale(.small)
+				}
+
+				Divider()
+					.gridCellUnsizedAxes(.vertical)
+					.frame(maxWidth: 1, maxHeight: .infinity)
+					.background(.foreground)
+					.opacity(0.01)
+
+				Button {} label: {
+					Image(systemName: "lanyardcard")
+						.foregroundStyle(.foreground)
+						.imageScale(.small)
+				}
+
+				Divider()
+					.gridCellUnsizedAxes(.vertical)
+					.frame(maxWidth: 1, maxHeight: .infinity)
+					.background(.foreground)
+					.opacity(0.01)
+
+				Button {
+					isLogSheetPresented = true
+				} label: {
+					Image(systemName: "clock")
+						.foregroundStyle(.foreground)
+						.imageScale(.small)
+				}
 			}
 		}
-		.padding([.top, .bottom], 10)
+		.padding(10)
 	}
 }
 

@@ -27,9 +27,8 @@ struct MapView: UIViewRepresentable {
 	func updateUIView(_ x: UIViewType, context: Context) {
 		guard let mapView = x as? MKMapView else { return }
 		guard let currentTrip = currentTrip else { return }
-		mapView.delegate = context.coordinator
-		mapView.pointOfInterestFilter = .excludingAll
-		guard let delegate = mapView.delegate as? MapViewDelegate else { return }
+		let delegate = context.coordinator
+		mapView.delegate = delegate
 		delegate.setCurrentTrip(mapView: mapView, currentTrip)
 	}
 
@@ -38,6 +37,7 @@ struct MapView: UIViewRepresentable {
 		mapView.preferredConfiguration = MKStandardMapConfiguration(elevationStyle: .flat, emphasisStyle: .default)
 		mapView.showsCompass = false
 		mapView.showsScale = true
+		mapView.pointOfInterestFilter = .excludingAll
 		// mapView.isPitchEnabled = false
 		return mapView
 	}
@@ -66,11 +66,12 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 	private var renderers: [MyRenderer] = []
 
 	func setCurrentTrip(mapView: MKMapView, _ newTrip: TripEntity) {
-		newRenderNeeded = currentTrip != newTrip
-		currentTrip = newTrip
 		self.mapView = mapView
-
-		if newRenderNeeded {
+		if currentTrip != newTrip {
+			print("Not the same... \(currentTrip == newTrip)")
+			newRenderNeeded = true
+			currentTrip = newTrip
+			currentTimer?.invalidate()
 			path = newTrip.locations.map { coordinate in
 				let latitude = coordinate.latitude.doubleValue
 				let longitude = coordinate.longitude.doubleValue
@@ -88,7 +89,7 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 		let coordinates = path.map { $0.coordinate }
 		let polyline = MKPolyline(coordinates: coordinates, count: coordinates.count)
 		totalPolyline = polyline
-		mapView.setVisibleMapRect(polyline.boundingMapRect, edgePadding: UIEdgeInsets(top: 50.0, left: 50.0, bottom: 500.0, right: 50.0), animated: true)
+		mapView.setVisibleMapRect(polyline.boundingMapRect, edgePadding: UIEdgeInsets(top: 200.0, left: 50.0, bottom: 300.0, right: 50.0), animated: true)
 	}
 
 	func mapViewWillStartRenderingMap(_ mapView: MKMapView) {
@@ -106,6 +107,7 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 		if newRenderNeeded {
 			renderers = []
 			currentSegment = 1
+			newRenderNeeded = false
 			canRenderSpeed = false
 			previousPolyline = nil
 			colors = []
@@ -115,51 +117,50 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 			let coordinates = path.map { $0.coordinate }
 			let segmentSize = max(1, coordinates.count / 25)
 
-			currentTimer?.invalidate()
-			currentTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [self] timer in
-				let currentMaxIndex = min(coordinates.count - 1, currentSegment * segmentSize)
-				let minimumIndex = max(currentMaxIndex - segmentSize - 1, 0)
-				let isLastSegment = currentMaxIndex >= coordinates.count - 1
-				let segment = Array(path[minimumIndex ... currentMaxIndex])
-				let averageSpeed = segment.reduce(0.0) { $0 + $1.speed } / Double(segment.count) * 3.6
+			DispatchQueue.main.async { [self] in
+				currentTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [self] timer in
+					let currentMaxIndex = min(coordinates.count - 1, currentSegment * segmentSize)
+					let minimumIndex = max(currentMaxIndex - segmentSize - 1, 0)
+					let isLastSegment = currentMaxIndex >= coordinates.count - 1
+					let segment = Array(path[minimumIndex ... currentMaxIndex])
+					let averageSpeed = segment.reduce(0.0) { $0 + $1.speed } / Double(segment.count) * 3.6
 
-				if averageSpeed == 0.0 {
-					currentColor = UIColor(named: "RouteStop")!
-				} else if averageSpeed <= 15 {
-					currentColor = UIColor(named: "RouteSuperSlow")!
-				} else if averageSpeed <= 30 {
-					currentColor = UIColor(named: "RouteSlow")!
-				} else if averageSpeed <= 60 {
-					currentColor = UIColor(named: "RouteMedium")!
-				} else if averageSpeed <= 90 {
-					currentColor = UIColor(named: "RouteFast")!
-				} else {
-					currentColor = UIColor(named: "RouteSuperFast")!
-				}
-				let cleanedCoordinates = segment.map { $0.coordinate }
-				let polyline = MKPolyline(coordinates: cleanedCoordinates, count: cleanedCoordinates.count)
-				let border = MKPolyline(coordinates: cleanedCoordinates, count: cleanedCoordinates.count)
+					if averageSpeed == 0.0 {
+						currentColor = UIColor(named: "RouteStop")!
+					} else if averageSpeed <= 15 {
+						currentColor = UIColor(named: "RouteSuperSlow")!
+					} else if averageSpeed <= 30 {
+						currentColor = UIColor(named: "RouteSlow")!
+					} else if averageSpeed <= 60 {
+						currentColor = UIColor(named: "RouteMedium")!
+					} else if averageSpeed <= 90 {
+						currentColor = UIColor(named: "RouteFast")!
+					} else {
+						currentColor = UIColor(named: "RouteSuperFast")!
+					}
+					let cleanedCoordinates = segment.map { $0.coordinate }
+					let polyline = MKPolyline(coordinates: cleanedCoordinates, count: cleanedCoordinates.count)
+					let border = MKPolyline(coordinates: cleanedCoordinates, count: cleanedCoordinates.count)
 
-				border.title = "border"
-				if let previousPolyline = previousPolyline {
-					mapView.insertOverlay(border, below: previousPolyline)
-					mapView.insertOverlay(polyline, above: previousPolyline)
-				} else {
-					mapView.addOverlays([border, polyline], level: .aboveLabels)
-				}
-				previousPolyline = polyline
-				currentSegment += 1
-				if isLastSegment {
-					resetMemory()
-					timer.invalidate()
+					border.title = "border"
+					if let previousPolyline = previousPolyline {
+						mapView.insertOverlay(border, below: previousPolyline)
+						mapView.insertOverlay(polyline, above: previousPolyline)
+					} else {
+						mapView.addOverlays([border, polyline], level: .aboveLabels)
+					}
+					previousPolyline = polyline
+					currentSegment += 1
+					if isLastSegment {
+						resetMemory()
+						timer.invalidate()
+					}
 				}
 			}
-			newRenderNeeded = false
 		}
 	}
 
 	private func resetMemory() {
-		newRenderNeeded = false
 		path = []
 	}
 

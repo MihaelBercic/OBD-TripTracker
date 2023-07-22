@@ -22,7 +22,7 @@ struct ContentView: View {
 
 	@State private var currentTrip: TripEntity? = nil
 
-	@State private var currentSheetSize: PresentationDetent = .height(300)
+	@State private var currentSheetSize: PresentationDetent = .height(250)
 
 	@State var selectedView: String = "trip"
 	@State var cardIndex: Int = 0
@@ -40,37 +40,34 @@ struct ContentView: View {
 				.ignoresSafeArea()
 
 			VStack(alignment: .leading) {
-				HStack {
-					Spacer()
-					MapToolbar(isLogSheetPresented: $isLogSheetPresented)
-						.background(.ultraThickMaterial)
-						.cornerRadius(10)
-						.shadow(color: .black.opacity(0.15), radius: 10, x: 0, y: 5)
-				}
-				Spacer()
-
 				TripGridView(currentTrip: $currentTrip)
-					.offset(y: -off)
+				Spacer()
 			}
 			.frame(maxWidth: .infinity, maxHeight: .infinity)
 			.padding(10)
 		}
 		.sheet(isPresented: $isPresented) {
-			GeometryReader { containerReader in
-				VStack(alignment: .leading) {
-					RecentTripsList(trips: trips, currentTrip: $currentTrip)
-						.frame(height: 300)
+			VStack(alignment: .leading) {
+				HStack {
+					Text("Trips")
+						.font(.title)
+						.fontWeight(.bold)
+						.fontDesign(.rounded)
+					Spacer()
+					MapToolbar(isLogSheetPresented: $isLogSheetPresented)
+						.background(.foreground.opacity(0.01))
+						.cornerRadius(5)
 				}
-				.padding(20)
-				.preference(key: InnerHeightPreferenceKey.self, value: containerReader.size.height)
-				.onPreferenceChange(InnerHeightPreferenceKey.self) { newHeight in
-					withAnimation(.spring(response: 0.25, dampingFraction: 0.75)) {
-						off = newHeight
-					}
-				}
-			}
-			.presentationBackground(.bar)
-			.presentationDetents([.height(300), .fraction(0.1)], selection: $currentSheetSize)
+				.padding([.top, .bottom], 10)
+
+				RecentTripsList(trips: trips, currentTrip: $currentTrip)
+					.ignoresSafeArea()
+			}.onChange(of: currentTrip, perform: { _ in
+				currentSheetSize = .height(250)
+			})
+			.padding([.leading, .trailing], 20)
+			.presentationBackground(.thinMaterial)
+			.presentationDetents([.height(250), .fraction(0.1), .medium], selection: $currentSheetSize)
 			.presentationDragIndicator(.visible)
 			.presentationBackgroundInteraction(.enabled)
 			.interactiveDismissDisabled()

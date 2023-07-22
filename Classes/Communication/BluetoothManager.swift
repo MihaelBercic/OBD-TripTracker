@@ -12,7 +12,7 @@ import Foundation
 class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
 
 	private var interestedIn: [PIDs] = []
-	private var messageInterval = 1.0
+	private var messageInterval = 0.1
 
 	private let adapterName = "IOS-Vlink"
 	private let advertisedUUID = CBUUID(string: "18F0")
@@ -22,15 +22,8 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 
 	private var manager: CBCentralManager? = nil
 	private var adapter: CBPeripheral? = nil
-	private var characteristic: CBCharacteristic? = nil
-
-	private let outgoingSemaphore: DispatchSemaphore = .init(value: 0)
 	private var responseManager: ResponseManager = .init()
-	private let requestQueue = Queue<Request>()
-	private let outgoingMessageQueue = Queue<String>()
-
-	private var outgoingMessageThread: Thread? = nil
-	private var requestProcessingThread: Thread? = nil
+	private let outgoingQueue: Queue<Message> = .init()
 
 	init(interestedIn: [PIDs] = []) {
 		super.init()
@@ -65,10 +58,6 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 	func centralManager(_: CBCentralManager, didConnect peripheral: CBPeripheral) {
 		Logger.info("✅ Connected to our adapter!")
 		adapter = peripheral
-		outgoingMessageThread?.cancel()
-		requestProcessingThread?.cancel()
-		outgoingMessageThread = Thread(block: processOutgoing).apply { $0.start() }
-		requestProcessingThread = Thread(block: processRequests).apply { $0.start() }
 		peripheral.discoverServices([serviceUUID])
 	}
 
@@ -80,21 +69,26 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 
 	func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error _: Error?) {
 		guard let characteristic = service.characteristics?.first(where: { $0.uuid == characteristicUUID }) else { return }
-		self.characteristic = characteristic
 		Logger.info("💭 Discovered the important characteristic!")
+		let pidsChunked = interestedIn.chunked(into: 2)
 
 		peripheral.setNotifyValue(true, for: characteristic)
-		addToOutgoingQueue("AT FE",
-		                   "AT E0",
-		                   "AT SP 0",
-		                   "AT L0",
-		                   "AT H1")
+		outgoingQueue.clear()
+		addToQueue(
+			// "AT Z",
+			"AT WS",
+			"AT FE",
+			"AT E0",
+			"AT SP 0",
+			"AT L0",
+			"AT H1", repeats: false
+		)
 
-		let pidsChunked = interestedIn.chunked(into: 3)
-		let requestsMapped = pidsChunked.map { Request(sid: "01", pids: $0) }
-
-		requestsMapped.forEach { requestQueue.enqueue($0) }
-		Logger.info("Added {SETUP} to outgoing queue.")
+		pidsChunked.forEach {
+			let request = Request(sid: "01", pids: $0)
+			addToQueue(request.encodedRequest, repeats: true)
+		}
+		sendMessage(forCharacteristic: characteristic)
 	}
 
 	func peripheral(_: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error _: Error?) {
@@ -104,20 +98,17 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 		let shouldIgnoreResponse = encodedData.count <= 1 || encodedData.contains(/SEARCHING/)
 		// print("🔊 \(encodedData)")
 		if shouldIgnoreResponse { return }
-		messageInterval = 1
-
-		defer {
-			adapter?.readRSSI()
-			outgoingMessageQueue.semaphore.signal()
-		}
+		messageInterval = 0.5
 
 		if encodedData.contains(/NO|UNABLE|ERROR|STOPPED/) {
 			Logger.error(encodedData)
-			messageInterval = 5
-			requestQueue.moveToTheBack()
+			messageInterval = 1
+			responseManager.clean()
+			sendMessage(forCharacteristic: characteristic)
 		} else {
 			if encodedData.split(separator: " ").count < 3 {
 				Logger.debug("Short data: |\(encodedData)|")
+				sendMessage(forCharacteristic: characteristic)
 				return
 			}
 
@@ -127,24 +118,22 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 			}
 
 			if responseManager.canSend {
-				requestQueue.moveToTheBack()
+				sendMessage(forCharacteristic: characteristic)
 			}
 		}
 	}
 
 	func peripheral(_: CBPeripheral, didReadRSSI rssiValue: NSNumber, error _: Error?) {
 		if rssiValue.decimalValue < -80 {
-			messageInterval = 10
-			Logger.info("Increasing message interval to 10 (RSSI)")
+			// messageInterval = 5
+			// Logger.info("Increasing message interval to 10 (RSSI)")
 		}
 	}
 
 	func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error _: Error?) {
 		central.connect(peripheral)
-		outgoingMessageQueue.clear()
-		requestQueue.clear()
 		TripSingleton.shared.stopTrip()
-		Logger.info("Will try to reconnect! Cleared queues.")
+		Logger.info("Will try to reconnect!")
 	}
 
 	func centralManager(_ central: CBCentralManager, willRestoreState state: [String: Any]) {
@@ -174,32 +163,41 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 		}
 	}
 
-	private func processRequests() {
-		while true {
-			requestQueue.semaphore.wait()
-			guard let request = requestQueue.peek() else { continue }
-			addToOutgoingQueue(request.encodedRequest)
+	private func sendMessage(forCharacteristic: CBCharacteristic) {
+		Logger.info("Sending message!")
+		guard let adapter = adapter else { return }
+		guard let message = outgoingQueue.peek() else { return }
+		DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + messageInterval) { [self] in
+			adapter.writeValue(message.data, for: forCharacteristic, type: .withoutResponse)
+			Logger.info("Sent message!")
+
+			if message.repeats {
+				outgoingQueue.moveToTheBack()
+			}
 		}
 	}
 
-	private func processOutgoing() {
-		while true {
-			guard let message = outgoingMessageQueue.dequeue() else { continue }
-			guard let characteristic = characteristic else { continue }
-			guard let adapter = adapter else { continue }
-			let data = Data("\(message)\r".utf8)
-			print("Sending \(message)")
-			Thread.sleep(forTimeInterval: messageInterval)
-			adapter.writeValue(data, for: characteristic, type: .withoutResponse)
+	private func addToQueue(_ messages: String..., repeats: Bool) {
+		messages.forEach { command in
+			let encodedData = Data("\(command)\r".utf8)
+			let message = Message(data: encodedData, repeats: repeats)
+			outgoingQueue.enqueue(message)
 		}
 	}
 
-	private func addToOutgoingQueue(_ messages: String...) {
-		messages.forEach {
-			let isEmpty = outgoingMessageQueue.isEmpty
-			Logger.info("Adding to outgoing queue, quietly: \(!isEmpty)")
-			outgoingMessageQueue.enqueue($0, quietly: !isEmpty)
-		}
+}
+
+class Message: Equatable {
+
+	let data: Data
+	let repeats: Bool
+
+	init(data: Data, repeats: Bool) {
+		self.data = data
+		self.repeats = repeats
 	}
 
+	static func == (lhs: Message, rhs: Message) -> Bool {
+		lhs.data.hashValue == rhs.data.hashValue
+	}
 }

@@ -50,4 +50,8 @@ class ResponseManager {
 		}
 	}
 
+	func clean() {
+		activeBuilders.removeAll()
+		
+	}
 }
