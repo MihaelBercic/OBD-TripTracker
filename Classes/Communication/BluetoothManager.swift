@@ -76,7 +76,7 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 		outgoingQueue.clear()
 		addToQueue(
 			// "AT Z",
-			"AT WS",
+			// "AT WS",
 			"AT FE",
 			"AT E0",
 			"AT SP 0",
@@ -98,7 +98,7 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 		let shouldIgnoreResponse = encodedData.count <= 1 || encodedData.contains(/SEARCHING/)
 		// print("🔊 \(encodedData)")
 		if shouldIgnoreResponse { return }
-		messageInterval = 0.5
+		messageInterval = 1
 
 		if encodedData.contains(/NO|UNABLE|ERROR|STOPPED/) {
 			Logger.error(encodedData)
@@ -164,15 +164,16 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 	}
 
 	private func sendMessage(forCharacteristic: CBCharacteristic) {
-		Logger.info("Sending message!")
-		guard let adapter = adapter else { return }
-		guard let message = outgoingQueue.peek() else { return }
-		DispatchQueue.global(qos: .userInitiated).asyncAfter(deadline: .now() + messageInterval) { [self] in
+        Logger.info("Sending message!")
+        if outgoingQueue.isEmpty { return }
+        guard let adapter = adapter else { return }
+        guard let message = outgoingQueue.dequeue() else { return }
+        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + messageInterval) { [self] in
 			adapter.writeValue(message.data, for: forCharacteristic, type: .withoutResponse)
-			Logger.info("Sent message!")
+            Logger.info("Sent message! \(String(bytes: message.data, encoding: .utf8))")
 
 			if message.repeats {
-				outgoingQueue.moveToTheBack()
+                outgoingQueue.enqueue(message)
 			}
 		}
 	}

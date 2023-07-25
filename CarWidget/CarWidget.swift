@@ -31,6 +31,7 @@ struct CarWidgetEntryView: View {
 	@Environment(\.widgetFamily) var family
 	
 	var entry: SimpleEntry
+    @State var lastTrip: TripEntity? = nil
 	
 	var body: some View {
 		VStack(spacing: 10) {
@@ -52,20 +53,20 @@ struct CarWidgetEntryView: View {
 						FuelView(fuelLevel: entry.fuel).scaleEffect(0.7)
 					}
 				case.systemMedium:
-					HStack {
-						VStack(alignment: .leading) {
-							Text("RANGE").fontWeight(.bold).fontDesign(.rounded)
-							Text("\(entry.range.formatted())km")
-						}
-					
-						Spacer()
-						FuelView(fuelLevel: entry.fuel).scaleEffect(0.7)
-						Spacer()
-						VStack(alignment:.trailing) {
-							Text("TOTAL").fontWeight(.bold).fontDesign(.rounded)
-							Text("\(entry.total.formatted())km")
-						}
-					}
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("RANGE").fontWeight(.bold).fontDesign(.rounded)
+                        Text("\(entry.range.formatted())km")
+                    }
+                    
+                    Spacer()
+                    FuelView(fuelLevel: entry.fuel).scaleEffect(0.7)
+                    Spacer()
+                    VStack(alignment:.trailing) {
+                        Text("TOTAL").fontWeight(.bold).fontDesign(.rounded)
+                        Text("\(entry.total.formatted())km")
+                    }
+                }
 				case .systemLarge:
 					Text("Large")
 				

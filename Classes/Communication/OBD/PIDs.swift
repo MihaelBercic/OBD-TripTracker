@@ -19,5 +19,5 @@ public enum PIDs: UInt8 {
 	case ambientAirTemperature = 0x46
 	case engineFuelRate = 0x5E
 	case odometer = 0xA6
-
+    case massAirFlowSensor = 0x10
 }

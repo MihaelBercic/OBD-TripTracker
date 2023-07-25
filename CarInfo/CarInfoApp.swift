@@ -16,7 +16,7 @@ struct CarInfoApp: App {
 	private let bluetoothManager = BluetoothManager(interestedIn: [
 		.engineRunTime, .ambientAirTemperature, .engineLoad,
 		.engineCoolantTemperature, .fuelTankLevel,
-		.engineSpeed, .vehicleSpeed,
+        .engineSpeed, .vehicleSpeed, .massAirFlowSensor
 	])
 
 	@Environment(\.scenePhase) var scenePhase

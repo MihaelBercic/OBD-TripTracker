@@ -13,9 +13,7 @@ class CoreDataManager {
 	static let shared = CoreDataManager()
 	let container = NSPersistentContainer(name: "CarInfo")
 
-	var viewContext: NSManagedObjectContext {
-		container.viewContext
-	}
+	let viewContext: NSManagedObjectContext
 
 	private init() {
 		container.loadPersistentStores { _, error in
@@ -23,27 +21,29 @@ class CoreDataManager {
 				print("Error with data loading \(error)")
 			}
 		}
+        viewContext = container.viewContext
+        
 	}
 
 	func insert(entity _: NSManagedObject) {
-		viewContext.perform {
-			// self.viewContext.insert(entity)
-			self.saveContext()
-		}
+        viewContext.performAndWait {
+            self.saveContext()
+        }
 	}
 
 	func delete(entity: NSManagedObject) {
-		viewContext.perform {
-			self.viewContext.delete(entity)
-			self.saveContext()
-		}
+        viewContext.performAndWait {
+            self.viewContext.delete(entity)
+            self.saveContext()
+        }
 	}
 
 	private func saveContext() {
 		do {
-			if viewContext.hasChanges {
-				try viewContext.save()
-			}
+            if viewContext.hasChanges {
+                try viewContext.save()
+            }
+
 		} catch {
 			print(error)
 		}

@@ -89,5 +89,11 @@ final class CarInfoTests: XCTestCase {
 		trip.fuelTankLevel = 9.0
 		XCTAssert(trip.startFuelTankLevel == 9.0)
 	}
+    
+    func testDateDifference() {
+        let start: Date = .now
+        usleep(1_000_000)
+        print("Time difference: \(start.distance(to: .now))")
+    }
 
 }

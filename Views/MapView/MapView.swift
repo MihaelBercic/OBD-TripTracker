@@ -68,7 +68,6 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
 	func setCurrentTrip(mapView: MKMapView, _ newTrip: TripEntity) {
 		self.mapView = mapView
 		if currentTrip != newTrip {
-			print("Not the same... \(currentTrip == newTrip)")
 			newRenderNeeded = true
 			currentTrip = newTrip
 			currentTimer?.invalidate()

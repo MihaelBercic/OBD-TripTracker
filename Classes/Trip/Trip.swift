@@ -19,6 +19,7 @@ public struct Trip: Codable, Hashable, ScopeFunctions {
 	var averageConsumption = 0.0
 	var currentRpm = 0.0
 	var distance = 0.0
+    var litersUsed = 0.0
 	var speed = 0.0
 	var engineTemp = 0.0
 	var ambientTemperature = 0.0
@@ -52,6 +53,7 @@ class TripSingleton {
 	private(set) var currentActivity: Activity<CarWidgetAttributes>?
 
 	private var lastSpeedMeasurement: Date = .now
+    private var lastAirFlowMeasurement: Date = .now
 
 	private init() {
 		Thread(block: processMeasurements).start()
@@ -64,7 +66,6 @@ class TripSingleton {
 
 		if pid == .engineSpeed {
 			let isEngineOn = value > 0
-			print("Engine is on: \(isEngineOn) and current trip exists \(currentTrip != nil)")
 			if isEngineOn, currentTrip == nil {
 				startTrip()
 			}
@@ -87,6 +88,14 @@ class TripSingleton {
 				$0.speed = value
 				$0.distance += movedKilometers
 				lastSpeedMeasurement = .now
+            case .massAirFlowSensor:
+                // MAF(g/s) * 1/14.7 * 1L/710g = Fuel Consumption in L/s Units
+                let timeDifference = abs(Date.now.distance(to: lastSpeedMeasurement))
+                let litersPerSecond = value * 1/14.7 * 1/710
+                let litersUsed = litersPerSecond * timeDifference
+                $0.litersUsed += litersUsed
+                Logger.info("Used += \(litersUsed)")
+                lastAirFlowMeasurement = .now
 			case .fuelTankLevel:
 				$0.fuelTankLevel = value
 			case .engineCoolantTemperature:

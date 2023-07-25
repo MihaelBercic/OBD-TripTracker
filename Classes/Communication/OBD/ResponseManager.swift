@@ -45,7 +45,6 @@ class ResponseManager {
 				let computedMeasurement = packet.compute(data)
 				let measuredValue = MeasuredValue(pid: pid, measurement: computedMeasurement)
 				measurementProcessingQueue.enqueue(measuredValue)
-				print("Queued measurement: \(computedMeasurement)")
 			}
 		}
 	}

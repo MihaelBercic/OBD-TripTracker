@@ -97,15 +97,15 @@ struct LiveActivityView: View {
 				Divider().gridCellUnsizedAxes([.horizontal]).overlay(.foreground).cornerRadius(10).opacity(0.2)
 				GridRow(alignment: .bottom) {
 					CustomGauge(iconName: "speedometer") {
-						HStack(alignment: .top, spacing: 0) {
+						HStack(alignment: .bottom, spacing: 0) {
 							Text("\(decimalFormatter.string(for: trip.speed) ?? "-")").fontWeight(.bold)
 							Text("km/h").font(.footnote).foregroundColor(.secondary)
 						}
 					}.frame(maxWidth: .infinity)
 					CustomGauge(iconName: "fuelpump") {
-						HStack(alignment: .top, spacing: 0) {
-							Text("\(decimalFormatter.string(for: trip.fuelTankLevel) ?? "-")L").fontWeight(.bold)
-							Text("%").font(.footnote).foregroundColor(.secondary)
+						HStack(alignment: .bottom, spacing: 0) {
+                            Text("\(decimalFormatter.string(for: trip.litersUsed) ?? "-")").fontWeight(.bold)
+							Text("L").font(.footnote).foregroundColor(.secondary)
 						}
 					}.frame(maxWidth: .infinity)
 					CustomGauge(iconName: "engine.combustion") {

@@ -58,6 +58,14 @@ enum Packets {
 		let distance = (mapped[0] * 2 ^ 24) + (mapped[1] * 2 ^ 16) + (mapped[2] * 2 ^ 8) + mapped[3]
 		return Measurement(value: Double(distance) / 10.0, unit: UnitLength.kilometers)
 	}
+    
+    public static let massAirFlowSensor = Packet(id: .massAirFlowSensor, dataLength: 2) { data in
+        let mapped = data.map {Double($0)}
+        let flowRate = (256.0 * mapped[0] + mapped[1]) / 100.0
+        return Measurement(value: flowRate, unit: Unit(symbol: "g/s"))
+    }
+    
+    
 
 	public static let packetMap: [PIDs: Packet] = [
 		.engineSpeed: Packets.engineSpeed,
@@ -71,5 +79,6 @@ enum Packets {
 		.fuelTankLevel: Packets.fuelTankLevel,
 		.engineRunTime: Packets.engineRunTime,
 		.vehicleSpeed: Packets.vehicleSpeed,
+        .massAirFlowSensor: Packets.massAirFlowSensor
 	]
 }

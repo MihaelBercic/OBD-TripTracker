@@ -44,12 +44,6 @@ class Queue<T: Equatable> {
 		return lock.withLock { elements.contains { $0 == element }}
 	}
 
-	func moveToTheBack() {
-		let firstElementRemoved = lock.withLock { elements.isEmpty ? nil : elements.removeFirst() }
-		guard let element = firstElementRemoved else { return }
-		enqueue(element)
-	}
-
 	func clear() {
 		lock.withLock {
 			elements = []

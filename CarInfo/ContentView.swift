@@ -66,7 +66,7 @@ struct ContentView: View {
 				currentSheetSize = .height(250)
 			})
 			.padding([.leading, .trailing], 20)
-			.presentationBackground(.thinMaterial)
+			.presentationBackground(.ultraThickMaterial)
 			.presentationDetents([.height(250), .fraction(0.1), .medium], selection: $currentSheetSize)
 			.presentationDragIndicator(.visible)
 			.presentationBackgroundInteraction(.enabled)
