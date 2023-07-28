@@ -42,26 +42,19 @@ struct RecentTripsList: View {
 							let backgroundColorEnd = Color(UIColor(named: "\(tripTime.capitalized)RideBackground")?.lighter(by: 1.6) ?? .yellow)
 
 							TripCard(tripEntity: trip)
-								.padding(10)
-								.background(LinearGradient(
-									colors: [backgroundColor, backgroundColorEnd],
-									startPoint: .leading,
-									endPoint: .trailing
-								))
-								.overlay(
-									RoundedRectangle(cornerRadius: 10)
-										.stroke(.foreground.opacity(0.05), lineWidth: 5)
-								)
+                                .padding(10)
+                                .background(.background)
 								.cornerRadius(10)
 								.shadow(color: .secondary.opacity(0.05), radius: 5, x: 0, y: 5)
-								.foregroundColor(.white)
 								.onTapGesture {
 									currentTrip = trip
 								}
 								.contextMenu {
 									Button {
 										currentTrip = nil
-										CoreDataManager.shared.delete(entity: trip)
+                                        CoreDataManager.shared.performBackgroundTask { context in
+                                            context.delete(trip)
+                                        }
 									} label: {
 										Label("Remove", systemImage: "trash")
 											.foregroundStyle(.red)

@@ -127,7 +127,6 @@ class TripSingleton {
 		guard let trip = currentTrip else { return }
 		guard let firstLocation = locations.first else { return }
 		guard let lastLocation = locations.last else { return }
-		let coreDataContext = CoreDataManager.shared.viewContext
 
 		// if trip.distance < 0.1 { return }
 		Logger.info("Trip ended...")
@@ -141,33 +140,41 @@ class TripSingleton {
 				let driveDuration = startDate.distance(to: endDate)
 				let averageSpeed = (trip.distance * 1000 / driveDuration.magnitude) * 3.6
 				Logger.info("Trip average speed \(averageSpeed)km/h")
-
-				let tripEntity = TripEntity(context: coreDataContext).apply { entity in
-					entity.end = .now
-					entity.start = trip.start
-					entity.averageSpeed = averageSpeed
-					entity.distance = trip.distance
-					entity.timestamp = .now
-					entity.fuelEnd = trip.fuelTankLevel.asDecimal
-					entity.fuelStart = trip.startFuelTankLevel.asDecimal
-
-					entity.startCity = startPlacemark.locality ?? "Unknown"
-					entity.startCountry = startPlacemark.country ?? "Unknown"
-					entity.endCity = endPlacemark.locality ?? "Unknown"
-					entity.endCountry = endPlacemark.country ?? "Unknown"
-
-					locations.dropFirst(10).forEach { location in
-						let coordinate = location.coordinate
-						let coordinateEntity = CoordinateEntity(context: coreDataContext)
-						coordinateEntity.latitude = NSDecimalNumber(value: coordinate.latitude)
-						coordinateEntity.longitude = NSDecimalNumber(value: coordinate.longitude)
-						coordinateEntity.speed = Int16(location.speed.magnitude)
-						entity.addToLocations(coordinateEntity)
-					}
-					Logger.info("Stopped the trip: \(trip.distance)km")
-				}
+                CoreDataManager.shared.performBackgroundTask { context in
+                    TripEntity(context: context).apply { entity in
+                        entity.end = .now
+                        entity.start = trip.start
+                        entity.averageSpeed = averageSpeed
+                        entity.distance = trip.distance
+                        entity.timestamp = .now
+                        entity.fuelEnd = trip.fuelTankLevel.asDecimal
+                        entity.fuelStart = trip.startFuelTankLevel.asDecimal
+                        
+                        entity.startCity = startPlacemark.locality ?? "Unknown"
+                        entity.startCountry = startPlacemark.country ?? "Unknown"
+                        entity.endCity = endPlacemark.locality ?? "Unknown"
+                        entity.endCountry = endPlacemark.country ?? "Unknown"
+                        
+                        locations.dropFirst(10).forEach { location in
+                            let coordinate = location.coordinate
+                            let coordinateEntity = CoordinateEntity(context: context)
+                            coordinateEntity.latitude = NSDecimalNumber(value: coordinate.latitude)
+                            coordinateEntity.longitude = NSDecimalNumber(value: coordinate.longitude)
+                            coordinateEntity.speed = Int16(location.speed.magnitude)
+                            entity.addToLocations(coordinateEntity)
+                        }
+                        Logger.info("Stopped the trip: \(trip.distance)km")
+                    }
+                }
 				Logger.info("Inserting the trip!")
-				CoreDataManager.shared.insert(entity: tripEntity)
+                let notification = UNMutableNotificationContent()
+                notification.title = "Car Trip"
+                notification.body = "Trip has stopped! 🚦"
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1.0, repeats: false)
+                let uuid = UUID().uuidString
+                let request = UNNotificationRequest(identifier: uuid, content: notification, trigger: trigger)
+                let center = UNUserNotificationCenter.current()
+                center.add(request)
 			}
 		}
 	}

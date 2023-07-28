@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 class Logger {
 
@@ -27,12 +28,12 @@ class Logger {
 
 	static func insertLog(message: String, type: LogType) {
 		print(message)
-		let logEntity = LogEntity(context: CoreDataManager.shared.viewContext).apply {
-			$0.message = message
-			$0.type = type.rawValue
-			$0.timestamp = .now
-		}
-		CoreDataManager.shared.insert(entity: logEntity)
+        CoreDataManager.shared.performBackgroundTask { context in
+            let logEntity = LogEntity(context: context)
+            logEntity.message = message
+            logEntity.type = type.rawValue
+            logEntity.timestamp = .now
+        }
 	}
 
 }

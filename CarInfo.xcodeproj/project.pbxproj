@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11FD59622A71D11B00F8B8CE /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D83C2A5F386300E36389 /* CoreDataManager.swift */; };
 		470A92572A595E3D00237240 /* MapToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470A92562A595E3D00237240 /* MapToolbar.swift */; };
 		470A92582A595E8C00237240 /* MapToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470A92562A595E3D00237240 /* MapToolbar.swift */; };
 		470A92592A595E8C00237240 /* MapToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470A92562A595E3D00237240 /* MapToolbar.swift */; };
@@ -56,7 +57,6 @@
 		47B3D83D2A5F386300E36389 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D83C2A5F386300E36389 /* CoreDataManager.swift */; };
 		47B3D83E2A5F386300E36389 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D83C2A5F386300E36389 /* CoreDataManager.swift */; };
 		47B3D83F2A5F386300E36389 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D83C2A5F386300E36389 /* CoreDataManager.swift */; };
-		47B3D8402A5F386300E36389 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D83C2A5F386300E36389 /* CoreDataManager.swift */; };
 		47B3D8432A5F3CEA00E36389 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D8422A5F3CEA00E36389 /* Logger.swift */; };
 		47B3D8442A5F3CEA00E36389 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D8422A5F3CEA00E36389 /* Logger.swift */; };
 		47B3D8452A5F3CEA00E36389 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D8422A5F3CEA00E36389 /* Logger.swift */; };
@@ -699,8 +699,8 @@
 				478A55992A4706D9000759D3 /* Queue.swift in Sources */,
 				47CDBCE42A52C5A80013322E /* LogEntity+CoreDataProperties.swift in Sources */,
 				47B3D8512A5F48B500E36389 /* CoordinateEntity+CoreDataClass.swift in Sources */,
+				11FD59622A71D11B00F8B8CE /* CoreDataManager.swift in Sources */,
 				477E424B2A4B187E00A902F0 /* Trip.swift in Sources */,
-				47B3D8402A5F386300E36389 /* CoreDataManager.swift in Sources */,
 				47B3D82C2A59D3B400E36389 /* TripRepresented.swift in Sources */,
 				47C9568A2A56B31100E52853 /* TripEntity+CoreDataProperties.swift in Sources */,
 				47C077E72A34D265001A85E2 /* FuelView.swift in Sources */,

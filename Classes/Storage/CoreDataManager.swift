@@ -6,47 +6,46 @@
 //
 
 import CoreData
+import UIKit
 import Foundation
 
+
 class CoreDataManager {
-
-	static let shared = CoreDataManager()
-	let container = NSPersistentContainer(name: "CarInfo")
-
-	let viewContext: NSManagedObjectContext
-
-	private init() {
-		container.loadPersistentStores { _, error in
-			if let error = error {
-				print("Error with data loading \(error)")
-			}
-		}
-        viewContext = container.viewContext
-        
-	}
-
-	func insert(entity _: NSManagedObject) {
-        viewContext.performAndWait {
-            self.saveContext()
-        }
-	}
-
-	func delete(entity: NSManagedObject) {
-        viewContext.performAndWait {
-            self.viewContext.delete(entity)
-            self.saveContext()
-        }
-	}
-
-	private func saveContext() {
-		do {
-            if viewContext.hasChanges {
-                try viewContext.save()
+    
+    static let shared = CoreDataManager()
+    let container = NSPersistentContainer(name: "CarInfo")
+    
+    let viewContext: NSManagedObjectContext
+    
+    private init() {
+        container.loadPersistentStores { _, error in
+            if let error = error {
+                print("Error with data loading \(error)")
             }
-
-		} catch {
-			print(error)
-		}
-	}
-
+        }
+        viewContext = container.viewContext
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didSave(_:)),
+                                               name: NSManagedObjectContext.didSaveObjectsNotification,
+                                               object: nil)
+    }
+    
+    func performBackgroundTask(block: @escaping (_ context: NSManagedObjectContext) -> Void) {
+        container.performBackgroundTask { context in
+            do {
+                block(context)
+                try context.save()
+                
+            } catch {
+                fatalError("Failure to perform background context save \(error)")
+            }
+        }
+    }
+    
+    @objc private func didSave(_ notification: Notification) {
+        DispatchQueue.main.async {
+            self.viewContext.mergeChanges(fromContextDidSave: notification)
+        }
+    }
+    
 }
