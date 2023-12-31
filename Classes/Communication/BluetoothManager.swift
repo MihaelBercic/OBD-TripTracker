@@ -12,7 +12,7 @@ import Foundation
 class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
 
 	private var interestedIn: [PIDs] = []
-	private var messageInterval = 0.1
+	private var messageInterval = 0.5
 
 	private let adapterName = "IOS-Vlink"
 	private let advertisedUUID = CBUUID(string: "18F0")
@@ -77,10 +77,10 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 		addToQueue(
 			// "AT Z",
 			// "AT WS",
-			"AT FE",
 			"AT E0",
 			"AT SP 0",
 			"AT L0",
+            "AT FE",
 			"AT H1", repeats: false
 		)
 
@@ -96,15 +96,11 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 		guard let encodedData = String(bytes: data, encoding: .utf8)?.trimmingCharacters(in: trimmingCharacterSet) else { return }
 
 		let shouldIgnoreResponse = encodedData.count <= 1 || encodedData.contains(/SEARCHING/)
-		// print("🔊 \(encodedData)")
 		if shouldIgnoreResponse { return }
-		messageInterval = 1
 
 		if encodedData.contains(/NO|UNABLE|ERROR|STOPPED/) {
 			Logger.error(encodedData)
-			messageInterval = 1
 			responseManager.clean()
-			sendMessage(forCharacteristic: characteristic)
 		} else {
 			if encodedData.split(separator: " ").count < 3 {
 				Logger.debug("Short data: |\(encodedData)|")
@@ -116,18 +112,11 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 			lines.filter { !$0.isEmpty && $0.contains(" ") }.forEach {
 				responseManager.prepare(message: String($0))
 			}
-
-			if responseManager.canSend {
-				sendMessage(forCharacteristic: characteristic)
-			}
 		}
-	}
-
-	func peripheral(_: CBPeripheral, didReadRSSI rssiValue: NSNumber, error _: Error?) {
-		if rssiValue.decimalValue < -80 {
-			// messageInterval = 5
-			// Logger.info("Increasing message interval to 10 (RSSI)")
-		}
+        
+        if responseManager.canSend {
+            sendMessage(forCharacteristic: characteristic)
+        }
 	}
 
 	func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error _: Error?) {
@@ -137,9 +126,7 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 	}
 
 	func centralManager(_ central: CBCentralManager, willRestoreState state: [String: Any]) {
-		Logger.info("Will restore state!")
 		guard let restoredPeripherals = state[CBCentralManagerRestoredStatePeripheralsKey] as? [CBPeripheral] else { return }
-		Logger.info("There are \(restoredPeripherals.count) restored peripherals.")
 		guard let ourAdapter = restoredPeripherals.first(where: { $0.name == adapterName }) else { return }
 		var adapterState = ""
 		switch ourAdapter.state {
@@ -164,14 +151,11 @@ class BluetoothManager: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 	}
 
 	private func sendMessage(forCharacteristic: CBCharacteristic) {
-        Logger.info("Sending message!")
         if outgoingQueue.isEmpty { return }
         guard let adapter = adapter else { return }
         guard let message = outgoingQueue.dequeue() else { return }
         DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + messageInterval) { [self] in
 			adapter.writeValue(message.data, for: forCharacteristic, type: .withoutResponse)
-            Logger.info("Sent message! \(String(bytes: message.data, encoding: .utf8))")
-
 			if message.repeats {
                 outgoingQueue.enqueue(message)
 			}

@@ -167,9 +167,20 @@ class TripSingleton {
                     }
                 }
 				Logger.info("Inserting the trip!")
-                let notification = UNMutableNotificationContent()
-                notification.title = "Car Trip"
-                notification.body = "Trip has stopped! 🚦"
+                let formatter: DateComponentsFormatter = DateComponentsFormatter().apply { formatter in
+                    formatter.unitsStyle = .abbreviated
+                    formatter.zeroFormattingBehavior = .dropAll
+                    formatter.allowedUnits = [.hour, .minute, .second]
+                }
+                
+                let distance = trip.stoppedAt?.distance(to: trip.start) ?? .zero
+
+                let notification = UNMutableNotificationContent().apply {
+                    $0.title = "Car Trip"
+                    $0.body = "Trip summary! 🚦\nDistance: \(trip.distance)km\nDuration \(formatter.string(from: distance) ?? "-")"
+                    $0.sound = .default
+                    $0.interruptionLevel = .timeSensitive
+                }
                 let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1.0, repeats: false)
                 let uuid = UUID().uuidString
                 let request = UNNotificationRequest(identifier: uuid, content: notification, trigger: trigger)
@@ -190,10 +201,14 @@ class TripSingleton {
 			}
 		}
 		print("Started the trip!")
-		let notification = UNMutableNotificationContent()
-		notification.title = "Car Trip"
-		notification.body = "Trip has started 🚦"
-		let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1.0, repeats: false)
+        let notification = UNMutableNotificationContent().apply {
+            $0.title = "Car Trip"
+            $0.body = "Trip has started 🚦"
+            $0.sound = .default
+            $0.interruptionLevel = .timeSensitive
+        }
+        
+		let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1.0 , repeats: false)
 		let uuid = UUID().uuidString
 		let request = UNNotificationRequest(identifier: uuid, content: notification, trigger: trigger)
 		let center = UNUserNotificationCenter.current()

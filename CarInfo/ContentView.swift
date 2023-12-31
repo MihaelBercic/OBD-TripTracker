@@ -30,29 +30,49 @@ struct ContentView: View {
 	@State var isPresented = true
 	@State var isLogSheetPresented = false
 	@State var off = 0.0
+    
+    @State private var tripView: PossibleViews = .single
+    @State private var currentTrips: [TripEntity] = []
 
+    private enum PossibleViews {
+        case single
+        case today
+        case thisWeek
+        case thisMonth
+    }
+    
 	var body: some View {
 		let trips: [TripEntity] = previousTrips
 			.sorted(by: { $0.timestamp > $1.timestamp })
 
 		ZStack(alignment: .bottomLeading) {
-			MapView(currentTrip: $currentTrip)
-				.ignoresSafeArea()
+			MapView(currentTrips: $currentTrips)
+                .ignoresSafeArea()
 
 			VStack(alignment: .leading) {
-				TripGridView(currentTrip: $currentTrip)
+                TripGridView(currentTrips: $currentTrips)
+                    .background(.black)
+                    .cornerRadius(10)
 				Spacer()
-			}
-			.frame(maxWidth: .infinity, maxHeight: .infinity)
-			.padding(10)
+            }.padding(5)
+            
+			
 		}
 		.sheet(isPresented: $isPresented) {
 			VStack(alignment: .leading) {
-				HStack {
-					Text("Trips")
-						.font(.title)
-						.fontWeight(.bold)
-						.fontDesign(.rounded)
+                HStack {
+                    Picker("tripViewSelection", selection: $tripView) {
+                            Text("Today")
+                                .tag(PossibleViews.today)
+                            Text("Week")
+                                .tag(PossibleViews.thisWeek)
+                            Text("Month")
+                                .tag(PossibleViews.thisMonth)
+                        }
+                        .pickerStyle(.segmented)
+                        .frame(maxWidth: 200)
+                    
+                
 					Spacer()
 					MapToolbar(isLogSheetPresented: $isLogSheetPresented)
 						.background(.foreground.opacity(0.01))
@@ -60,11 +80,29 @@ struct ContentView: View {
 				}
 				.padding([.top, .bottom], 10)
 
-				RecentTripsList(trips: trips, currentTrip: $currentTrip)
+                RecentTripsList(trips: trips, currentTrips: $currentTrips)
 					.ignoresSafeArea()
-			}.onChange(of: currentTrip, perform: { _ in
-				currentSheetSize = .height(250)
-			})
+			}
+            .onChange(of: tripView, perform: { selectedTripView in
+                currentTrips = trips.filter { trip in
+                    let distanceInDays = Calendar.current.dateComponents([.day], from: trip.start, to: .now).day ?? 0
+                    switch selectedTripView {
+                    case .today: return trip.start.isInToday
+                    case .thisWeek: return distanceInDays <= 7
+                    case .thisMonth: return distanceInDays <= 31
+                    default: return false;
+                    }
+                }
+            })
+            .onChange(of: currentTrips, perform: { trips in
+                currentSheetSize = .height(250)
+                currentTrip = nil
+                if trips.count == 1 {
+                    tripView = .single
+                    currentTrip = trips.first!
+                }
+            })
+            
 			.padding([.leading, .trailing], 20)
 			.presentationBackground(.ultraThickMaterial)
 			.presentationDetents([.height(250), .fraction(0.1), .medium], selection: $currentSheetSize)

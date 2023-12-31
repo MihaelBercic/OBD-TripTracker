@@ -17,6 +17,7 @@ class CoreDataManager {
     
     let viewContext: NSManagedObjectContext
     
+    
     private init() {
         container.loadPersistentStores { _, error in
             if let error = error {
@@ -24,10 +25,6 @@ class CoreDataManager {
             }
         }
         viewContext = container.viewContext
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(didSave(_:)),
-                                               name: NSManagedObjectContext.didSaveObjectsNotification,
-                                               object: nil)
     }
     
     func performBackgroundTask(block: @escaping (_ context: NSManagedObjectContext) -> Void) {
@@ -42,9 +39,12 @@ class CoreDataManager {
         }
     }
     
-    @objc private func didSave(_ notification: Notification) {
-        DispatchQueue.main.async {
-            self.viewContext.mergeChanges(fromContextDidSave: notification)
+    func performMainTask(block: @escaping (_ context: NSManagedObjectContext) -> Void) {
+        do {
+            block(viewContext)
+            try viewContext.save()
+        } catch {
+            fatalError("Failure to perform main context save \(error)")
         }
     }
     

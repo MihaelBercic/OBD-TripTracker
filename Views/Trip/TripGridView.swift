@@ -9,8 +9,8 @@ import SwiftUI
 
 struct TripGridView: View {
 
-	@Binding var currentTrip: TripEntity?
-	private let backgroundColor: UIColor = .systemBackground.darker(by: 0.8)!
+	@Binding var currentTrips: [TripEntity]
+    private let backgroundColor: UIColor = .systemBackground.darker(by: 0.8)!
 	private let foregroundColor: UIColor = .label
 
 	private let formatter: DateComponentsFormatter = DateComponentsFormatter().apply { formatter in
@@ -26,7 +26,10 @@ struct TripGridView: View {
 	}
 
 	var body: some View {
-		guard let currentTrip = currentTrip else { return AnyView(EmptyView()) }
+        let isSingle = currentTrips.count == 1
+		if !isSingle { return AnyView(EmptyView()) }
+        
+        let currentTrip = currentTrips.first!
 		return AnyView(
 			Grid(horizontalSpacing: 5, verticalSpacing: 5) {
 				let startDate = currentTrip.start
@@ -129,8 +132,7 @@ struct TripGridView: View {
 				}
 				.padding(10)
 				.padding([.leading, .trailing], 10)
-				.foregroundColor(Color(foregroundColor))
-                .background(.ultraThickMaterial)
+                .foregroundColor(.white)
 				.cornerRadius(5)
 				.shadow(radius: 1)
 
@@ -207,8 +209,7 @@ struct TripGridView: View {
 				}
 				.padding(10)
 				.padding([.leading, .trailing], 10)
-				.background(.ultraThickMaterial)
-				.foregroundColor(Color(foregroundColor))
+                .foregroundColor(.white)
 				.cornerRadius(5)
 				.shadow(radius: 1)
 			}
@@ -229,8 +230,10 @@ struct TripGridView_Previews: PreviewProvider {
 		$0.fuelStart = 100.0
 		$0.fuelEnd = 90.0
 	}
+    
+    @State static var trips: [TripEntity] = [entity!, entity!]
 
 	static var previews: some View {
-		TripGridView(currentTrip: $entity)
+        TripGridView(currentTrips: $trips)
 	}
 }

@@ -15,7 +15,7 @@ struct RecentTripsList: View {
 
 	var trips: [TripEntity]
 	@State private var tripIndex = 0
-	@Binding var currentTrip: TripEntity?
+    @Binding var currentTrips: [TripEntity]
 
 	var body: some View {
 		let trippies = trips.chunked(into: 2)
@@ -47,12 +47,11 @@ struct RecentTripsList: View {
 								.cornerRadius(10)
 								.shadow(color: .secondary.opacity(0.05), radius: 5, x: 0, y: 5)
 								.onTapGesture {
-									currentTrip = trip
+									currentTrips = [trip]
 								}
 								.contextMenu {
 									Button {
-										currentTrip = nil
-                                        CoreDataManager.shared.performBackgroundTask { context in
+                                        CoreDataManager.shared.performMainTask { context in
                                             context.delete(trip)
                                         }
 									} label: {
@@ -83,9 +82,11 @@ struct RecentTripsList_Previews: PreviewProvider {
 		$0.fuelStart = 100.0
 		$0.fuelEnd = 90.0
 	}
+    
+    @State static var trips: [TripEntity] = [entity!, entity!]
 
 	static var previews: some View {
 		let e = entity.unsafelyUnwrapped
-		RecentTripsList(trips: [e, e, e, e, e, e], currentTrip: $entity)
+		RecentTripsList(trips: [e, e, e, e, e, e], currentTrips: $trips)
 	}
 }
