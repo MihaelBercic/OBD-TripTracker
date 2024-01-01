@@ -3,10 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 53;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11C85E332B420DCC0073BFDC /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C85E322B420DCC0073BFDC /* MainView.swift */; };
+		11C85E352B4218FB0073BFDC /* TripListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C85E342B4218FB0073BFDC /* TripListView.swift */; };
+		11C85E372B42C7C80073BFDC /* TestEntities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C85E362B42C7C80073BFDC /* TestEntities.swift */; };
+		11C85E392B4312310073BFDC /* TripDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11C85E382B4312310073BFDC /* TripDetailView.swift */; };
 		11FD59622A71D11B00F8B8CE /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47B3D83C2A5F386300E36389 /* CoreDataManager.swift */; };
 		470A92572A595E3D00237240 /* MapToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470A92562A595E3D00237240 /* MapToolbar.swift */; };
 		470A92582A595E8C00237240 /* MapToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470A92562A595E3D00237240 /* MapToolbar.swift */; };
@@ -214,6 +218,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		11C85E322B420DCC0073BFDC /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		11C85E342B4218FB0073BFDC /* TripListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripListView.swift; sourceTree = "<group>"; };
+		11C85E362B42C7C80073BFDC /* TestEntities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestEntities.swift; sourceTree = "<group>"; };
+		11C85E382B4312310073BFDC /* TripDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailView.swift; sourceTree = "<group>"; };
 		470A92562A595E3D00237240 /* MapToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapToolbar.swift; sourceTree = "<group>"; };
 		474905832A4CD656006C347C /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		474905882A4DEF84006C347C /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
@@ -389,6 +397,7 @@
 				477E42482A4B177600A902F0 /* Trip */,
 				478A55882A46EC34000759D3 /* Communication */,
 				47EF1B3F2A3B490A001DC39B /* Extensions */,
+				11C85E362B42C7C80073BFDC /* TestEntities.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -415,6 +424,7 @@
 				47CDBD0C2A52D3EC0013322E /* StatisticsView.swift */,
 				47CDBD112A52D7310013322E /* CustomGauge.swift */,
 				47C9567C2A55939600E52853 /* LogListView.swift */,
+				11C85E342B4218FB0073BFDC /* TripListView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -425,6 +435,7 @@
 				47CDBD172A52FD910013322E /* TripCard.swift */,
 				47B3D82D2A59E45C00E36389 /* TripGridView.swift */,
 				47B3D8322A59E79500E36389 /* RecentTripsList.swift */,
+				11C85E382B4312310073BFDC /* TripDetailView.swift */,
 			);
 			path = Trip;
 			sourceTree = "<group>";
@@ -473,6 +484,7 @@
 				BFF8946C0138EFBE94B3563B /* CarInfoApp.swift */,
 				BFF895298CD94DBDA8193722 /* ContentView.swift */,
 				BFF89B2C0974C99562C1E43F /* CarInfo.xcdatamodeld */,
+				11C85E322B420DCC0073BFDC /* MainView.swift */,
 			);
 			path = CarInfo;
 			sourceTree = "<group>";
@@ -713,6 +725,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				477E424A2A4B178500A902F0 /* Trip.swift in Sources */,
+				11C85E332B420DCC0073BFDC /* MainView.swift in Sources */,
 				474905892A4DEF84006C347C /* LocationManager.swift in Sources */,
 				474905842A4CD656006C347C /* Request.swift in Sources */,
 				47CDBCEA2A52D2760013322E /* Useful.swift in Sources */,
@@ -724,6 +737,8 @@
 				478A558C2A46ECC5000759D3 /* Packet.swift in Sources */,
 				47CDBD182A52FD910013322E /* TripCard.swift in Sources */,
 				47CDBD072A52D30B0013322E /* ResponseBuilder.swift in Sources */,
+				11C85E372B42C7C80073BFDC /* TestEntities.swift in Sources */,
+				11C85E392B4312310073BFDC /* TripDetailView.swift in Sources */,
 				47C956832A56B0CB00E52853 /* TripEntity+CoreDataClass.swift in Sources */,
 				47CDBD022A52D2F00013322E /* MeasuredValue.swift in Sources */,
 				47CDBD122A52D7310013322E /* CustomGauge.swift in Sources */,
@@ -746,6 +761,7 @@
 				47CDBCDD2A52C5A80013322E /* LogEntity+CoreDataClass.swift in Sources */,
 				47B3D8332A59E79500E36389 /* RecentTripsList.swift in Sources */,
 				BFF89E9472E3B716C83C92F4 /* CarInfo.xcdatamodeld in Sources */,
+				11C85E352B4218FB0073BFDC /* TripListView.swift in Sources */,
 				47C077E62A34CC9C001A85E2 /* FuelView.swift in Sources */,
 				47B3D8292A59D3B400E36389 /* TripRepresented.swift in Sources */,
 				478A55912A4705B4000759D3 /* BluetoothManager.swift in Sources */,

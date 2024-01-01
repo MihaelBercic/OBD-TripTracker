@@ -23,7 +23,7 @@ struct CarInfoApp: App {
 
 	var body: some Scene {
 		WindowGroup {
-			ContentView()
+			MainView()
 				.environment(\.managedObjectContext, CoreDataManager.shared.viewContext)
 				.onAppear {
 					UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, error in

@@ -89,7 +89,7 @@ class MapViewDelegate: NSObject, MKMapViewDelegate {
         let coordinates = tripOverlays.flatMap {$0.coordinates}
         let polyline = MKPolyline(coordinates: coordinates, count: coordinates.count)
         totalPolyline = polyline
-        mapView.setVisibleMapRect(polyline.boundingMapRect, edgePadding: UIEdgeInsets(top: 200.0, left: 50.0, bottom: 300.0, right: 50.0), animated: true)
+        mapView.setVisibleMapRect(polyline.boundingMapRect, edgePadding: UIEdgeInsets(top: 50.0, left: 50.0, bottom: 50.0, right: 50.0), animated: true)
     }
     
     func mapViewWillStartRenderingMap(_ mapView: MKMapView) {
